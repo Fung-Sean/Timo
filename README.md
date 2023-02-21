@@ -1,6 +1,6 @@
-# timo
+# Timo
 
-A new Flutter project.
+A flutter project designed to get you to places on time
 
 ## Getting Started
 
