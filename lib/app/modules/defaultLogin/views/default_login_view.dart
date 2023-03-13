@@ -49,7 +49,8 @@ class DefaultLoginView extends GetView<DefaultLoginController> {
                   Get.to(LoginView());
                   Get.put(LoginController());
                 },
-                child: const Text('Leads to Calendar')),
+                child: const Text('Leads to Calendar')
+            ),
 
             // const SizedBox(height: 15),
             // ElevatedButton(
