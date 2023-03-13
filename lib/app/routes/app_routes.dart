@@ -7,6 +7,7 @@ abstract class Routes {
   static const LOGIN = _Paths.LOGIN;
   static const ACCOUNT = _Paths.ACCOUNT;
   static const DEFAULT_LOGIN = _Paths.DEFAULT_LOGIN;
+  static const ONBOARDING = _Paths.ONBOARDING;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
   static const LOGIN = '/login';
   static const ACCOUNT = '/account';
   static const DEFAULT_LOGIN = '/default-login';
+  static const ONBOARDING = '/onboarding';
 }
