@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:timo_test/app/modules/onboarding/views/onboarding_transportation_view_view.dart';
 import 'package:timo_test/app/modules/onboarding/views/preptime_view.dart';
 
+import '../../login/controllers/login_controller.dart';
 import '../controllers/onboarding_controller.dart';
 
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import '../../login/views/login_view.dart';
 import '../../../routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'minutes.dart';
+
 //import '../../../routes/app_routes.dart';
 //import '../modules/login/views/login_view.dart';
 
@@ -146,7 +148,8 @@ class PreptimeView extends GetView<OnboardingController> {
                       onPressed: () {
                         OnboardingController()
                             .setMinutesToGetReady(numMinutes.value);
-                        print("CONTINUE");
+                        Get.to(LoginView());
+                        Get.put(LoginController());
                       },
                       child: const Text('Continue')),
                 ),

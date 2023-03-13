@@ -65,15 +65,15 @@ class TransportationView extends GetView<OnboardingController> {
                 },
               ),
             ),
-            const SizedBox(height: 40),
+            //const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: SizedBox(
-                      width: 150.00,
-                      height: 150.00,
+                      width: 110.00,
+                      height: 110.00,
                       child: Obx(
                         () => ElevatedButton.icon(
                           onPressed: () {
@@ -95,8 +95,8 @@ class TransportationView extends GetView<OnboardingController> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: SizedBox(
-                      width: 150.00,
-                      height: 150.00,
+                      width: 110.00,
+                      height: 110.00,
                       child: Obx(
                         () => ElevatedButton.icon(
                           onPressed: () {
@@ -123,8 +123,8 @@ class TransportationView extends GetView<OnboardingController> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: SizedBox(
-                      width: 150.00,
-                      height: 150.00,
+                      width: 110.00,
+                      height: 110.00,
                       child: Obx(
                         () => ElevatedButton.icon(
                           onPressed: () {
@@ -146,8 +146,8 @@ class TransportationView extends GetView<OnboardingController> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: SizedBox(
-                      width: 150.00,
-                      height: 150.00,
+                      width: 110.00,
+                      height: 110.00,
                       child: Obx(
                         () => ElevatedButton.icon(
                           onPressed: () {
@@ -174,8 +174,8 @@ class TransportationView extends GetView<OnboardingController> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: SizedBox(
-                      width: 150.00,
-                      height: 150.00,
+                      width: 110.00,
+                      height: 110.00,
                       child: Obx(
                         () => ElevatedButton.icon(
                           onPressed: () {
