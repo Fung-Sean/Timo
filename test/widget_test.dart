@@ -12,7 +12,7 @@ void main() {
     await tester.pumpWidget(const MyWidget(title: 'T', message: 'M'));
 
     // Create the Finders.
-    //final titleFinder = find.text('T');
+    final titleFinder = find.text('B');
     final messageFinder = find.text('M');
 
     // Use the `findsOneWidget` matcher provided by flutter_test to
