@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart' as GoogleAPI;
@@ -11,14 +12,21 @@ class LoginController extends GetxController {
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     clientId:
         '763150906246-jhrqn6r1ekpo27e8tq2ec1qe78421e5h.apps.googleusercontent.com',
+    serverClientId:
+        '763150906246-g0iqj1ce5rro6vh8tutj37brh6nuda75.apps.googleusercontent.com',
     scopes: <String>[GoogleAPI.CalendarApi.calendarScope],
   );
 
   //google user sign-in variable
   GoogleSignInAccount? _currentUser;
 
+  final database = FirebaseDatabase.instance.ref();
+
   @override
   void onInit() {
+    final testRef = database.child("/test");
+
+    testRef.set("TEST!");
     dispose();
     super.onInit();
     //when a user logs in

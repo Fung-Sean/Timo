@@ -13,6 +13,8 @@ dependencies:
   syncfusion_flutter_calendar: ^18.4.46
   google_sign_in: ^5.4.2
   googleapis: ^9.2.0
+  firebase_core: ^2.7.1
+  firebase_database: ^10.0.15
 
 dev_dependencies: 
   flutter_lints: 2.0.1
