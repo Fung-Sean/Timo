@@ -1,9 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.timo.timo_test">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
    <application
         android:label="timo_test"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyD1iNlf5OmBKaffB80GB5rgSjrvSr1gz7U"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

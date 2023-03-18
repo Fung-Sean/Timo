@@ -6,6 +6,7 @@ environment:
   sdk: '>=2.19.2 <3.0.0'
 
 dependencies: 
+  google_maps_flutter: ^2.2.5
   cupertino_icons: ^1.0.2
   get: 4.6.5
   flutter: 

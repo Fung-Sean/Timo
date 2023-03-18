@@ -1,18 +1,21 @@
 import 'package:flutter/widgets.dart';
+
 import 'package:get/get.dart';
-import 'package:timo_test/app/modules/onboarding/bindings/onboarding_binding.dart';
-import 'package:timo_test/app/modules/onboarding/views/preptime_view.dart';
 
 import '../modules/account/bindings/account_binding.dart';
 import '../modules/account/views/account_view.dart';
 import '../modules/defaultLogin/bindings/default_login_binding.dart';
 import '../modules/defaultLogin/views/default_login_view.dart';
+import '../modules/googlemaps/bindings/googlemaps_binding.dart';
+import '../modules/googlemaps/views/googlemaps_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_transportation_view_view.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
+import '../modules/onboarding/views/preptime_view.dart';
 
 part 'app_routes.dart';
 
@@ -21,7 +24,7 @@ class AppPages {
 
   //static const INITIAL = Routes.DEFAULT_LOGIN;
   //static const INITIAL = Routes.LOGIN;
-  static const INITIAL = Routes.ONBOARDING;
+  static const INITIAL = Routes.GOOGLEMAPS;
 
   //check this!
   static const SECOND_PAGE = Routes.LOGIN;
@@ -61,6 +64,11 @@ class AppPages {
       name: _Paths.ONBOARDING,
       page: () => const PreptimeView(),
       binding: OnboardingBinding(),
+    ),
+    GetPage(
+      name: _Paths.GOOGLEMAPS,
+      page: () => const GooglemapsView(),
+      binding: GooglemapsBinding(),
     ),
   ];
 }

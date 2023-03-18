@@ -64,5 +64,11 @@
 	</dict>
 </array>
 <!-- End of the Google Sign-in Section -->
+
+<!--Start of Google Maps section-->
+<key>NSLocationAlwaysUsageDescription</key>
+	<string>Needed to access location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Needed to access location</string>
 </dict>
 </plist>
