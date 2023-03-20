@@ -9,6 +9,7 @@ abstract class Routes {
   static const DEFAULT_LOGIN = _Paths.DEFAULT_LOGIN;
   static const ONBOARDING = _Paths.ONBOARDING;
   static const GOOGLEMAPS = _Paths.GOOGLEMAPS;
+  static const TIMER = _Paths.TIMER;
 }
 
 abstract class _Paths {
@@ -19,4 +20,5 @@ abstract class _Paths {
   static const DEFAULT_LOGIN = '/default-login';
   static const ONBOARDING = '/onboarding';
   static const GOOGLEMAPS = '/googlemaps';
+  static const TIMER = '/timer';
 }

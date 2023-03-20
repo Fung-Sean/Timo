@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 
+import '../modules/Timer/bindings/timer_binding.dart';
+import '../modules/Timer/views/timer_view.dart';
 import '../modules/account/bindings/account_binding.dart';
 import '../modules/account/views/account_view.dart';
 import '../modules/defaultLogin/bindings/default_login_binding.dart';
@@ -69,6 +71,11 @@ class AppPages {
       name: _Paths.GOOGLEMAPS,
       page: () => const GooglemapsView(),
       binding: GooglemapsBinding(),
+    ),
+    GetPage(
+      name: _Paths.TIMER,
+      page: () => const TimerView(),
+      binding: TimerBinding(),
     ),
   ];
 }
