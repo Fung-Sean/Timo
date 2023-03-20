@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/timer_controller.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
