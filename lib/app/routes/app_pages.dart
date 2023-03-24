@@ -18,6 +18,8 @@ import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_transportation_view_view.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/onboarding/views/preptime_view.dart';
+import '../modules/weather/bindings/weather_binding.dart';
+import '../modules/weather/views/weather_view.dart';
 
 part 'app_routes.dart';
 
@@ -26,7 +28,8 @@ class AppPages {
 
   //static const INITIAL = Routes.DEFAULT_LOGIN;
   //static const INITIAL = Routes.LOGIN;
-  static const INITIAL = Routes.TIMER;
+  //static const INITIAL = Routes.TIMER;
+  static const INITIAL = Routes.WEATHER;
 
   //check this!
   static const SECOND_PAGE = Routes.LOGIN;
@@ -76,6 +79,11 @@ class AppPages {
       name: _Paths.TIMER,
       page: () => const TimerView(),
       binding: TimerBinding(),
+    ),
+    GetPage(
+      name: _Paths.WEATHER,
+      page: () => const WeatherView(),
+      binding: WeatherBinding(),
     ),
   ];
 }
