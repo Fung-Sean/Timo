@@ -26,10 +26,10 @@ class AppPages {
 
   //static const INITIAL = Routes.DEFAULT_LOGIN;
   //static const INITIAL = Routes.LOGIN;
-  static const INITIAL = Routes.GOOGLEMAPS;
+  static const INITIAL = Routes.TIMER;
 
   //check this!
-  static const SECOND_PAGE = Routes.LOGIN;
+  //static const SECOND_PAGE = Routes.LOGIN;
 
   static final routes = [
     GetPage(
