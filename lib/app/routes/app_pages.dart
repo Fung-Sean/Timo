@@ -82,7 +82,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.WEATHER,
-      page: () => const WeatherView(),
+      page: () => WeatherView(),
       binding: WeatherBinding(),
     ),
   ];
