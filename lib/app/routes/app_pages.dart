@@ -27,8 +27,10 @@ class AppPages {
   AppPages._();
 
   //static const INITIAL = Routes.DEFAULT_LOGIN;
-  //static const INITIAL = Routes.LOGIN;
+  
+  static const INITIAL = Routes.LOGIN;
   static const INITIAL = Routes.HOMESCREEN;
+
 
   //check this!
   //static const SECOND_PAGE = Routes.LOGIN;
