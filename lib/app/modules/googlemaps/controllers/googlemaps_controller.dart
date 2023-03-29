@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../controllers/googlemaps_controller.dart';
 
 //our starting point
-const LatLng SOURCE_LOCATION = LatLng(42.3601, 71.0589);
+const LatLng SOURCE_LOCATION = LatLng(42.3601, -71.0589);
 const LatLng DEST_LOCATION = LatLng(42.743908, -71.170009);
 
 class GooglemapsController extends GetxController {

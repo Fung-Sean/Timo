@@ -12,6 +12,8 @@ import '../modules/googlemaps/bindings/googlemaps_binding.dart';
 import '../modules/googlemaps/views/googlemaps_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/homescreen/bindings/homescreen_binding.dart';
+import '../modules/homescreen/views/homescreen_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
@@ -25,11 +27,13 @@ class AppPages {
   AppPages._();
 
   //static const INITIAL = Routes.DEFAULT_LOGIN;
-  //static const INITIAL = Routes.LOGIN;
-  static const INITIAL = Routes.GOOGLEMAPS;
+  
+  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.HOMESCREEN;
+
 
   //check this!
-  static const SECOND_PAGE = Routes.LOGIN;
+  //static const SECOND_PAGE = Routes.LOGIN;
 
   static final routes = [
     GetPage(
@@ -76,6 +80,11 @@ class AppPages {
       name: _Paths.TIMER,
       page: () => const TimerView(),
       binding: TimerBinding(),
+    ),
+    GetPage(
+      name: _Paths.HOMESCREEN,
+      page: () => const HomescreenView(),
+      binding: HomescreenBinding(),
     ),
   ];
 }

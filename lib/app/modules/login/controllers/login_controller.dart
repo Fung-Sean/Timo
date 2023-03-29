@@ -1,11 +1,16 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart' as GoogleAPI;
 import 'package:http/io_client.dart' show IOClient, IOStreamedResponse;
 import 'package:http/http.dart' show BaseRequest, Response;
+import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:timo_test/app/modules/login/providers/google_auth_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   //google sign-in initialization
@@ -19,15 +24,20 @@ class LoginController extends GetxController {
 
   //google user sign-in variable
   GoogleSignInAccount? _currentUser;
+  final filename = "local_user";
+  //late SharedPreferences prefs;
 
-  final database = FirebaseDatabase.instance.ref();
+/*
+  asyncFunc() async {
+    // Async func to handle Futures easier; or use Future.then
+    prefs = await SharedPreferences.getInstance();
+  }
+  */
 
   @override
   void onInit() {
-    final testRef = database.child("/test");
-
-    testRef.set("TEST!");
-    dispose();
+    //final testRef = database.child("/test");
+    //dispose();
     super.onInit();
     //when a user logs in
     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
@@ -35,14 +45,101 @@ class LoginController extends GetxController {
 
       //if they are logged in, grab calendar data
       if (_currentUser != null) {
-        getGoogleEventsData();
+        appendToLocalStorage();
       }
     });
     _googleSignIn.signInSilently();
   }
 
+  void appendToLocalStorage() async {
+    //list that fetches Google API data
+    List<GoogleAPI.Event> eventsFetched = await getGoogleEventsData();
+
+    //class that handles gathering data from each GoogleAPI Event
+    GoogleDataSource eventsData = GoogleDataSource(events: eventsFetched);
+
+    //list to store all events that will be encoded to json
+    List<Event> events = [];
+
+    //loop through all events that were fetched from Google API
+    for (int i = 0; i < eventsData.appointments.length; i++) {
+      //gather event start time, current time and calculate difference
+      var eventTime = eventsData.getStartTime(i);
+      DateTime now = DateTime.now();
+      var difference = now.compareTo(eventTime);
+
+      //if the event is in the future
+      if (difference < 0) {
+        //define the Event class and fill in the properties for it
+        Event event = Event(
+            title: eventsData.getSubject(i),
+            description: eventsData.getNotes(i),
+            start: eventsData.getStartTime(i),
+            end: eventsData.getEndTime(i),
+            location: eventsData.getLocation(i));
+        events.add(event);
+      }
+    }
+
+    //encode all the future events to json format
+    String json = jsonEncode(events.map((e) => e.toJson()).toList());
+
+    //get the phone's App Docs directory
+    var directory = await getApplicationDocumentsDirectory();
+
+    //use directory to create full filepath
+    var filePath = '${directory.path}/data.json';
+
+    //create file at specified filePath
+    var file = File(filePath);
+
+    //write json data to file
+    file.writeAsString(json);
+
+    readDataFromLocalStorage();
+  }
+
+  Future<List<Event>> readDataFromLocalStorage() async {
+    //get the phone's App Docs directory
+    var directory = await getApplicationDocumentsDirectory();
+
+    //use directory to create full filepath
+    final file = File('${directory.path}/data.json');
+
+    //store event data extracted from json
+    List<Event> events = [];
+
+    //checks if file exists
+    if (await file.exists()) {
+      //reads json data in file
+      final jsonData = await file.readAsString();
+
+      //decodes it using jsonDecode
+      final data = jsonDecode(jsonData);
+
+      //loops through each event field
+      for (var element in data) {
+        //fills in event info from json data
+        Event event = Event(
+            title: element['title'],
+            description: element['description'],
+            start: element['start'],
+            end: element['end'],
+            location: element['location']);
+
+        //adds it to list of evenets
+        events.add(event);
+      }
+      //returns event
+      return events;
+    } else {
+      //if file not able to be opened, throw an exception
+      throw Exception("File does not exist");
+    }
+  }
+
   @override
-  void onReady() {
+  Future<void> onReady() async {
     super.onReady();
   }
 
@@ -58,8 +155,6 @@ class LoginController extends GetxController {
       _googleSignIn.disconnect();
       _googleSignIn.signOut();
     }
-    _googleSignIn.disconnect();
-    _googleSignIn.signOut();
     super.dispose();
   }
 
@@ -130,5 +225,32 @@ class GoogleDataSource extends CalendarDataSource {
     return event.summary == null || event.summary!.isEmpty
         ? 'No Title'
         : event.summary!;
+  }
+}
+
+class Event {
+  final String title;
+  final String description;
+  final DateTime start;
+  final DateTime end;
+  final String location;
+
+  Event({
+    this.location = "None",
+    required this.title,
+    required this.description,
+    required this.start,
+    required this.end,
+  });
+
+  // Convert the Event object to a Map that can be encoded as JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'description': description,
+      'start': start.toIso8601String(),
+      'end': end.toIso8601String(),
+      'location': location
+    };
   }
 }
