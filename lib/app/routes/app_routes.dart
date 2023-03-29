@@ -10,6 +10,7 @@ abstract class Routes {
   static const ONBOARDING = _Paths.ONBOARDING;
   static const GOOGLEMAPS = _Paths.GOOGLEMAPS;
   static const TIMER = _Paths.TIMER;
+  static const HOMESCREEN = _Paths.HOMESCREEN;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const ONBOARDING = '/onboarding';
   static const GOOGLEMAPS = '/googlemaps';
   static const TIMER = '/timer';
+  static const HOMESCREEN = '/homescreen';
 }
