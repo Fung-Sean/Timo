@@ -7,6 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart' as GoogleAPI;
 import 'package:http/io_client.dart' show IOClient, IOStreamedResponse;
 import 'package:http/http.dart' show BaseRequest, Response;
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:timo_test/app/modules/login/providers/google_auth_provider.dart';
@@ -71,11 +72,17 @@ class LoginController extends GetxController {
       //if the event is in the future
       if (difference < 0) {
         //define the Event class and fill in the properties for it
+        String date =
+            DateFormat('EEEE, MMMM d, y').format(eventsData.getStartTime(i));
+        String startTime =
+            DateFormat('h:mm a').format(eventsData.getStartTime(i));
+        String endTime = DateFormat('h:mm a').format(eventsData.getEndTime(i));
         Event event = Event(
             title: eventsData.getSubject(i),
             description: eventsData.getNotes(i),
-            start: eventsData.getStartTime(i),
-            end: eventsData.getEndTime(i),
+            start: startTime,
+            end: endTime,
+            date: date,
             location: eventsData.getLocation(i));
         events.add(event);
       }
@@ -125,11 +132,20 @@ class LoginController extends GetxController {
             description: element['description'],
             start: element['start'],
             end: element['end'],
+            date: element['date'],
             location: element['location']);
 
         //adds it to list of evenets
         events.add(event);
       }
+/*
+      print(events[0].title);
+      print(events[0].description);
+      print(events[0].start);
+      print(events[0].end);
+      print(events[0].date);
+      print(events[0].location);
+*/
       //returns event
       return events;
     } else {
@@ -231,26 +247,28 @@ class GoogleDataSource extends CalendarDataSource {
 class Event {
   final String title;
   final String description;
-  final DateTime start;
-  final DateTime end;
+  final String start;
+  final String end;
   final String location;
+  final String date;
 
-  Event({
-    this.location = "None",
-    required this.title,
-    required this.description,
-    required this.start,
-    required this.end,
-  });
+  Event(
+      {this.location = "None",
+      required this.title,
+      required this.description,
+      required this.start,
+      required this.end,
+      required this.date});
 
   // Convert the Event object to a Map that can be encoded as JSON
   Map<String, dynamic> toJson() {
     return {
       'title': title,
       'description': description,
-      'start': start.toIso8601String(),
-      'end': end.toIso8601String(),
-      'location': location
+      'start': start,
+      'end': end,
+      'location': location,
+      'date': date
     };
   }
 }
