@@ -22,6 +22,12 @@ dependencies:
   google_fonts: ^4.0.3
   intl: ^0.18.0
 
+  smooth_page_indicator: ^1.0.0+2
+  url_launcher: ^6.1.10
+
+  currency_icons: ^0.3.0
+
+
 dev_dependencies: 
   flutter_lints: 2.0.1
   flutter_test: 
@@ -30,3 +36,5 @@ dev_dependencies:
 flutter: 
   uses-material-design: true
 
+  assets: 
+    - assets/
