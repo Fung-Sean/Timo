@@ -11,6 +11,7 @@ abstract class Routes {
   static const GOOGLEMAPS = _Paths.GOOGLEMAPS;
   static const TIMER = _Paths.TIMER;
   static const HOMESCREEN = _Paths.HOMESCREEN;
+  static const INTRO = _Paths.INTRO;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const GOOGLEMAPS = '/googlemaps';
   static const TIMER = '/timer';
   static const HOMESCREEN = '/homescreen';
+  static const INTRO = '/intro';
 }
