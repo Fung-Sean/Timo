@@ -14,14 +14,17 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/homescreen/bindings/homescreen_binding.dart';
 import '../modules/homescreen/views/homescreen_view.dart';
+import '../modules/homescreen/views/mainscreen_view.dart';
+import '../modules/homescreen/views/weather_view.dart';
+import '../modules/intro/bindings/intro_binding.dart';
+import '../modules/intro/views/intro_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_transportation_view_view.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/onboarding/views/preptime_view.dart';
-import '../modules/homescreen/views/mainscreen_view.dart';
-import '../modules/homescreen/views/weather_view.dart';
+
 part 'app_routes.dart';
 
 class AppPages {
@@ -29,8 +32,9 @@ class AppPages {
 
   //static const INITIAL = Routes.DEFAULT_LOGIN;
 
-  static const INITIAL = Routes.LOGIN;
-  //static const INITIAL = Routes.HOMESCREEN;
+  //static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.INTRO;
+
 
   //check this!
   //static const SECOND_PAGE = Routes.LOGIN;
@@ -95,6 +99,11 @@ class AppPages {
       name: _Paths.HOMESCREEN,
       page: () => const WeatherView(),
       binding: HomescreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.INTRO,
+      page: () => const IntroView(),
+      binding: IntroBinding(),
     ),
   ];
 }
