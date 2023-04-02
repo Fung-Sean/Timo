@@ -25,7 +25,6 @@ dependencies:
   firebase_auth: ^4.2.2
 
   smooth_page_indicator: ^1.0.0+2
-  url_launcher: ^6.1.10
 
   currency_icons: ^0.3.0
 
