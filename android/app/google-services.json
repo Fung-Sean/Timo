@@ -1,4 +1,4 @@
-{
+ {
   "project_info": {
     "project_number": "763150906246",
     "firebase_url": "https://fluted-oasis-378820-default-rtdb.firebaseio.com",
@@ -8,14 +8,22 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:763150906246:android:b5bb4391aba4cd140cb207",
+        "mobilesdk_app_id": "1:763150906246:android:bb13f0dd9375c4980cb207",
         "android_client_info": {
           "package_name": "com.timo.timo_test"
         }
       },
       "oauth_client": [
         {
-          "client_id": "763150906246-6g9s3r0uo9fuqtr2gjjupd8aaqfi6luk.apps.googleusercontent.com",
+          "client_id": "763150906246-2qg98u46ktp09bvasbadlk948tfa2ucc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.timo.timo_test",
+            "certificate_hash": "144e2ff23c4c7edc0c2e146a5baa0f4b6e9910f0"
+          }
+        },
+        {
+          "client_id": "763150906246-f13mleq49r0hsj6tvvfs1seplammlvr1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

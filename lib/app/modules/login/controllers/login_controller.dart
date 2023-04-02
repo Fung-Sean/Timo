@@ -11,45 +11,24 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:timo_test/app/modules/login/providers/google_auth_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:io' show Platform;
+
+import '../../homescreen/controllers/secrets.dart';
 
 class LoginController extends GetxController {
   //google sign-in initialization
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    clientId:
-        '763150906246-jhrqn6r1ekpo27e8tq2ec1qe78421e5h.apps.googleusercontent.com',
-    serverClientId:
-        '763150906246-g0iqj1ce5rro6vh8tutj37brh6nuda75.apps.googleusercontent.com',
-    scopes: <String>[GoogleAPI.CalendarApi.calendarScope],
-  );
+  final GoogleSignIn _googleSignIn =
+      GoogleSignIn(scopes: <String>[GoogleAPI.CalendarApi.calendarScope]);
 
   //google user sign-in variable
-  GoogleSignInAccount? _currentUser;
-  final filename = "local_user";
-  //late SharedPreferences prefs;
+  late GoogleSignInAccount _currentUser;
 
-/*
-  asyncFunc() async {
-    // Async func to handle Futures easier; or use Future.then
-    prefs = await SharedPreferences.getInstance();
-  }
-  */
+  //gCal events data
+  late Future<List<GoogleAPI.Event>> gcalDataFetch;
 
   @override
-  void onInit() {
-    //final testRef = database.child("/test");
-    //dispose();
+  Future<void> onInit() async {
     super.onInit();
-    //when a user logs in
-    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
-      _currentUser = account;
-
-      //if they are logged in, grab calendar data
-      if (_currentUser != null) {
-        appendToLocalStorage();
-      }
-    });
-    _googleSignIn.signInSilently();
   }
 
   void appendToLocalStorage() async {
@@ -64,28 +43,20 @@ class LoginController extends GetxController {
 
     //loop through all events that were fetched from Google API
     for (int i = 0; i < eventsData.appointments.length; i++) {
-      //gather event start time, current time and calculate difference
-      var eventTime = eventsData.getStartTime(i);
-      DateTime now = DateTime.now();
-      var difference = now.compareTo(eventTime);
-
-      //if the event is in the future
-      if (difference < 0) {
-        //define the Event class and fill in the properties for it
-        String date =
-            DateFormat('EEEE, MMMM d, y').format(eventsData.getStartTime(i));
-        String startTime =
-            DateFormat('h:mm a').format(eventsData.getStartTime(i));
-        String endTime = DateFormat('h:mm a').format(eventsData.getEndTime(i));
-        Event event = Event(
-            title: eventsData.getSubject(i),
-            description: eventsData.getNotes(i),
-            start: startTime,
-            end: endTime,
-            date: date,
-            location: eventsData.getLocation(i));
-        events.add(event);
-      }
+      //define the Event class and fill in the properties for it
+      String date =
+          DateFormat('EEEE, MMMM d, y').format(eventsData.getStartTime(i));
+      String startTime =
+          DateFormat('h:mm a').format(eventsData.getStartTime(i));
+      String endTime = DateFormat('h:mm a').format(eventsData.getEndTime(i));
+      Event event = Event(
+          title: eventsData.getSubject(i),
+          description: eventsData.getNotes(i),
+          start: startTime,
+          end: endTime,
+          date: date,
+          location: eventsData.getLocation(i));
+      events.add(event);
     }
 
     //encode all the future events to json format
@@ -102,8 +73,6 @@ class LoginController extends GetxController {
 
     //write json data to file
     file.writeAsString(json);
-
-    readDataFromLocalStorage();
   }
 
   Future<List<Event>> readDataFromLocalStorage() async {
@@ -138,14 +107,6 @@ class LoginController extends GetxController {
         //adds it to list of evenets
         events.add(event);
       }
-/*
-      print(events[0].title);
-      print(events[0].description);
-      print(events[0].start);
-      print(events[0].end);
-      print(events[0].date);
-      print(events[0].location);
-*/
       //returns event
       return events;
     } else {
@@ -174,15 +135,36 @@ class LoginController extends GetxController {
     super.dispose();
   }
 
+  Future<void> waitForNonNullValue(dynamic variable) async {
+    while (variable == null) {
+      await Future.delayed(
+          Duration(milliseconds: 100)); // wait for 100 milliseconds
+    }
+  }
+
   Future<List<GoogleAPI.Event>> getGoogleEventsData() async {
-    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+    //checks if there is a new user account; if there is show login screen otherwise signIn "silently"
+    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+      _currentUser = account!;
+
+      //if they are logged in, grab calendar data
+      if (_currentUser != null) {
+        print("Success!");
+      }
+    });
+    _googleSignIn.signInSilently();
+    _currentUser = (await _googleSignIn.signIn())!;
 
     final GoogleAuthProvider httpClient =
-        GoogleAuthProvider(await googleUser!.authHeaders);
-
+        GoogleAuthProvider(await _currentUser.authHeaders);
     final GoogleAPI.CalendarApi calendarApi = GoogleAPI.CalendarApi(httpClient);
+    final now = DateTime.now().toUtc();
     final GoogleAPI.Events calEvents = await calendarApi.events.list(
       "primary",
+      timeMin: now,
+      timeMax: now.add(Duration(days: 1)),
+      singleEvents: true,
+      orderBy: 'startTime',
     );
     final List<GoogleAPI.Event> appointments = <GoogleAPI.Event>[];
     if (calEvents.items != null) {
@@ -194,7 +176,7 @@ class LoginController extends GetxController {
         appointments.add(event);
       }
     }
-
+    appendToLocalStorage();
     return appointments;
   }
 }

@@ -17,10 +17,12 @@ dependencies:
   firebase_core: ^2.7.1
   firebase_database: ^10.0.15
   flutter_ringtone_player: ^3.2.0
-  shared_preferences: any
   path_provider: any
   google_fonts: ^4.0.3
   intl: ^0.18.0
+  googleapis_auth: ^1.4.0
+  url_launcher: ^6.1.10
+  firebase_auth: ^4.2.2
 
   smooth_page_indicator: ^1.0.0+2
   url_launcher: ^6.1.10
