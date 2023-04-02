@@ -20,16 +20,17 @@ class LoginView extends GetView<LoginController> {
             children: [
               SfCalendar(
                 view: CalendarView.day,
+                controller: CalendarController(),
                 dataSource: GoogleDataSource(events: snapshot.data),
                 monthViewSettings: const MonthViewSettings(
-                    appointmentDisplayMode:
-                        MonthAppointmentDisplayMode.appointment),
+                  appointmentDisplayMode:
+                      MonthAppointmentDisplayMode.appointment,
+                ),
               ),
-              snapshot.data != null
-                  ? Container()
-                  : const Center(
-                      child: CircularProgressIndicator(),
-                    )
+              if (!snapshot.hasData)
+                Center(
+                  child: CircularProgressIndicator(),
+                ),
             ],
           );
         },

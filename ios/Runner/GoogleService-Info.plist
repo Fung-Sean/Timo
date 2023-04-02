@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>763150906246-6joumqkjiojic0862cipug4eqs5f6944.apps.googleusercontent.com</string>
+	<string>763150906246-jhrqn6r1ekpo27e8tq2ec1qe78421e5h.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.763150906246-6joumqkjiojic0862cipug4eqs5f6944</string>
+	<string>com.googleusercontent.apps.763150906246-jhrqn6r1ekpo27e8tq2ec1qe78421e5h</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>763150906246-g0iqj1ce5rro6vh8tutj37brh6nuda75.apps.googleusercontent.com</string>
+	<string>763150906246-2qg98u46ktp09bvasbadlk948tfa2ucc.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBshCTVrWn-qjKKDFbusP24PCRAav7TFGA</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.timo</string>
+	<string>com.timo.timoTest</string>
 	<key>PROJECT_ID</key>
 	<string>fluted-oasis-378820</string>
 	<key>STORAGE_BUCKET</key>
