@@ -41,7 +41,6 @@ class HomescreenController extends GetxController {
 
   RxDouble proportionOfTimer = 0.0.obs;
 
-
   //no args constructor
   //HomescreenController() {}
 

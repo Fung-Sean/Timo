@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:timo_test/app/modules/login/controllers/login_controller.dart';
 
+import '../../homescreen/controllers/homescreen_controller.dart';
+import '../../homescreen/views/homescreen_view.dart';
 import '../../login/views/login_view.dart';
 import '../../../routes/app_pages.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -22,8 +24,8 @@ class Intro4View extends GetView<IntroController> {
 
     Uri linkURL = Uri(
         scheme: 'https',
-        host: 'youtube.com',
-        path: '/feed/subscriptions',
+        host: 'accounts.google.com',
+        path: '/signup',
         fragment: '');
 
     return Scaffold(
@@ -37,7 +39,7 @@ class Intro4View extends GetView<IntroController> {
               child: Image.asset('assets/timo.png'),
             ),
             Text(
-              '*insert tagline*',
+              'Your ultimate time management tool',
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                   textStyle: const TextStyle(
@@ -56,7 +58,9 @@ class Intro4View extends GetView<IntroController> {
                     await controller.getGoogleEventsData();
                     controller.appendToLocalStorage();
                     //Get.to(const Intro5View());
-                    Get.put(IntroController());
+                    Get.to(HomescreenView());
+                    Get.put(HomescreenController(
+                        20, 20, 20, DateTime(2023, 3, 27, 17, 30)));
                   },
                   child: const Text('Log in with Google')),
             ),
