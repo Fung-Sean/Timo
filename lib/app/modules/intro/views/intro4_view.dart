@@ -25,15 +25,10 @@ class Intro4View extends GetView {
         fragment: '');
 
     return Scaffold(
-      appBar: AppBar(
-        //title: const Text('TIMO'),
-        centerTitle: true,
-        backgroundColor: Color.fromARGB(246, 0, 0, 0),
-      ),
       body: Center(
         child: Column(
           children: <Widget>[
-            const SizedBox(height: 100),
+            const SizedBox(height: 150),
             Container(
               height: 350,
               width: 350,
@@ -49,7 +44,7 @@ class Intro4View extends GetView {
                 fontSize: 22,
               )),
             ),
-            const SizedBox(height: 150),
+            const SizedBox(height: 200),
             SizedBox(
               width: 300,
               height: 50,

@@ -14,8 +14,15 @@ class OnboardingController extends GetxController {
   final count = 0.obs;
   double progressSliderValue = 0.0;
   List<Transportation> userSelections = [];
-  List<String> TransportationNames = ["Walk", "Bike", "Bus", "Train", "Car"];
-  //add the 5 types of transportation types to a simple list
+  List<String> TransportationNames = [
+    "Walk",
+    "Bike",
+    "Bus",
+    "Train",
+    "Car",
+    "Uber",
+  ];
+  //add the 6 types of transportation types to a simple list
 
   int minutesToGetReady = 0;
 
