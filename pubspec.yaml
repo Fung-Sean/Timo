@@ -27,6 +27,7 @@ dependencies:
   smooth_page_indicator: ^1.0.1
 
   currency_icons: ^0.3.0
+  geolocator: ^9.0.2
 
 
 dev_dependencies: 

@@ -24,6 +24,8 @@ import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_transportation_view_view.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/onboarding/views/preptime_view.dart';
+import '../modules/weatherpage/bindings/weatherpage_binding.dart';
+import '../modules/weatherpage/views/weatherpage_view.dart';
 
 part 'app_routes.dart';
 
@@ -33,7 +35,8 @@ class AppPages {
   //static const INITIAL = Routes.DEFAULT_LOGIN;
 
   //static const INITIAL = Routes.LOGIN;
-  static const INITIAL = Routes.HOMESCREEN;
+  //static const INITIAL = Routes.INTRO;
+  static const INITIAL = Routes.WEATHERPAGE;
 
   //check this!
   //static const SECOND_PAGE = Routes.LOGIN;
@@ -96,7 +99,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.HOMESCREEN,
-      page: () => const WeatherView(),
+      page: () => WeatherpageView(),
       binding: HomescreenBinding(),
     ),
     GetPage(
