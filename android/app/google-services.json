@@ -1,4 +1,4 @@
- {
+{
   "project_info": {
     "project_number": "763150906246",
     "firebase_url": "https://fluted-oasis-378820-default-rtdb.firebaseio.com",
@@ -40,10 +40,10 @@
               "client_type": 3
             },
             {
-              "client_id": "763150906246-6joumqkjiojic0862cipug4eqs5f6944.apps.googleusercontent.com",
+              "client_id": "763150906246-jhrqn6r1ekpo27e8tq2ec1qe78421e5h.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.timo"
+                "bundle_id": "com.timo.timoTest"
               }
             }
           ]

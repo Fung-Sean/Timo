@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:get/get.dart';
+import 'package:googleapis_auth/auth.dart';
 import 'package:timo_test/app/modules/login/controllers/login_controller.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart' as GoogleAPI;
@@ -142,6 +143,7 @@ class IntroController extends GetxController {
     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
       if (account != null) {
         _currentUser = account;
+        _currentUser.clearAuthCache();
 
         //if they are logged in, grab calendar data
         if (_currentUser != null) {
@@ -153,7 +155,6 @@ class IntroController extends GetxController {
     });
     _googleSignIn.signInSilently();
     _currentUser = (await _googleSignIn.signIn())!;
-
     final GoogleAuthProvider httpClient =
         GoogleAuthProvider(await _currentUser.authHeaders);
     final GoogleAPI.CalendarApi calendarApi = GoogleAPI.CalendarApi(httpClient);
