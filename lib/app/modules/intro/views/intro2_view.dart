@@ -17,7 +17,7 @@ class Intro2View extends GetView {
             Container(
               height: 350,
               padding: const EdgeInsets.all(4.0),
-              child: Image.asset('assets/Mario.png'),
+              child: Image.asset('assets/timo.png'),
             ),
             Padding(
               padding: const EdgeInsets.all(25.0),
