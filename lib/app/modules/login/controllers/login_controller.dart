@@ -13,8 +13,6 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:timo_test/app/modules/login/providers/google_auth_provider.dart';
 import 'dart:io' show Platform;
 
-import '../../homescreen/controllers/secrets.dart';
-
 class LoginController extends GetxController {
   //google sign-in initialization
   final GoogleSignIn _googleSignIn =
@@ -133,13 +131,6 @@ class LoginController extends GetxController {
       _googleSignIn.signOut();
     }
     super.dispose();
-  }
-
-  Future<void> waitForNonNullValue(dynamic variable) async {
-    while (variable == null) {
-      await Future.delayed(
-          Duration(milliseconds: 100)); // wait for 100 milliseconds
-    }
   }
 
   Future<List<GoogleAPI.Event>> getGoogleEventsData() async {
