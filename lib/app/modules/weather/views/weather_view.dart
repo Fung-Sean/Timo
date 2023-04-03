@@ -21,7 +21,7 @@ class WeatherView extends GetView<WeatherController> {
 
   final style_date = TextStyle(fontSize: 24, fontWeight: FontWeight.w300);
   final style_temp = TextStyle(fontSize: 48, fontWeight: FontWeight.w500);
-  final style_temp_hl = TextStyle(fontSize: 16, fontWeight: FontWeight.w300);
+  //final style_temp_hl = TextStyle(fontSize: 16, fontWeight: FontWeight.w300);
 
   //WeatherFactory wf = WeatherFactory('5ef0b262f16659ab86bd672617ca3c51');
   //Weather w = wf.currentWeatherByLocation(lat, lon);
@@ -50,13 +50,13 @@ class WeatherView extends GetView<WeatherController> {
                   Text('${_weathercontroller.futureWeather[0].temp}°C',
                       style: GoogleFonts.inter(textStyle: style_temp)),
                   const SizedBox(height: 10),
-                  Text(
-                      'H: ${_weathercontroller.futureWeather[0].temp_max}°C  L: ${_weathercontroller.futureWeather[0].temp_min}°C',
-                      style: GoogleFonts.inter(textStyle: style_temp_hl)),
+                  //Text(
+                  //    'H: ${_weathercontroller.futureWeather[0].temp_max}°C  L: ${_weathercontroller.futureWeather[0].temp_min}°C',
+                  //    style: GoogleFonts.inter(textStyle: style_temp_hl)),
                   // ignore: unnecessary_string_interpolations
-                  Text(
-                      'Description: ${_weathercontroller.futureWeather[0].w_description}',
-                      style: GoogleFonts.inter(textStyle: style_temp_hl))
+                  //Text(
+                  //    'Description: ${_weathercontroller.futureWeather[0].w_description}',
+                  //    style: GoogleFonts.inter(textStyle: style_temp_hl))
                 ],
               ))
             : const CircularProgressIndicator()));
