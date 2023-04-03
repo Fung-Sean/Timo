@@ -12,6 +12,8 @@ abstract class Routes {
   static const TIMER = _Paths.TIMER;
   static const HOMESCREEN = _Paths.HOMESCREEN;
   static const INTRO = _Paths.INTRO;
+  static const WEATHER = _Paths.WEATHER;
+  static const WEATHERPAGE = _Paths.WEATHERPAGE;
 }
 
 abstract class _Paths {
@@ -25,4 +27,6 @@ abstract class _Paths {
   static const TIMER = '/timer';
   static const HOMESCREEN = '/homescreen';
   static const INTRO = '/intro';
+  static const WEATHER = '/weather';
+  static const WEATHERPAGE = '/weatherpage';
 }
