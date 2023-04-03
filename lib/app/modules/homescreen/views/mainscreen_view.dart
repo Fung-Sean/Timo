@@ -180,25 +180,55 @@ class HorizontalBarWidget extends StatelessWidget {
                 child: Container(color: lightBlue),
               ),
               Text(
-                firstSectionValue.toString(),
+                firstSectionValue.toString() + " min",
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                     textStyle: const TextStyle(
                   fontWeight: FontWeight.normal,
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: 15,
                 )),
               ),
             ],
           ),
-          // SizedBox(
-          //   width: secondSectionWidth * 300,
-          //   child: Container(color: lightGreen),
-          // ),
-          // SizedBox(
-          //   width: thirdSectionWidth * 300,
-          //   child: Container(color: lightOrange),
-          // ),
+          Column(
+            children: [
+              SizedBox(
+                width: secondSectionWidth * 300,
+                height: 20,
+                child: Container(color: lightGreen),
+              ),
+              Text(
+                secondSectionValue.toString() + " min",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                    textStyle: const TextStyle(
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black,
+                  fontSize: 15,
+                )),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              SizedBox(
+                width: thirdSectionWidth * 300,
+                height: 20,
+                child: Container(color: lightOrange),
+              ),
+              Text(
+                thirdSectionValue.toString() + " min",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                    textStyle: const TextStyle(
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black,
+                  fontSize: 15,
+                )),
+              ),
+            ],
+          ),
         ],
       ),
     );
