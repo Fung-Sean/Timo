@@ -17,7 +17,7 @@ class Intro3View extends GetView {
             Container(
               height: 350,
               padding: const EdgeInsets.all(4.0),
-              child: Image.asset('assets/Mario.png'),
+              child: Image.asset('assets/timo.png'),
             ),
             Padding(
               padding: const EdgeInsets.all(25.0),
@@ -35,7 +35,7 @@ class Intro3View extends GetView {
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: Text(
-                '床前明月光 疑是地上霜 举头望明月 低头思故乡',
+                'Everything you need, from weather to transportation, to prepare for your day',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                     textStyle: const TextStyle(

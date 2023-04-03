@@ -26,15 +26,10 @@ class Intro5View extends GetView {
         fragment: '');
 
     return Scaffold(
-      appBar: AppBar(
-        //title: const Text('TIMO'),
-        centerTitle: true,
-        backgroundColor: Color.fromARGB(246, 0, 0, 0),
-      ),
       body: Center(
         child: Column(
           children: <Widget>[
-            const SizedBox(height: 70),
+            const SizedBox(height: 170),
             Text(
               'Welcome to',
               textAlign: TextAlign.center,
