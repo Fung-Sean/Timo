@@ -21,13 +21,14 @@ class MainScreenView extends GetView<HomescreenController> {
   const MainScreenView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final HomescreenController controller = Get.put(HomescreenController());
     return Scaffold(
       body: Center(
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.center,
           //crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
             //here we have some headers indicating the event name and location
             Row(
               children: [
@@ -38,32 +39,32 @@ class MainScreenView extends GetView<HomescreenController> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      controller.eventName,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 25,
-                      )),
+                    Obx(
+                      () => Text(controller.title.value,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.inter(
+                              textStyle: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 28,
+                          ))),
                     ),
-                    Text(
-                      "at " + controller.address,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black,
-                        fontSize: 17,
-                      )),
+                    Obx(
+                      () => Text("at " + controller.location.value,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.inter(
+                              textStyle: const TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                            fontSize: 17,
+                          ))),
                     ),
                   ],
                 ),
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
             SizedBox(
               width: 350,
               height: 350,
@@ -71,18 +72,18 @@ class MainScreenView extends GetView<HomescreenController> {
                   alignment: Alignment.center,
                   fit: StackFit.expand,
                   children: <Widget>[
-                    Obx(() => CircularProgressIndicator(
-                          value: controller.proportionOfTimer.value,
-                          strokeWidth: 17,
-                          color: darkBlue,
-                          backgroundColor: lightBlue,
-                        )),
+                    CircularProgressIndicator(
+                      value: 0,
+                      strokeWidth: 17,
+                      color: darkBlue,
+                      backgroundColor: lightBlue,
+                    ),
                     Positioned.fill(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Get Ready!',
+                            'Get Ready In',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
                                 textStyle: const TextStyle(
@@ -93,26 +94,28 @@ class MainScreenView extends GetView<HomescreenController> {
                           ),
                           Obx(
                             () => Text(
-                              '${controller.time.value}',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.inter(
-                                  textStyle: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: const Color.fromARGB(255, 64, 149, 249),
-                                fontSize: 45,
-                              )),
-                            ),
+                                //this shows the time inside the circle
+                                controller.timeDisplay.value,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.inter(
+                                    textStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color:
+                                      const Color.fromARGB(255, 64, 149, 249),
+                                  fontSize: 45,
+                                ))),
                           ),
-                          Obx(() => Text(
-                                'Leave at ' + controller.arriveTime.value,
+                          Obx(
+                            () => Text(
+                                'Start at ' + controller.startAtString.value,
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.inter(
                                     textStyle: const TextStyle(
                                   fontWeight: FontWeight.normal,
                                   color: Colors.black,
                                   fontSize: 30,
-                                )),
-                              )),
+                                ))),
+                          ),
                         ],
                       ),
                     ),
@@ -127,19 +130,23 @@ class MainScreenView extends GetView<HomescreenController> {
                     // padding: const EdgeInsets.all(4.0),
                     // child: Image.asset('assets/toothbrush.png', color: darkBlue),
                     ),
-                HorizontalBarWidget(
-                  firstSectionValue: 10,
-                  secondSectionValue: 20,
-                  thirdSectionValue: 30,
-                ),
+                Obx(() => HorizontalBarWidget(
+                      firstSectionValue:
+                          (controller.getReadyTime.value / 60).toInt(),
+                      secondSectionValue:
+                          (controller.transportTime.value / 60).toInt(),
+                      thirdSectionValue:
+                          (controller.eventDuration.value).toInt(),
+                    )),
               ],
             ),
             const SizedBox(height: 20),
             ElevatedButton(
                 //style: style,
                 onPressed: () {
-                  controller.updateArrival();
-                  controller.startTimer(900);
+                  //controller.updateArrival();
+
+                  //controller.startTimer(controller.timeUntilNextGetReadyInt);
                 },
                 child: const Text('Start Timer')),
           ],
@@ -175,7 +182,7 @@ class HorizontalBarWidget extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                width: firstSectionWidth * 300,
+                width: firstSectionWidth * 350,
                 height: 20,
                 child: Container(color: lightBlue),
               ),
@@ -194,7 +201,7 @@ class HorizontalBarWidget extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                width: secondSectionWidth * 300,
+                width: secondSectionWidth * 350,
                 height: 20,
                 child: Container(color: lightGreen),
               ),
@@ -213,7 +220,7 @@ class HorizontalBarWidget extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                width: thirdSectionWidth * 300,
+                width: thirdSectionWidth * 350,
                 height: 20,
                 child: Container(color: lightOrange),
               ),
@@ -226,6 +233,8 @@ class HorizontalBarWidget extends StatelessWidget {
                   color: Colors.black,
                   fontSize: 15,
                 )),
+                //TODO: fix min alignment so that disproportionate times
+                //do not create gaps between rectangles
               ),
             ],
           ),

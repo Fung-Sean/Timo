@@ -19,7 +19,7 @@ class HomescreenView extends GetView {
     //a scaffold key for our drawer widget
     final scaffoldKey = GlobalKey<ScaffoldState>();
 
-    Get.put(HomescreenController(25, 50, 75, DateTime(2023, 3, 27, 17, 30)));
+    //Get.put(HomescreenController(25, 50, 75, DateTime(2023, 3, 27, 17, 30)));
     //display the date and time on this main screen
     final now = DateTime.now();
     String date = DateFormat.yMMMMd('en_US').format(now).obs();
@@ -27,6 +27,7 @@ class HomescreenView extends GetView {
 
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text(
             date,
             style: GoogleFonts.inter(

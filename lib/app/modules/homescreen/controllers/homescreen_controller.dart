@@ -6,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart';
 import 'package:intl/intl.dart';
 import 'package:quiver/async.dart';
+import 'package:timo_test/app/modules/intro/controllers/intro_controller.dart';
 import 'package:timo_test/app/modules/login/controllers/login_controller.dart';
 
 class HomescreenController extends GetxController {
@@ -14,89 +15,104 @@ class HomescreenController extends GetxController {
   final count = 0.obs;
   final myFuture =
       Future.delayed(Duration(seconds: 3), () => 'Hello World!').obs;
-  final LoginController loginController = Get.put(LoginController());
+  final IntroController introController = Get.put(IntroController());
 
-  //for the time being we will have some constant values for
-  //our event data to initalize the start screen
+  int timeLeft = 0;
 
-  String address = "".obs();
-  String eventName = "".obs();
-  DateTime startTime = DateTime(2023, 3, 27, 17, 30).obs();
-  int readyTime = 0.obs();
-  int travelTime = 0.obs();
-  int eventTime = 0.obs();
-  int totalTime = 0.obs();
-
-  double readyProportion = 0.0.obs();
-  double travlelProportion = 0.0.obs();
-  double eventProportion = 0.0.obs();
-  //a variable to indicate the time remaining until the next phase
-
-  static int start = 10.obs();
-  static int current = 10.obs();
-
-  RxString arriveTime = "".obs;
-
-  RxString time = '00:00:00'.obs;
-
+  RxString timeDisplay = '00:00:00'.obs;
   RxDouble proportionOfTimer = 0.0.obs;
 
-  //no args constructor
-  //HomescreenController() {}
+  //initialize the parameters of the CURRENT or UPCOMING event
+  RxString title = "".obs;
+  RxString description = "".obs;
+  RxString startTime = "".obs;
+  RxString endTime = "".obs;
+  RxString location = "".obs;
+  RxString date = "".obs;
 
-  HomescreenController(int ready, int travel, int event, DateTime timeStart) {
-    //loginController.onInit();
-    /*
-    readyTime = ready.obs();
-    travelTime = travel.obs();
-    eventTime = event.obs();
-    
-    totalTime = (readyTime + travelTime + eventTime).obs();
+  //get this data from the local system, which was originally input on
+  //onboarding screen, alongside the transport time, which sean will figure out
+  RxInt getReadyTime = 2000.obs;
+  RxInt transportTime = 1500.obs;
+  RxInt eventDuration = 0.obs;
 
-    readyProportion = (readyTime / totalTime).obs();
-    travlelProportion = (travelTime / totalTime).obs();
-    eventProportion = (eventTime / totalTime).obs();
-    */
-    initialize();
+  //the physical number of seconds until the we have to get ready for our next event
+  late RxInt timeBeforeNextEventGetReady;
+
+  //integer form of the previous
+  late int timeUntilNextGetReadyInt;
+
+  //this represents the time at which the user should start getting ready
+  RxString startAtString = "".obs;
+
+  //the time until our get ready event starts
+  late Duration timeUntilNextGetReady;
+
+  HomescreenController() {
+    //initialize();
   }
 
   initialize() async {
-    var localData = await loginController.readDataFromLocalStorage();
-    var readyFormat = DateFormat('h:mm a');
-    //var readyInt = int.parse(localData[0].start);
-    var readyInt = readyFormat.parse(localData[0].start);
-    print(readyInt);
-    //var endInt = int.parse(localData[0].end);
-    RegExp regExp = RegExp(r'\d.*');
-    //address = localData[0].location.obs();
-    var intermediateAddress =
-        regExp.stringMatch(localData[0].location.obs()) as String;
-    address =
-        intermediateAddress.substring(0, intermediateAddress.length - 5).obs();
-    //print(address);
-    eventName = localData[0].title.obs();
+    var localData = await introController.readDataFromLocalStorage();
 
-    readyTime = readyInt.minute.obs();
-    var readyTimeString =
-        (readyInt.hour - 12).toString() + ":" + readyInt.minute.toString();
-    arriveTime = readyTimeString.obs;
-    var leaveTimeString = (readyInt.hour - 12).toString() +
-        ":" +
-        (readyInt.minute - 15).toString();
-    time = leaveTimeString.obs;
-    //time = travelTime = 30.obs();
-    //eventTime = (endInt - readyInt).obs();
+    //on startup, load in the information of the first event
+    title.value = localData[0].title;
+    description.value = localData[0].description;
+    startTime.value = localData[0].start;
+    endTime.value = localData[0].end;
+    location.value = localData[0].location;
+    date.value = localData[0].date;
 
-    totalTime = (readyTime + travelTime + eventTime).obs();
+    //convert startTime fields into seperate fields used to create DateTime object
+    DateTime now = DateTime.now();
+    int year = convertYearToInt(date.value);
+    int month = convertMonthToInt(date.value);
+    int day = convertDayToInt(date.value);
+    int hour = convertHourToInt(startTime.value);
+    int minutes = convertMinuteToInt(startTime.value);
 
-    readyProportion = (readyTime / totalTime).obs();
-    travlelProportion = (travelTime / totalTime).obs();
-    eventProportion = (eventTime / totalTime).obs();
+    //startTime variable from gCal as DateTime object
+    DateTime eventStartTime = DateTime(year, month, day, hour, minutes);
+
+    //now we want to calculate the duration of time the event actually lasts
+    hour = convertHourToInt(endTime.value);
+    minutes = convertMinuteToInt(endTime.value);
+
+    //day = convertDayToInt(date.value);
+    DateTime eventEndTime = DateTime(year, month, day, hour, minutes);
+
+    if (eventEndTime.compareTo(eventStartTime) < 0) {
+      day++;
+    }
+    //TODO: check for edge cases: events between months, and between years
+    eventEndTime = DateTime(year, month, day, hour, minutes);
+    print(eventStartTime.toString());
+    print(eventEndTime.toString());
+    eventDuration.value = eventEndTime.difference(eventStartTime).inMinutes;
+    print(eventDuration.value);
+
+    //calculates total time in seconds that user needs to get ready and transport
+    int secondsTosubtract = getReadyTime.value + transportTime.value;
+
+    //calculates time for user to start getting ready as a DateTime Object
+    DateTime timeToGetReady =
+        eventStartTime.subtract(Duration(seconds: secondsTosubtract));
+
+    startAtString.value = DateFormat.jm().format(timeToGetReady);
+
+    timeUntilNextGetReady = timeToGetReady.difference(now);
+    print(timeUntilNextGetReady.toString());
+
+    timeUntilNextGetReadyInt = timeUntilNextGetReady.inSeconds;
+
+    //timeBeforeNextEventGetReady.value =
   }
 
   @override
   Future<void> onInit() async {
     super.onInit();
+    await initialize();
+    startTimer();
   }
 
   @override
@@ -109,51 +125,84 @@ class HomescreenController extends GetxController {
     super.onClose();
   }
 
-  String getAddress() {
-    return address;
+  int convertYearToInt(String date) {
+    DateTime dateTime = DateFormat('EEEE, MMMM d, y').parse(date);
+    int year = dateTime.year;
+    return year;
   }
 
-  String getEventName() {
-    return eventName;
+  int convertMonthToInt(String date) {
+    DateTime dateTime = DateFormat('EEEE, MMMM d, y').parse(date);
+    int monthNumber = dateTime.month;
+    return monthNumber;
   }
 
-  void updateArrival() {
-    bool PM = false;
-    int numHours = startTime.hour;
-    if (startTime.hour >= 12) {
-      PM = true;
-      numHours -= 12;
-    } else {
-      PM = false;
+  int convertDayToInt(String date) {
+    DateTime dateTime = DateFormat('EEEE, MMMM d, y').parse(date);
+    int day = dateTime.day;
+    return day;
+  }
+
+  int convertHourToInt(String time) {
+    DateTime dateTime = DateFormat('h:mm a').parse(time);
+    int hour = dateTime.hour;
+    return hour;
+  }
+
+  int convertMinuteToInt(String time) {
+    DateTime dateTime = DateFormat('h:mm a').parse(time);
+    int minute = dateTime.minute;
+    return minute;
+  }
+
+  // String getAddress() {
+  //   return address;
+  // }
+
+  // String getEventName() {
+  //   return eventName;
+  // }
+
+  // void updateArrival() {
+  //   bool PM = false;
+  //   int numHours = startTime.hour;
+  //   if (startTime.hour >= 12) {
+  //     PM = true;
+  //     numHours -= 12;
+  //   } else {
+  //     PM = false;
+  //   }
+  //   if (PM) {
+  //     arriveTime.value =
+  //         numHours.toString() + ":" + startTime.minute.toString() + " PM";
+  //   } else {
+  //     arriveTime.value =
+  //         numHours.toString() + ":" + startTime.minute.toString() + " AM";
+  //   }
+  // }
+
+  void startTimer() {
+    if (timeUntilNextGetReadyInt < 0) {
+      timeDisplay.value = '00:00:00';
+      return;
     }
-    if (PM) {
-      arriveTime.value =
-          numHours.toString() + ":" + startTime.minute.toString() + " PM";
-    } else {
-      arriveTime.value =
-          numHours.toString() + ":" + startTime.minute.toString() + " AM";
-    }
-  }
-
-  //start a timer that counts down from numSeconds
-  void startTimer(int numSeconds) {
     CountdownTimer countDownTimer = CountdownTimer(
-      Duration(seconds: numSeconds),
+      Duration(seconds: timeUntilNextGetReadyInt),
       const Duration(seconds: 1),
     );
 
     var sub = countDownTimer.listen(null);
     sub.onData((duration) {
-      current = numSeconds - duration.elapsed.inSeconds;
+      timeLeft = timeUntilNextGetReadyInt - duration.elapsed.inSeconds;
 
       //maintain a variable called proportion that dictates
       //the portion of the timer progress indicator to be filled
-      proportionOfTimer.value = current / numSeconds;
+      proportionOfTimer.value = timeLeft / timeUntilNextGetReadyInt;
 
-      int hours = current ~/ 3600;
-      int minutes = current ~/ 60;
-      int seconds = current % 60;
-      time.value = hours.toString().padLeft(2, "0") +
+      int hours = timeUntilNextGetReady.inHours;
+      int minutes = timeUntilNextGetReady.inMinutes.remainder(60);
+      int seconds = timeLeft.remainder(60);
+      timeDisplay.value = hours.toString().padLeft(2, "0") +
           ":" +
           minutes.toString().padLeft(2, "0") +
           ":" +
