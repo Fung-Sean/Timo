@@ -59,8 +59,7 @@ class Intro4View extends GetView<IntroController> {
                     controller.appendToLocalStorage();
                     //Get.to(const Intro5View());
                     Get.to(HomescreenView());
-                    Get.put(HomescreenController(
-                        20, 20, 20, DateTime(2023, 3, 27, 17, 30)));
+                    Get.put(HomescreenController());
                   },
                   child: const Text('Log in with Google')),
             ),

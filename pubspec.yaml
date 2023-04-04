@@ -19,7 +19,7 @@ dependencies:
   flutter_ringtone_player: ^3.2.0
   path_provider: any
   google_fonts: ^4.0.3
-  intl: ^0.18.0
+  intl: ^0.17.0
   googleapis_auth: ^1.4.0
   url_launcher: ^6.1.10
   firebase_auth: ^4.2.2
