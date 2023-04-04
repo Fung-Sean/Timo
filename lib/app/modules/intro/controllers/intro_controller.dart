@@ -159,6 +159,7 @@ class IntroController extends GetxController {
         GoogleAuthProvider(await _currentUser.authHeaders);
     final GoogleAPI.CalendarApi calendarApi = GoogleAPI.CalendarApi(httpClient);
     final now = DateTime.now().toUtc();
+    print(now);
     final GoogleAPI.Events calEvents = await calendarApi.events.list(
       "primary",
       timeMin: now,
