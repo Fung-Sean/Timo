@@ -12,6 +12,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/map/bindings/map_binding.dart';
+import '../modules/map/views/map_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_transportation_view_view.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
@@ -69,6 +71,11 @@ class AppPages {
       name: _Paths.GOOGLEMAPS,
       page: () => const GooglemapsView(),
       binding: GooglemapsBinding(),
+    ),
+    GetPage(
+      name: _Paths.MAP,
+      page: () => const MapView(),
+      binding: MapBinding(),
     ),
   ];
 }
