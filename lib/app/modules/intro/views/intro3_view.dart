@@ -9,43 +9,63 @@ class Intro3View extends GetView {
   Widget build(BuildContext context) {
     //define colors to use here
     Color page1Blue = Color.fromARGB(255, 84, 144, 248);
-    return Scaffold(
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            const SizedBox(height: 100),
-            Container(
-              height: 350,
-              padding: const EdgeInsets.all(4.0),
-              child: Image.asset('assets/timo.png'),
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const SizedBox(height: 50),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  padding:
+                      EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+                  child: Image.asset('assets/everything_in_one_place.png'),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.05,
+                    right: MediaQuery.of(context).size.width * 0.05,
+                    top: 0,
+                    bottom: MediaQuery.of(context).size.width * 0.05,
+                  ),
+                  child: Text(
+                    "Let's Get Started!",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.inter(
+                        textStyle: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Color.fromARGB(255, 232, 114, 92),
+                      fontSize: 35,
+                    )),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.05,
+                    right: MediaQuery.of(context).size.width * 0.05,
+                    top: 0,
+                    bottom: MediaQuery.of(context).size.width * 0.05,
+                  ),
+                  child: Text(
+                    'Everything you need, from weather to transportation, to prepare for your day',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.inter(
+                        textStyle: const TextStyle(
+                      fontWeight: FontWeight.w300,
+                      color: Colors.black,
+                      fontSize: 20,
+                    )),
+                  ),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: Text(
-                'Insert Text',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                    textStyle: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Color.fromARGB(255, 232, 114, 92),
-                  fontSize: 45,
-                )),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Text(
-                'Everything you need, from weather to transportation, to prepare for your day',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                    textStyle: const TextStyle(
-                  fontWeight: FontWeight.w300,
-                  color: Colors.black,
-                  fontSize: 22,
-                )),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

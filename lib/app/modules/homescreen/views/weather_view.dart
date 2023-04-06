@@ -68,16 +68,16 @@ class WeatherView extends GetView<HomescreenController> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      controller.eventName,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 25,
-                      )),
-                    ),
+                    // Text(
+                    //   controller.eventName,
+                    //   textAlign: TextAlign.center,
+                    //   style: GoogleFonts.inter(
+                    //       textStyle: const TextStyle(
+                    //     fontWeight: FontWeight.bold,
+                    //     color: Colors.black,
+                    //     fontSize: 25,
+                    //   )),
+                    // ),
                   ],
                 ),
               ],
@@ -126,135 +126,5 @@ class WeatherView extends GetView<HomescreenController> {
         ),
       ),
     );
-
-    // Color darkBlue = const Color.fromARGB(255, 64, 149, 249);
-    // Color lightBlue = const Color.fromARGB(255, 227, 237, 246);
-    // return Scaffold(
-    //     body: Obx(() => _weatherpagecontroller.isLoading.value
-    //         ? Center(
-    //             child: Column(
-    //             children: <Widget>[
-    //               //const SizedBox(height: 80),
-    //               SizedBox(
-    //                   width: 300,
-    //                   height: 300,
-    //                   child: Stack(
-    //                     alignment: Alignment.center,
-    //                     fit: StackFit.expand,
-    //                     children: <Widget>[
-    //                       Obx(() => CircularProgressIndicator(
-    //                             value: controller.proportionOfTimer.value,
-    //                             strokeWidth: 17,
-    //                             color: darkBlue,
-    //                             backgroundColor: lightBlue,
-    //                           )),
-    //                       Positioned.fill(
-    //                           child: Column(
-    //                         mainAxisAlignment: MainAxisAlignment.center,
-    //                         children: [
-    //                           Text(
-    //                               '${_weatherpagecontroller.futureWeather[0].temp}°C',
-    //                               style:
-    //                                   GoogleFonts.inter(textStyle: style_temp)),
-
-    //                           // Text(
-    //                           //   //add weather stuff here!!
-    //                           //   'Get Ready!',
-    //                           //   textAlign: TextAlign.center,
-    //                           //   style: GoogleFonts.inter(
-    //                           //       textStyle: const TextStyle(
-    //                           //     fontWeight: FontWeight.normal,
-    //                           //     color: Colors.black,
-    //                           //     fontSize: 30,
-    //                           //   )),
-    //                           // ),
-    //                         ],
-    //                       ))
-    //                     ],
-    //                   ))
-
-    //               // Text('${_weatherpagecontroller.futureWeather[0].temp}°C',
-    //               //     style: GoogleFonts.inter(textStyle: style_temp)),
-    //               // const SizedBox(height: 10),
-    //             ],
-    //           ))
-    //         :
-    //         //const CircularProgressIndicator()
-    //         Text('Could not retrieve weather data'))
-
-    // SizedBox(
-    //         width: 300,
-    //         height: 300,
-    //         child: Stack(
-    //             alignment: Alignment.center,
-    //             fit: StackFit.expand,
-    //             children: <Widget>[
-    //               Obx(() => CircularProgressIndicator(
-    //                     value: controller.proportionOfTimer.value,
-    //                     strokeWidth: 17,
-    //                     color: darkBlue,
-    //                     backgroundColor: lightBlue,
-    //                   )),
-    //               Positioned.fill(
-    //                 child: Column(
-    //                   mainAxisAlignment: MainAxisAlignment.center,
-    //                   children: [
-    //                     Text(
-    //                       //add weather stuff here!!
-    //                       'Get Ready!',
-    //                       textAlign: TextAlign.center,
-    //                       style: GoogleFonts.inter(
-    //                           textStyle: const TextStyle(
-    //                         fontWeight: FontWeight.normal,
-    //                         color: Colors.black,
-    //                         fontSize: 30,
-    //                       )),
-    //                     ),
-    //                     Obx(
-    //                       () => Text(
-    //                         '${controller.time.value}',
-    //                         textAlign: TextAlign.center,
-    //                         style: GoogleFonts.inter(
-    //                             textStyle: const TextStyle(
-    //                           fontWeight: FontWeight.bold,
-    //                           color: const Color.fromARGB(255, 64, 149, 249),
-    //                           fontSize: 45,
-    //                         )),
-    //                       ),
-    //                     ),
-    //                     Obx(() => Text(
-    //                           'Leave at ' + controller.arriveTime.value,
-    //                           textAlign: TextAlign.center,
-    //                           style: GoogleFonts.inter(
-    //                               textStyle: const TextStyle(
-    //                             fontWeight: FontWeight.normal,
-    //                             color: Colors.black,
-    //                             fontSize: 30,
-    //                           )),
-    //                         )),
-    //                   ],
-    //                 ),
-    //               ),
-    //             ]),
-    //       ),
-
-    // body: Obx(() => _weatherpagecontroller.isLoading.value
-    //     ? Center(
-    //         child: Column(
-    //         children: <Widget>[
-    //           const SizedBox(height: 80),
-
-    //           const SizedBox(height: 100),
-
-    //           Text('${_weatherpagecontroller.futureWeather[0].temp}°C',
-    //               style: GoogleFonts.inter(textStyle: style_temp)),
-    //           const SizedBox(height: 10),
-
-    //         ],
-    //       ))
-    //     :
-    //     //const CircularProgressIndicator()
-    //     Text('Could not retrieve weather data'))
-    //);
   }
 }

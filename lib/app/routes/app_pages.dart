@@ -36,8 +36,12 @@ class AppPages {
 
   //static const INITIAL = Routes.LOGIN;
   //static const INITIAL = Routes.INTRO;
+<<<<<<< HEAD
   //static const INITIAL = Routes.WEATHERPAGE;
   static const INITIAL = Routes.HOMESCREEN;
+=======
+  static const INITIAL = Routes.INTRO;
+>>>>>>> 6723dba807efbe1870b80fbd3af2b167cd2d348b
 
   //check this!
   //static const SECOND_PAGE = Routes.LOGIN;
