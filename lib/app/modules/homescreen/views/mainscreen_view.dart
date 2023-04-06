@@ -22,6 +22,24 @@ class MainScreenView extends GetView<HomescreenController> {
   @override
   Widget build(BuildContext context) {
     final HomescreenController controller = Get.put(HomescreenController());
+
+    //lets define some variables to give us the proportion of each segment
+    int firstSectionValue = (controller.getReadyTime.value / 60).toInt();
+    int secondSectionValue = (controller.transportTime.value / 60).toInt();
+    int thirdSectionValue = (controller.eventDuration.value).toInt();
+
+    final totalValue =
+        firstSectionValue + secondSectionValue + thirdSectionValue;
+    final firstSectionWidth = firstSectionValue.toDouble() / totalValue;
+    final secondSectionWidth = secondSectionValue.toDouble() / totalValue;
+    final thirdSectionWidth = thirdSectionValue.toDouble() / totalValue;
+
+    const IconData directions_walk =
+        IconData(0xe1e1, fontFamily: 'MaterialIcons');
+
+    const IconData calendar_today =
+        IconData(0xe122, fontFamily: 'MaterialIcons');
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -121,7 +139,7 @@ class MainScreenView extends GetView<HomescreenController> {
                     ),
                   ]),
             ),
-            const SizedBox(height: 70),
+            const SizedBox(height: 50),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -140,15 +158,108 @@ class MainScreenView extends GetView<HomescreenController> {
                     )),
               ],
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-                //style: style,
-                onPressed: () {
-                  //controller.updateArrival();
-
-                  //controller.startTimer(controller.timeUntilNextGetReadyInt);
-                },
-                child: const Text('Start Timer')),
+            const SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(width: 5),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    height: 35,
+                    padding: const EdgeInsets.all(4.0),
+                    child:
+                        Image.asset('assets/toothbrush.png', color: lightBlue),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text(
+                      controller.startAtString.value +
+                          "-" +
+                          controller.startTravelString.value,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                          textStyle: const TextStyle(
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black,
+                        fontSize: 20,
+                      ))),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: SizedBox(
+                    width: firstSectionWidth * 325,
+                    height: 20,
+                    child: Container(color: lightBlue),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(width: 5),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Icon(directions_walk, size: 35, color: lightGreen),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text(
+                      controller.startTravelString.value +
+                          "-" +
+                          controller.startEventString.value,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                          textStyle: const TextStyle(
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black,
+                        fontSize: 20,
+                      ))),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: SizedBox(
+                    width: secondSectionWidth * 325,
+                    height: 20,
+                    child: Container(color: lightGreen),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(width: 5),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Icon(calendar_today, size: 35, color: lightOrange),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text(
+                      controller.startEventString.value +
+                          "-" +
+                          controller.endEventString.value,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                          textStyle: const TextStyle(
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black,
+                        fontSize: 20,
+                      ))),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: SizedBox(
+                    width: thirdSectionWidth * 325,
+                    height: 20,
+                    child: Container(color: lightOrange),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -182,7 +293,7 @@ class HorizontalBarWidget extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                width: firstSectionWidth * 350,
+                width: firstSectionWidth * 325,
                 height: 20,
                 child: Container(color: lightBlue),
               ),
@@ -201,7 +312,7 @@ class HorizontalBarWidget extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                width: secondSectionWidth * 350,
+                width: secondSectionWidth * 325,
                 height: 20,
                 child: Container(color: lightGreen),
               ),
@@ -220,7 +331,7 @@ class HorizontalBarWidget extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                width: thirdSectionWidth * 350,
+                width: thirdSectionWidth * 325,
                 height: 20,
                 child: Container(color: lightOrange),
               ),

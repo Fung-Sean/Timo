@@ -45,6 +45,13 @@ class HomescreenController extends GetxController {
   //this represents the time at which the user should start getting ready
   RxString startAtString = "".obs;
 
+  //this represents the time at which the ready timer has finished and user should embark
+  RxString startTravelString = "".obs;
+
+  RxString startEventString = "".obs;
+
+  RxString endEventString = "".obs;
+
   //the time until our get ready event starts
   late Duration timeUntilNextGetReady;
 
@@ -99,6 +106,16 @@ class HomescreenController extends GetxController {
         eventStartTime.subtract(Duration(seconds: secondsTosubtract));
 
     startAtString.value = DateFormat.jm().format(timeToGetReady);
+
+    //timeToGetReady records the first time in our list; we will have to track
+    //all the other times and turn them into strings that I can work with
+    DateTime travelTime =
+        timeToGetReady.add(Duration(seconds: getReadyTime.value));
+    startTravelString.value = DateFormat.jm().format(travelTime);
+
+    //we also record the start and end of the event
+    startEventString.value = DateFormat.jm().format(eventStartTime);
+    endEventString.value = DateFormat.jm().format(eventEndTime);
 
     timeUntilNextGetReady = timeToGetReady.difference(now);
     print(timeUntilNextGetReady.toString());
