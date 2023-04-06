@@ -10,12 +10,12 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import '../models/weatherpage_model.dart';
 
 class WeatherpageController extends GetxController {
-  //TODO: Implement WeatherpageController
-
   var futureWeather = <WeatherDataModel>[].obs;
   var isLoading = true.obs;
 
   final count = 0.obs;
+
+  get proportionOfTimer => null;
   @override
   void onInit() {
     super.onInit();

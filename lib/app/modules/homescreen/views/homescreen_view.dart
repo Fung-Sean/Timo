@@ -56,7 +56,7 @@ class HomescreenView extends GetView {
         ),
         body: PageView(
           onPageChanged: onPageViewChange,
-          children: const [
+          children: [
             MainScreenView(),
             WeatherView(),
           ],

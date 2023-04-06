@@ -7,20 +7,14 @@ import 'package:timo_test/app/modules/homescreen/views/homescreen_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-//define some colors to be used on the widgets
-Color darkBlue = const Color.fromARGB(255, 53, 146, 255);
-Color lightBlue = const Color.fromARGB(255, 170, 207, 251);
-
-Color darkGreen = const Color.fromARGB(255, 0, 201, 153);
-Color lightGreen = const Color.fromARGB(255, 148, 229, 210);
-
-Color darkOrange = const Color.fromARGB(255, 237, 123, 87);
-Color lightOrange = const Color.fromARGB(255, 243, 198, 183);
-
 class MainScreenView extends GetView<HomescreenController> {
   const MainScreenView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    //define some colors to be used on the widgets
+    Color darkBlue = const Color.fromARGB(255, 64, 149, 249);
+    Color lightBlue = const Color.fromARGB(255, 227, 237, 246);
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -65,8 +59,8 @@ class MainScreenView extends GetView<HomescreenController> {
 
             const SizedBox(height: 20),
             SizedBox(
-              width: 350,
-              height: 350,
+              width: 300,
+              height: 300,
               child: Stack(
                   alignment: Alignment.center,
                   fit: StackFit.expand,
@@ -82,6 +76,7 @@ class MainScreenView extends GetView<HomescreenController> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
+                            //add weather stuff here!!
                             'Get Ready!',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
@@ -118,19 +113,66 @@ class MainScreenView extends GetView<HomescreenController> {
                     ),
                   ]),
             ),
-            const SizedBox(height: 70),
+
+            const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                    // height: 40,
-                    // padding: const EdgeInsets.all(4.0),
-                    // child: Image.asset('assets/toothbrush.png', color: darkBlue),
+                Column(
+                  children: [
+                    Container(
+                      height: 40,
+                      padding: const EdgeInsets.all(4.0),
+                      child:
+                          Image.asset('assets/toothbrush.png', color: darkBlue),
                     ),
-                HorizontalBarWidget(
-                  firstSectionValue: 10,
-                  secondSectionValue: 20,
-                  thirdSectionValue: 30,
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: SizedBox(
+                        width: 110,
+                        height: 110,
+                        child: Stack(
+                            alignment: Alignment.center,
+                            fit: StackFit.expand,
+                            children: <Widget>[
+                              CircularProgressIndicator(
+                                value: controller.readyProportion,
+                                strokeWidth: 10,
+                                color: darkBlue,
+                                backgroundColor: lightBlue,
+                              ),
+                              Positioned.fill(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '${controller.readyTime}',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.inter(
+                                          textStyle: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: const Color.fromARGB(
+                                            255, 64, 149, 249),
+                                        fontSize: 20,
+                                      )),
+                                    ),
+                                    Text(
+                                      'min',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.inter(
+                                          textStyle: const TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                      )),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -144,62 +186,6 @@ class MainScreenView extends GetView<HomescreenController> {
                 child: const Text('Start Timer')),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class HorizontalBarWidget extends StatelessWidget {
-  final int firstSectionValue;
-  final int secondSectionValue;
-  final int thirdSectionValue;
-
-  HorizontalBarWidget({
-    required this.firstSectionValue,
-    required this.secondSectionValue,
-    required this.thirdSectionValue,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final totalValue =
-        firstSectionValue + secondSectionValue + thirdSectionValue;
-    final firstSectionWidth = firstSectionValue.toDouble() / totalValue;
-    final secondSectionWidth = secondSectionValue.toDouble() / totalValue;
-    final thirdSectionWidth = thirdSectionValue.toDouble() / totalValue;
-
-    return SizedBox(
-      height: 50,
-      child: Row(
-        children: [
-          Column(
-            children: [
-              SizedBox(
-                width: firstSectionWidth * 300,
-                height: 20,
-                child: Container(color: lightBlue),
-              ),
-              Text(
-                firstSectionValue.toString(),
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                    textStyle: const TextStyle(
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black,
-                  fontSize: 20,
-                )),
-              ),
-            ],
-          ),
-          // SizedBox(
-          //   width: secondSectionWidth * 300,
-          //   child: Container(color: lightGreen),
-          // ),
-          // SizedBox(
-          //   width: thirdSectionWidth * 300,
-          //   child: Container(color: lightOrange),
-          // ),
-        ],
       ),
     );
   }

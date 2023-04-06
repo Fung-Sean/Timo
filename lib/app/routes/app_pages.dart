@@ -36,7 +36,8 @@ class AppPages {
 
   //static const INITIAL = Routes.LOGIN;
   //static const INITIAL = Routes.INTRO;
-  static const INITIAL = Routes.WEATHERPAGE;
+  //static const INITIAL = Routes.WEATHERPAGE;
+  static const INITIAL = Routes.HOMESCREEN;
 
   //check this!
   //static const SECOND_PAGE = Routes.LOGIN;
@@ -98,9 +99,9 @@ class AppPages {
       binding: HomescreenBinding(),
     ),
     GetPage(
-      name: _Paths.HOMESCREEN,
+      name: _Paths.WEATHERPAGE,
       page: () => WeatherpageView(),
-      binding: HomescreenBinding(),
+      binding: WeatherpageBinding(),
     ),
     GetPage(
       name: _Paths.INTRO,
