@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../controllers/homescreen_controller.dart';
-import 'package:timo_test/app/modules/homescreen/views/homescreen_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'dart:math' as math;
 
-class MainScreenView extends GetView<HomescreenController> {
-  const MainScreenView({Key? key}) : super(key: key);
+import 'package:timo_test/app/modules/homescreen/views/weather_view.dart';
+import 'package:timo_test/app/modules/homescreen/views/mainscreen_view.dart';
+
+import '../controllers/homescreen_controller.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+class GetreadyView extends GetView {
+  const GetreadyView({Key? key}) : super(key: key);
+  static const String ROUTE_NAME = '/homescreen/getready';
+
   @override
   Widget build(BuildContext context) {
-    Color darkBlue = const Color.fromARGB(255, 64, 149, 249);
-    Color lightBlue = Color.fromARGB(255, 65, 159, 243);
-
-    Color lightGreen = const Color.fromARGB(255, 0, 201, 153);
-    Color lightOrange = const Color.fromARGB(255, 237, 123, 87);
-
     final HomescreenController controller = Get.put(HomescreenController());
 
     //lets define some variables to give us the proportion of each segment
@@ -38,46 +37,47 @@ class MainScreenView extends GetView<HomescreenController> {
         IconData(0xe122, fontFamily: 'MaterialIcons');
 
     return Scaffold(
-        body: Center(
-            child: Column(
-      //mainAxisAlignment: MainAxisAlignment.center,
-      //crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        const SizedBox(height: 40),
-        //here we have some headers indicating the event name and location
-        Row(
-          children: [
-            //this sized box gives us a little bit of for the event name and
-            //location, which were originally pressed up against the left side of the
-            //screen.
-            const SizedBox(width: 25),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Center(
+        child: Column(
+          //mainAxisAlignment: MainAxisAlignment.center,
+          //crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const SizedBox(height: 40),
+            //here we have some headers indicating the event name and location
+            Row(
               children: [
-                Obx(
-                  () => Text(controller.title.value,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 28,
-                      ))),
-                ),
-                Obx(
-                  () => Text("at " + controller.location.value,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black,
-                        fontSize: 17,
-                      ))),
+                //this sized box gives us a little bit of for the event name and
+                //location, which were originally pressed up against the left side of the
+                //screen.
+                const SizedBox(width: 25),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Obx(
+                      () => Text(controller.title.value,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.inter(
+                              textStyle: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 28,
+                          ))),
+                    ),
+                    Obx(
+                      () => Text("at " + controller.location.value,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.inter(
+                              textStyle: const TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                            fontSize: 17,
+                          ))),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
+
             const SizedBox(height: 40),
             SizedBox(
               width: 350,
@@ -86,33 +86,26 @@ class MainScreenView extends GetView<HomescreenController> {
                   alignment: Alignment.center,
                   fit: StackFit.expand,
                   children: <Widget>[
-                    Transform.rotate(
-                      angle: 0,
-                      child: SizedBox(
-                        height: 50,
-                        width: 50,
-                        child: Obx(() => CircularProgressIndicator(
-                              value: 1.0 - controller.proportionOfTimer.value,
-                              strokeWidth: 17,
-                              color: lightBlue,
-                              backgroundColor: darkBlue,
-                            )),
-                      ),
+                    CircularProgressIndicator(
+                      value: 0.1,
+                      strokeWidth: 17,
+                      color: darkBlue,
+                      backgroundColor: lightBlue,
                     ),
                     Positioned.fill(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Obx(() => Text(
-                                controller.aboveTimer.value,
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.inter(
-                                    textStyle: const TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black,
-                                  fontSize: 30,
-                                )),
-                              )),
+                          Text(
+                            'Get Ready!',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                                textStyle: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                              fontSize: 30,
+                            )),
+                          ),
                           Obx(
                             () => Text(
                                 //this shows the time inside the circle
@@ -128,8 +121,8 @@ class MainScreenView extends GetView<HomescreenController> {
                           ),
                           Obx(
                             () => Text(
-                                controller.belowTimer.value +
-                                    controller.startAtString.value,
+                                'Leave at ' +
+                                    controller.startTravelString.value,
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.inter(
                                     textStyle: const TextStyle(
@@ -140,22 +133,18 @@ class MainScreenView extends GetView<HomescreenController> {
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-              ]),
-        ),
-        const SizedBox(height: 50),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
+                    ),
+                  ]),
+            ),
+            const SizedBox(height: 50),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 40,
-                  padding: const EdgeInsets.all(4.0),
-                  child: Image.asset('assets/toothbrush.png', color: darkBlue),
-                ),
+                    // height: 40,
+                    // padding: const EdgeInsets.all(4.0),
+                    // child: Image.asset('assets/toothbrush.png', color: darkBlue),
+                    ),
                 Obx(() => HorizontalBarWidget(
                       firstSectionValue:
                           (controller.getReadyTime.value / 60).toInt(),
@@ -270,8 +259,8 @@ class MainScreenView extends GetView<HomescreenController> {
             ),
           ],
         ),
-      ],
-    )));
+      ),
+    );
   }
 }
 
@@ -293,12 +282,6 @@ class HorizontalBarWidget extends StatelessWidget {
     final firstSectionWidth = firstSectionValue.toDouble() / totalValue;
     final secondSectionWidth = secondSectionValue.toDouble() / totalValue;
     final thirdSectionWidth = thirdSectionValue.toDouble() / totalValue;
-
-    Color darkBlue = const Color.fromARGB(255, 64, 149, 249);
-    Color lightBlue = Color.fromARGB(255, 65, 159, 243);
-
-    Color lightGreen = const Color.fromARGB(255, 0, 201, 153);
-    Color lightOrange = const Color.fromARGB(255, 237, 123, 87);
 
     return SizedBox(
       height: 50,

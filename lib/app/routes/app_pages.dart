@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
+import 'package:timo_test/app/modules/homescreen/views/getready_view.dart';
 
 import '../modules/Timer/bindings/timer_binding.dart';
 import '../modules/Timer/views/timer_view.dart';
@@ -106,6 +107,11 @@ class AppPages {
       name: _Paths.WEATHERPAGE,
       page: () => WeatherpageView(),
       binding: WeatherpageBinding(),
+    ),
+    GetPage(
+      name: GetreadyView.ROUTE_NAME,
+      page: () => const GetreadyView(),
+      binding: HomescreenBinding(),
     ),
     GetPage(
       name: _Paths.INTRO,
