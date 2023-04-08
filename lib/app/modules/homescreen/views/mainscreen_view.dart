@@ -6,7 +6,6 @@ import '../controllers/homescreen_controller.dart';
 import 'package:timo_test/app/modules/homescreen/views/homescreen_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'dart:math' as math;
 
 class MainScreenView extends GetView<HomescreenController> {
   const MainScreenView({Key? key}) : super(key: key);
@@ -78,67 +77,56 @@ class MainScreenView extends GetView<HomescreenController> {
             ),
           ],
         ),
-            const SizedBox(height: 40),
-            SizedBox(
-              width: 350,
-              height: 350,
-              child: Stack(
-                  alignment: Alignment.center,
-                  fit: StackFit.expand,
-                  children: <Widget>[
-                    Transform.rotate(
-                      angle: 0,
-                      child: SizedBox(
-                        height: 50,
-                        width: 50,
-                        child: Obx(() => CircularProgressIndicator(
-                              value: 1.0 - controller.proportionOfTimer.value,
-                              strokeWidth: 17,
-                              color: lightBlue,
-                              backgroundColor: darkBlue,
-                            )),
+
+        const SizedBox(height: 40),
+        SizedBox(
+          width: 300,
+          height: 300,
+          child: Stack(
+              alignment: Alignment.center,
+              fit: StackFit.expand,
+              children: <Widget>[
+                CircularProgressIndicator(
+                  value: 0,
+                  strokeWidth: 17,
+                  color: darkBlue,
+                  backgroundColor: lightBlue,
+                ),
+                Positioned.fill(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Get Ready In',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                            textStyle: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                          color: Colors.black,
+                          fontSize: 30,
+                        )),
                       ),
-                    ),
-                    Positioned.fill(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Obx(() => Text(
-                                controller.aboveTimer.value,
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.inter(
-                                    textStyle: const TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black,
-                                  fontSize: 30,
-                                )),
-                              )),
-                          Obx(
-                            () => Text(
-                                //this shows the time inside the circle
-                                controller.timeDisplay.value,
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.inter(
-                                    textStyle: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color:
-                                      const Color.fromARGB(255, 64, 149, 249),
-                                  fontSize: 45,
-                                ))),
-                          ),
-                          Obx(
-                            () => Text(
-                                controller.belowTimer.value +
-                                    controller.startAtString.value,
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.inter(
-                                    textStyle: const TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black,
-                                  fontSize: 30,
-                                ))),
-                          ),
-                        ],
+                      Obx(
+                        () => Text(
+                            //this shows the time inside the circle
+                            controller.timeDisplay.value,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                                textStyle: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: const Color.fromARGB(255, 64, 149, 249),
+                              fontSize: 45,
+                            ))),
+                      ),
+                      Obx(
+                        () => Text('Start at ' + controller.startAtString.value,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                                textStyle: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                              fontSize: 30,
+                            ))),
                       ),
                     ],
                   ),
