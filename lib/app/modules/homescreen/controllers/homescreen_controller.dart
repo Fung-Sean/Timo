@@ -30,14 +30,10 @@ class HomescreenController extends GetxController {
   RxString location = "".obs;
   RxString date = "".obs;
 
-  //Initialize the parameters of titles inside the Circle
-  RxString aboveTimer = "".obs;
-  RxString belowTimer = "".obs;
-
   //get this data from the local system, which was originally input on
   //onboarding screen, alongside the transport time, which sean will figure out
-  RxInt getReadyTime = 120.obs;
-  RxInt transportTime = 60.obs;
+  RxInt getReadyTime = 2000.obs;
+  RxInt transportTime = 1500.obs;
   RxInt eventDuration = 0.obs;
 
   //the physical number of seconds until the we have to get ready for our next event
@@ -59,9 +55,6 @@ class HomescreenController extends GetxController {
   //the time until our get ready event starts
   late Duration timeUntilNextGetReady;
 
-  //checks when getReady timer should start
-  bool startGetReadyTimer = false;
-
   HomescreenController() {
     //initialize();
   }
@@ -76,10 +69,6 @@ class HomescreenController extends GetxController {
     endTime.value = localData[0].end;
     location.value = localData[0].location;
     date.value = localData[0].date;
-
-    //also on startup, fill in the info in the circles
-    aboveTimer.value = "Get Ready In";
-    belowTimer.value = "Start at ";
 
     //convert startTime fields into seperate fields used to create DateTime object
     DateTime now = DateTime.now();
@@ -140,7 +129,7 @@ class HomescreenController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     await initialize();
-    startBeforeGetReadyTimer();
+    startTimer();
   }
 
   @override
@@ -183,9 +172,36 @@ class HomescreenController extends GetxController {
     return minute;
   }
 
-  void startBeforeGetReadyTimer() async {
+  // String getAddress() {
+  //   return address;
+  // }
+
+  // String getEventName() {
+  //   return eventName;
+  // }
+
+  // void updateArrival() {
+  //   bool PM = false;
+  //   int numHours = startTime.hour;
+  //   if (startTime.hour >= 12) {
+  //     PM = true;
+  //     numHours -= 12;
+  //   } else {
+  //     PM = false;
+  //   }
+  //   if (PM) {
+  //     arriveTime.value =
+  //         numHours.toString() + ":" + startTime.minute.toString() + " PM";
+  //   } else {
+  //     arriveTime.value =
+  //         numHours.toString() + ":" + startTime.minute.toString() + " AM";
+  //   }
+  // }
+
+  void startTimer() {
     if (timeUntilNextGetReadyInt < 0) {
       timeDisplay.value = '00:00:00';
+      return;
     }
     CountdownTimer countDownTimer = CountdownTimer(
       Duration(seconds: timeUntilNextGetReadyInt),
@@ -210,44 +226,6 @@ class HomescreenController extends GetxController {
           seconds.toString().padLeft(2, "0");
     });
 
-    sub.onDone(() {
-      print("Done");
-      //Get.toNamed('/homescreen/getready')
-      sub.cancel();
-      startGetReadyTimer = true;
-
-      //make reset method but for now
-      aboveTimer.value = "Get Ready!";
-      belowTimer.value = "Leave at ";
-      startAtString.value = startTravelString.value;
-      getReadyTimer();
-    });
-  }
-
-  void getReadyTimer() async {
-    CountdownTimer countDownTimer = CountdownTimer(
-      Duration(seconds: getReadyTime.value),
-      const Duration(seconds: 1),
-    );
-
-    var sub = countDownTimer.listen(null);
-    sub.onData((duration) {
-      timeLeft = getReadyTime.value - duration.elapsed.inSeconds;
-
-      //maintain a variable called proportion that dictates
-      //the portion of the timer progress indicator to be filled
-      proportionOfTimer.value = timeLeft / getReadyTime.value;
-      //print(proportionOfTimer.value);
-
-      int hours = timeLeft ~/ 3600;
-      int minutes = (timeLeft % 3600) ~/ 60;
-      int seconds = timeLeft % 60;
-      timeDisplay.value = hours.toString().padLeft(2, "0") +
-          ":" +
-          minutes.toString().padLeft(2, "0") +
-          ":" +
-          seconds.toString().padLeft(2, "0");
-    });
     sub.onDone(() {
       print("Done");
       sub.cancel();
