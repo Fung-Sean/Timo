@@ -58,7 +58,10 @@ class HomescreenView extends GetView {
         ),
         body: PageView(
           onPageChanged: onPageViewChange,
-          children: const [MainScreenView(), WeatherView()],
+          children: [
+            MainScreenView(),
+            WeatherView(),
+          ],
         ),
         bottomNavigationBar: Row(
           mainAxisAlignment: MainAxisAlignment.center,
