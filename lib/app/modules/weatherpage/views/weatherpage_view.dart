@@ -18,7 +18,10 @@ class WeatherpageView extends GetView<WeatherpageController> {
 
   String dt = DateFormat("EEEE\nMMMM dd, yyyy").format(DateTime.now());
   final style_date = TextStyle(fontSize: 24, fontWeight: FontWeight.w300);
-  final style_temp = TextStyle(fontSize: 48, fontWeight: FontWeight.w500);
+  final style_temp = TextStyle(
+      fontSize: 48,
+      fontWeight: FontWeight.w500,
+      color: Color.fromARGB(255, 53, 147, 255));
 
   final _weatherpagecontroller = Get.find<WeatherpageController>();
 
@@ -42,6 +45,7 @@ class WeatherpageView extends GetView<WeatherpageController> {
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(textStyle: style_date)),
                   const SizedBox(height: 100),
+
                   Text('${_weatherpagecontroller.futureWeather[0].temp}°C',
                       style: GoogleFonts.inter(textStyle: style_temp)),
                   const SizedBox(height: 10),
