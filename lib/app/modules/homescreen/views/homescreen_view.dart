@@ -58,7 +58,7 @@ class HomescreenView extends GetView {
         ),
         body: PageView(
           onPageChanged: onPageViewChange,
-          children: const [MainScreenView(), WeatherView()],
+          children: [MainScreenView(), WeatherView()],
         ),
         bottomNavigationBar: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -76,6 +76,7 @@ class HomescreenView extends GetView {
 }
 
 //when the page is changed, I want that to reflect in my widgets
+//Trash Track
 onPageViewChange(int page) {
   currentPage.value = page;
 }
