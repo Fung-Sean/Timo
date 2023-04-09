@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:timo_test/app/modules/homescreen/views/getready_view.dart';
 
 import 'package:timo_test/app/modules/homescreen/views/weather_view.dart';
 import 'package:timo_test/app/modules/homescreen/views/mainscreen_view.dart';
@@ -57,10 +58,7 @@ class HomescreenView extends GetView {
         ),
         body: PageView(
           onPageChanged: onPageViewChange,
-          children: [
-            MainScreenView(),
-            WeatherView(),
-          ],
+          children: const [MainScreenView(), WeatherView()],
         ),
         bottomNavigationBar: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -68,7 +66,7 @@ class HomescreenView extends GetView {
             BottomAppBar(
               child: Obx(() => AnimatedSmoothIndicator(
                     activeIndex: currentPage.value,
-                    count: 3,
+                    count: 2,
                     effect: const ExpandingDotsEffect(),
                   )),
             ),
