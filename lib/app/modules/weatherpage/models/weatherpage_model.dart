@@ -12,18 +12,26 @@ class WeatherDataModel {
 
   const WeatherDataModel(
       {required this.temp,
-      // ignore: non_constant_identifier_names
       required this.temp_min,
-      // ignore: non_constant_identifier_names
       required this.temp_max,
+      required this.w_description
       // ignore: non_constant_identifier_names
-      required this.w_description});
+      //required this.temp_min,
+      // ignore: non_constant_identifier_names
+      //required this.temp_max,
+      // ignore: non_constant_identifier_names
+      //required this.w_description
+      });
 
   factory WeatherDataModel.fromJson(Map<String, dynamic> json) {
     return WeatherDataModel(
         temp: json["main"]["temp"],
         temp_min: json["main"]["temp_min"],
         temp_max: json["main"]["temp_max"],
-        w_description: json["weather"]["main"]);
+        w_description: json["weather"][0]["main"]
+        //temp_min: json["main"]["temp_min"],
+        //temp_max: json["main"]["temp_max"],
+        //w_description: json["weather"]["main"]
+        );
   }
 }
