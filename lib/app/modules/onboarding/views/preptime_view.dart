@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:timo_test/app/modules/onboarding/views/onboarding_transportation_view_view.dart';
 import 'package:timo_test/app/modules/onboarding/views/preptime_view.dart';
 
+import '../../homescreen/controllers/homescreen_controller.dart';
+import '../../homescreen/views/homescreen_view.dart';
 import '../../login/controllers/login_controller.dart';
 import '../controllers/onboarding_controller.dart';
 
@@ -148,8 +150,8 @@ class PreptimeView extends GetView<OnboardingController> {
                       onPressed: () {
                         OnboardingController()
                             .setMinutesToGetReady(numMinutes.value);
-                        Get.to(LoginView());
-                        Get.put(LoginController());
+                        Get.to(const HomescreenView());
+                        Get.put(HomescreenController());
                       },
                       child: const Text('Continue')),
                 ),

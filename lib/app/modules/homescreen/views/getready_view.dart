@@ -2,24 +2,19 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../controllers/homescreen_controller.dart';
-import 'package:timo_test/app/modules/homescreen/views/homescreen_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'dart:math' as math;
 
-//define some colors to be used on the widgets
-Color darkBlue = const Color.fromARGB(255, 53, 146, 255);
-Color lightBlue = const Color.fromARGB(255, 170, 207, 251);
+import 'package:timo_test/app/modules/homescreen/views/weather_view.dart';
+import 'package:timo_test/app/modules/homescreen/views/mainscreen_view.dart';
 
-Color darkGreen = const Color.fromARGB(255, 0, 201, 153);
-Color lightGreen = const Color.fromARGB(255, 148, 229, 210);
+import '../controllers/homescreen_controller.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-Color darkOrange = const Color.fromARGB(255, 237, 123, 87);
-Color lightOrange = const Color.fromARGB(255, 243, 198, 183);
+class GetreadyView extends GetView {
+  const GetreadyView({Key? key}) : super(key: key);
+  static const String ROUTE_NAME = '/homescreen/getready';
 
-class MainScreenView extends GetView<HomescreenController> {
-  const MainScreenView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final HomescreenController controller = Get.put(HomescreenController());
@@ -91,33 +86,26 @@ class MainScreenView extends GetView<HomescreenController> {
                   alignment: Alignment.center,
                   fit: StackFit.expand,
                   children: <Widget>[
-                    Transform.rotate(
-                      angle: 0,
-                      child: SizedBox(
-                        height: 50,
-                        width: 50,
-                        child: Obx(() => CircularProgressIndicator(
-                              value: 1.0 - controller.proportionOfTimer.value,
-                              strokeWidth: 17,
-                              color: lightBlue,
-                              backgroundColor: darkBlue,
-                            )),
-                      ),
+                    CircularProgressIndicator(
+                      value: 0.1,
+                      strokeWidth: 17,
+                      color: darkBlue,
+                      backgroundColor: lightBlue,
                     ),
                     Positioned.fill(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Obx(() => Text(
-                                controller.aboveTimer.value,
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.inter(
-                                    textStyle: const TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black,
-                                  fontSize: 30,
-                                )),
-                              )),
+                          Text(
+                            'Get Ready!',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                                textStyle: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                              fontSize: 30,
+                            )),
+                          ),
                           Obx(
                             () => Text(
                                 //this shows the time inside the circle
@@ -133,8 +121,8 @@ class MainScreenView extends GetView<HomescreenController> {
                           ),
                           Obx(
                             () => Text(
-                                controller.belowTimer.value +
-                                    controller.startAtString.value,
+                                'Leave at ' +
+                                    controller.startTravelString.value,
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.inter(
                                     textStyle: const TextStyle(

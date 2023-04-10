@@ -19,13 +19,14 @@ class HomescreenView extends GetView {
     //a scaffold key for our drawer widget
     final scaffoldKey = GlobalKey<ScaffoldState>();
 
-    //Get.put(HomescreenController(25, 50, 75, DateTime(2023, 3, 27, 17, 30)));
-    //display the date and time on this main screen
+    //Record the current date in the top appBar widget
     final now = DateTime.now();
     String date = DateFormat.yMMMMd('en_US').format(now).obs();
     Scaffold(key: scaffoldKey, drawer: Drawer());
 
     return Scaffold(
+
+        //appBar widget which should show up on every homescreen view
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text(
@@ -57,9 +58,10 @@ class HomescreenView extends GetView {
         ),
         body: PageView(
           onPageChanged: onPageViewChange,
-          children: [
+          //
+          children: const [
             MainScreenView(),
-            WeatherView(),
+            //WeatherView(),
           ],
         ),
         bottomNavigationBar: Row(

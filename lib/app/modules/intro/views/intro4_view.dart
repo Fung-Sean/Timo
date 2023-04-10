@@ -58,8 +58,8 @@ class Intro4View extends GetView<IntroController> {
                     await controller.getGoogleEventsData();
                     controller.appendToLocalStorage();
                     //Get.to(const Intro5View());
-                    Get.to(HomescreenView());
-                    Get.put(HomescreenController());
+                    Get.to(Intro5View());
+                    Get.put(IntroController());
                   },
                   child: const Text('Log in with Google')),
             ),

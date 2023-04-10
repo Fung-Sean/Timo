@@ -10,7 +10,6 @@ class Transportation {
 }
 
 class OnboardingController extends GetxController {
-  //TODO: Implement OnboardingController
   final count = 0.obs;
   double progressSliderValue = 0.0;
   List<Transportation> userSelections = [];
@@ -26,6 +25,8 @@ class OnboardingController extends GetxController {
 
   int minutesToGetReady = 0;
 
+  //here we create transportation objects, composed of a string of its name and a boolean
+  //for if its selected
   OnboardingController() {
     for (var i = 0; i < TransportationNames.length; i++) {
       Transportation transport =
@@ -49,6 +50,8 @@ class OnboardingController extends GetxController {
     super.onClose();
   }
 
+  //Getter and setter methods for the dynamic values of these screens, like
+  //the progress slider at the top of the view
   double getProgressSliderValue() {
     return progressSliderValue;
   }
@@ -57,6 +60,8 @@ class OnboardingController extends GetxController {
     progressSliderValue = input;
   }
 
+  //when a transportation button is pressed, the selection of that transportation item
+  //is reversed from what it currently is, either selected or deselected
   void selectTransportation(String name) {
     bool found = false;
     for (var i = 0; i < userSelections.length; i++) {
@@ -75,6 +80,10 @@ class OnboardingController extends GetxController {
     if (found == false) {
       print("transportation method does not exist.");
     }
+  }
+
+  int getMinutesToGetReady() {
+    return minutesToGetReady;
   }
 
   void setMinutesToGetReady(int mins) {
