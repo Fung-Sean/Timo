@@ -33,6 +33,10 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 
+##To Run: 
+#You Will Have to use the following command: 
+flutter run --no-sound-null-safety
+
 ## The Team
 Jacqueline Mang, Rithvik Nakirikanti, Isaac Hu, Sean Fung, Julian Tanja
 
