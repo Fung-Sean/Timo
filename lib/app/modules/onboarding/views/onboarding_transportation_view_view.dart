@@ -164,8 +164,8 @@ class TransportationView extends GetView<OnboardingController> {
               child: ElevatedButton(
                   style: style,
                   onPressed: () {
-                    // Get.to(TransportationView());
-                    // Get.put(OnboardingController());
+                    Get.to(PreptimeView());
+                    Get.put(OnboardingController());
                   },
                   child: Text(
                     'Continue',
