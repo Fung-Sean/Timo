@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,8 @@ import 'package:intl/intl.dart';
 import 'package:quiver/async.dart';
 import 'package:timo_test/app/modules/intro/controllers/intro_controller.dart';
 import 'package:timo_test/app/modules/login/controllers/login_controller.dart';
+
+import '../../onboarding/controllers/onboarding_controller.dart';
 
 class HomescreenController extends GetxController {
   final count = 0.obs;
@@ -19,7 +22,13 @@ class HomescreenController extends GetxController {
   //instantiates intro controller into existing controller to utilize its functions
   final IntroController introController = Get.put(IntroController());
 
+  //we import the onboarding controller to get the user's input for preptime needed
+  final OnboardingController onboardingController =
+      Get.put(OnboardingController());
+
+
   //initialize parameters for timer display on screen
+
   int timeLeft = 0;
   RxString timeDisplay = '00:00:00'.obs;
   RxDouble proportionOfTimer = 0.0.obs;
@@ -38,8 +47,8 @@ class HomescreenController extends GetxController {
 
   //get this data from the local system, which was originally input on
   //onboarding screen, alongside the transport time, which sean will figure out
-  RxInt getReadyTime = 120.obs;
-  RxInt transportTime = 60.obs;
+  RxInt getReadyTime = 1200.obs;
+  RxInt transportTime = 1800.obs;
   RxInt eventDuration = 0.obs;
 
   //the physical number of seconds until the we have to get ready for our next event
@@ -72,6 +81,7 @@ class HomescreenController extends GetxController {
   initialize() async {
     //uses intro controller's function to read data from local storage
     var localData = await introController.readDataFromLocalStorage();
+    //getReadyTime = (onboardingController.getMinutesToGetReady() * 60).obs;
 
     //on startup, load in the information of the first event
     title.value = localData[0].title;
@@ -148,8 +158,11 @@ class HomescreenController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    //getReadyTime = (onboardingController.getMinutesToGetReady() * 60).obs;
+
 
     //initializes all data in home screen
+
     await initialize();
 
     //inputs data into home screen
