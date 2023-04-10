@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:timo_test/app/modules/homescreen/views/getready_view.dart';
 
 import 'package:timo_test/app/modules/homescreen/views/weather_view.dart';
 import 'package:timo_test/app/modules/homescreen/views/mainscreen_view.dart';
@@ -20,13 +19,14 @@ class HomescreenView extends GetView {
     //a scaffold key for our drawer widget
     final scaffoldKey = GlobalKey<ScaffoldState>();
 
-    //Get.put(HomescreenController(25, 50, 75, DateTime(2023, 3, 27, 17, 30)));
-    //display the date and time on this main screen
+    //Record the current date in the top appBar widget
     final now = DateTime.now();
     String date = DateFormat.yMMMMd('en_US').format(now).obs();
     Scaffold(key: scaffoldKey, drawer: Drawer());
 
     return Scaffold(
+
+        //appBar widget which should show up on every homescreen view
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text(
@@ -58,7 +58,11 @@ class HomescreenView extends GetView {
         ),
         body: PageView(
           onPageChanged: onPageViewChange,
-          children: [MainScreenView(), WeatherView()],
+          //
+          children: const [
+            MainScreenView(),
+            //WeatherView(),
+          ],
         ),
         bottomNavigationBar: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +70,7 @@ class HomescreenView extends GetView {
             BottomAppBar(
               child: Obx(() => AnimatedSmoothIndicator(
                     activeIndex: currentPage.value,
-                    count: 2,
+                    count: 3,
                     effect: const ExpandingDotsEffect(),
                   )),
             ),
@@ -76,7 +80,6 @@ class HomescreenView extends GetView {
 }
 
 //when the page is changed, I want that to reflect in my widgets
-//Trash Track
 onPageViewChange(int page) {
   currentPage.value = page;
 }
