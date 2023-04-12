@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
-import 'package:timo_test/app/modules/homescreen/views/getready_view.dart';
 
 import '../modules/Timer/bindings/timer_binding.dart';
 import '../modules/Timer/views/timer_view.dart';
@@ -14,11 +13,14 @@ import '../modules/googlemaps/views/googlemaps_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/homescreen/bindings/homescreen_binding.dart';
+import '../modules/homescreen/views/getready_view.dart';
 import '../modules/homescreen/views/homescreen_view.dart';
 import '../modules/homescreen/views/mainscreen_view.dart';
 import '../modules/homescreen/views/weather_view.dart';
 import '../modules/intro/bindings/intro_binding.dart';
 import '../modules/intro/views/intro_view.dart';
+import '../modules/location/bindings/location_binding.dart';
+import '../modules/location/views/location_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
@@ -114,6 +116,11 @@ class AppPages {
       name: _Paths.INTRO,
       page: () => const IntroView(),
       binding: IntroBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOCATION,
+      page: () => const LocationView(),
+      binding: LocationBinding(),
     ),
   ];
 }
