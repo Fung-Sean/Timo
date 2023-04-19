@@ -15,6 +15,7 @@ abstract class Routes {
   static const WEATHER = _Paths.WEATHER;
   static const WEATHERPAGE = _Paths.WEATHERPAGE;
   static const LOCATION = _Paths.LOCATION;
+  //static const LOCATION = _Paths.LOCATION;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const WEATHER = '/weather';
   static const WEATHERPAGE = '/weatherpage';
   static const LOCATION = '/location';
+  //static const LOCATION = '/location';
 }
