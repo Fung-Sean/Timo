@@ -52,8 +52,6 @@ class WeatherView extends GetView<HomescreenController> {
     String currentTime = "${now.hour}:${now.minute} (Current):";
     //add tips if it's raining
 
-    //find another API for weather forecasting!! OR SCRAP WEATHER FORECAST, and replace the bottom part of ring with the tip
-
     //define some colors to be used on the widgets
     Color darkBlue = const Color.fromARGB(255, 64, 149, 249);
     Color lightBlue = const Color.fromARGB(255, 227, 237, 246);
