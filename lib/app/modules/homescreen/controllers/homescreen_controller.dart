@@ -19,13 +19,16 @@ import 'dart:math';
 import '../../onboarding/controllers/onboarding_controller.dart';
 import 'dart:math';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 class HomescreenController extends GetxController {
   final count = 0.obs;
 
+/*
   //delays loading of home screenc ontroller to allow for background data processing
   final myFuture =
       Future.delayed(Duration(seconds: 3), () => 'Hello World!').obs;
+      */
 
   //instantiates intro controller into existing controller to utilize its functions
   final IntroController introController = Get.put(IntroController());
@@ -84,6 +87,9 @@ class HomescreenController extends GetxController {
   //checks when getReady timer should start
   bool startGetReadyTimer = false;
 
+  //stores current location of user to determine walking time to destination
+  late Position currentLocation;
+
   HomescreenController() {
     //initialize();
   }
@@ -97,12 +103,15 @@ class HomescreenController extends GetxController {
   //########################################
 
   // function that runs to initialize data from local storage and store it for home screen use
-  initialize() async {
+  Future<void> initialize() async {
     //initialize our shared preferences
     final prefs = await SharedPreferences.getInstance();
     await prefs.reload();
     getReadyTime.value = await (prefs.getInt('time')! * 60) ?? 0;
     print("getReadyTime: " + getReadyTime.value.toString());
+
+    //get current location from user
+    currentLocation = await _determinePosition();
 
     //uses intro controller's function to read data from local storage
     var localData = await introController.readDataFromLocalStorage();
@@ -115,6 +124,50 @@ class HomescreenController extends GetxController {
     endTime.value = localData[0].end;
     location.value = localData[0].location;
     date.value = localData[0].date;
+
+    //###################################
+    //here is where i will do google maps distance and location tracking stuff
+    //List<Location> locations1 = await locationFromAddress("610 Beacon St");
+    List<Location> locations2 = await locationFromAddress(location.value);
+
+    Set<Marker> markers = Set(); //markers for google map
+    String googleAPIKey = "AIzaSyClNisCXgPVCbZXqReGLLc3k-5uz6Ho9Mg";
+    //LatLng startLocation =
+    //LatLng(locations1[0].latitude, locations1[0].longitude);
+    LatLng startLocation =
+        LatLng(currentLocation.latitude, currentLocation.longitude);
+    LatLng endLocation =
+        LatLng(locations2[0].latitude, locations2[0].longitude);
+
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      googleAPIKey,
+      PointLatLng(currentLocation.latitude, currentLocation.longitude),
+      PointLatLng(endLocation.latitude, endLocation.longitude),
+      travelMode: TravelMode.walking,
+    );
+
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    } else {
+      print(result.errorMessage);
+    }
+
+    addPolyLine(polylineCoordinates);
+
+    double totalDistance = 0;
+    for (var i = 0; i < polylineCoordinates.length - 1; i++) {
+      totalDistance += calculateDistance(
+          polylineCoordinates[i].latitude,
+          polylineCoordinates[i].longitude,
+          polylineCoordinates[i + 1].latitude,
+          polylineCoordinates[i + 1].longitude);
+    }
+    print("Travel time: " +
+        (totalDistance * 60 / 4.5).ceil().toString() +
+        " minutes");
+    transportTime.value = await (totalDistance * 60 / 4.5).ceil() * 60;
 
     //also on startup, fill in the info in the circles
     aboveTimer.value = "Get Ready In";
@@ -174,52 +227,14 @@ class HomescreenController extends GetxController {
 
     //calculates how much time you have until next event getReady timer
     timeUntilNextGetReady = timeToGetReady.difference(now);
+    print("TIME UNTIL NEXT GET READY");
     print(timeUntilNextGetReady.toString());
 
     //internal usage
     timeUntilNextGetReadyInt = timeUntilNextGetReady.inSeconds;
 
-    //###################################
-    //here is where i will do google maps distance and location tracking stuff
-    List<Location> locations1 = await locationFromAddress("610 Beacon St");
-    List<Location> locations2 = await locationFromAddress(location.value);
-
-    Set<Marker> markers = Set(); //markers for google map
-    String googleAPIKey = "AIzaSyClNisCXgPVCbZXqReGLLc3k-5uz6Ho9Mg";
-    LatLng startLocation =
-        LatLng(locations1[0].latitude, locations1[0].longitude);
-    LatLng endLocation =
-        LatLng(locations2[0].latitude, locations2[0].longitude);
-
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      googleAPIKey,
-      PointLatLng(startLocation.latitude, startLocation.longitude),
-      PointLatLng(endLocation.latitude, endLocation.longitude),
-      travelMode: TravelMode.driving,
-    );
-
-    if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
-    } else {
-      print(result.errorMessage);
-    }
-
-    addPolyLine(polylineCoordinates);
-
-    double totalDistance = 0;
-    for (var i = 0; i < polylineCoordinates.length - 1; i++) {
-      totalDistance += calculateDistance(
-          polylineCoordinates[i].latitude,
-          polylineCoordinates[i].longitude,
-          polylineCoordinates[i + 1].latitude,
-          polylineCoordinates[i + 1].longitude);
-    }
-    print("Travel time: " +
-        (totalDistance * 60 / 4.5).ceil().toString() +
-        " minutes");
-    transportTime.value = await (totalDistance * 60 / 4.5).ceil() * 60;
+    //call BeforeGetReady timer
+    startBeforeGetReadyTimer();
   }
 
   addPolyLine(List<LatLng> polylineCoordinates) {
@@ -240,17 +255,50 @@ class HomescreenController extends GetxController {
     return 12742 * asin(sqrt(a));
   }
 
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return await Geolocator.getCurrentPosition();
+  }
+
   @override
   Future<void> onInit() async {
     super.onInit();
     //getReadyTime = (onboardingController.getMinutesToGetReady() * 60).obs;
 
     //initializes all data in home screen
-
-    await initialize();
-
-    //inputs data into home screen
-    startBeforeGetReadyTimer();
+    //await initialize();
   }
 
   @override
@@ -295,6 +343,8 @@ class HomescreenController extends GetxController {
 
   //function to handle timer logic for before an event's getReady timer starts
   void startBeforeGetReadyTimer() async {
+    print("I AM IN TIMER FUNCTION");
+
     //change display show timer is over
     if (timeUntilNextGetReadyInt < 0) {
       timeDisplay.value = '00:00:00';

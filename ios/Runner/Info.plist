@@ -70,5 +70,20 @@
 	<string>Needed to access location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Needed to access location</string>
+
+<!-- End of the Google Maps Section -->
+
+
+<!--Start of Flutter Geolocator Section-->
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>This app needs access to location when open.</string>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>This app needs access to location when in the background.</string>
+<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+<dict>
+  <key>RequestCurrentLocation</key>
+  <string>The example App requires temporary access to the device&apos;s precise location.</string>
+</dict>
+
 </dict>
 </plist>
