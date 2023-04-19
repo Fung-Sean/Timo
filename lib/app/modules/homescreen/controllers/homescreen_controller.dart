@@ -2,11 +2,14 @@ import 'dart:async';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart';
 import 'package:intl/intl.dart';
 import 'package:quiver/async.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timo_test/app/modules/intro/controllers/intro_controller.dart';
 import 'package:timo_test/app/modules/login/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +17,8 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:math';
 import '../../onboarding/controllers/onboarding_controller.dart';
+import 'dart:math';
+import 'package:geocoding/geocoding.dart';
 
 class HomescreenController extends GetxController {
   final count = 0.obs;
@@ -53,8 +58,8 @@ class HomescreenController extends GetxController {
 
   //get this data from the local system, which was originally input on
   //onboarding screen, alongside the transport time, which sean will figure out
-  RxInt getReadyTime = 1200.obs;
-  RxInt transportTime = 1800.obs;
+  RxInt getReadyTime = 600.obs;
+  RxInt transportTime = 600.obs;
   RxInt eventDuration = 0.obs;
 
   //the physical number of seconds until the we have to get ready for our next event
@@ -83,10 +88,22 @@ class HomescreenController extends GetxController {
     //initialize();
   }
 
+  //fields to store all of the polylines that we gather to get an accurate
+  //reading of travel time between two points
+  PolylinePoints polylinePoints = PolylinePoints();
+  Map<PolylineId, Polyline> polylines = {};
+  List<LatLng> polylineCoordinates = [];
+
   //########################################
 
   // function that runs to initialize data from local storage and store it for home screen use
   initialize() async {
+    //initialize our shared preferences
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.reload();
+    getReadyTime.value = await (prefs.getInt('time')! * 60) ?? 0;
+    print("getReadyTime: " + getReadyTime.value.toString());
+
     //uses intro controller's function to read data from local storage
     var localData = await introController.readDataFromLocalStorage();
     //getReadyTime = (onboardingController.getMinutesToGetReady() * 60).obs;
@@ -164,15 +181,16 @@ class HomescreenController extends GetxController {
 
     //###################################
     //here is where i will do google maps distance and location tracking stuff
+    List<Location> locations1 = await locationFromAddress("610 Beacon St");
+    List<Location> locations2 = await locationFromAddress(location.value);
 
     Set<Marker> markers = Set(); //markers for google map
-    String googleAPIKey = "AIzaSyD1iNlf5OmBKaffB80GB5rgSjrvSr1gz7U";
-    LatLng startLocation = LatLng(27.6683619, 85.3101895);
-    LatLng endLocation = LatLng(27.6688312, 85.3077329);
+    String googleAPIKey = "AIzaSyClNisCXgPVCbZXqReGLLc3k-5uz6Ho9Mg";
+    LatLng startLocation =
+        LatLng(locations1[0].latitude, locations1[0].longitude);
+    LatLng endLocation =
+        LatLng(locations2[0].latitude, locations2[0].longitude);
 
-    PolylinePoints polylinePoints = PolylinePoints();
-    Map<PolylineId, Polyline> polylines = {};
-    List<LatLng> polylineCoordinates = [];
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       googleAPIKey,
       PointLatLng(startLocation.latitude, startLocation.longitude),
@@ -188,7 +206,38 @@ class HomescreenController extends GetxController {
       print(result.errorMessage);
     }
 
-    // addPolyLine(polylineCoordinates);
+    addPolyLine(polylineCoordinates);
+
+    double totalDistance = 0;
+    for (var i = 0; i < polylineCoordinates.length - 1; i++) {
+      totalDistance += calculateDistance(
+          polylineCoordinates[i].latitude,
+          polylineCoordinates[i].longitude,
+          polylineCoordinates[i + 1].latitude,
+          polylineCoordinates[i + 1].longitude);
+    }
+    print("Travel time: " +
+        (totalDistance * 60 / 4.5).ceil().toString() +
+        " minutes");
+    transportTime.value = await (totalDistance * 60 / 4.5).ceil() * 60;
+  }
+
+  addPolyLine(List<LatLng> polylineCoordinates) {
+    PolylineId id = PolylineId("poly");
+    Polyline polyline = Polyline(
+      polylineId: id,
+      points: polylineCoordinates,
+      width: 8,
+    );
+    polylines[id] = polyline;
+  }
+
+  double calculateDistance(lat1, lon1, lat2, lon2) {
+    var p = 0.017453292519943295;
+    var a = 0.5 -
+        cos((lat2 - lat1) * p) / 2 +
+        cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
+    return 12742 * asin(sqrt(a));
   }
 
   @override

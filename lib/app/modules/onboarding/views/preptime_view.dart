@@ -149,7 +149,7 @@ class PreptimeView extends GetView<OnboardingController> {
                       style: style,
                       onPressed: () {
                         OnboardingController()
-                            .setMinutesToGetReady(numMinutes.value);
+                            .onOnboardingExit(numMinutes.value);
                         Get.to(const HomescreenView());
                         Get.put(HomescreenController());
                       },
