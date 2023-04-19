@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //a class to keep track of each type of transportation and whether or
 //not its been selected
@@ -36,7 +37,7 @@ class OnboardingController extends GetxController {
   }
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
   }
 
@@ -88,6 +89,19 @@ class OnboardingController extends GetxController {
 
   void setMinutesToGetReady(int mins) {
     minutesToGetReady = mins;
+  }
+
+  void onOnboardingExit(int numMinutes) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //first we must save the user's transportation selections
+    for (var i = 0; i < userSelections.length; i++) {
+      if (userSelections[i].isSelected == true) {
+        //just save their first selection
+        await prefs.setString("transportation", userSelections[i].name);
+        break;
+      }
+    }
+    await prefs.setInt("time", numMinutes);
   }
 
   void increment() => count.value++;
