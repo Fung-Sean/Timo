@@ -74,18 +74,18 @@ class WeatherView extends GetView<HomescreenController> {
                 const SizedBox(width: 25),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Text(
-                    //   controller.eventName,
-                    //   textAlign: TextAlign.center,
-                    //   style: GoogleFonts.inter(
-                    //       textStyle: const TextStyle(
-                    //     fontWeight: FontWeight.bold,
-                    //     color: Colors.black,
-                    //     fontSize: 25,
-                    //   )),
-                    // ),
-                  ],
+                  //children: [
+                  // Text(
+                  //   controller.eventName,
+                  //   textAlign: TextAlign.center,
+                  //   style: GoogleFonts.inter(
+                  //       textStyle: const TextStyle(
+                  //     fontWeight: FontWeight.bold,
+                  //     color: Colors.black,
+                  //     fontSize: 25,
+                  //   )),
+                  // ),
+                  //],
                 ),
               ],
             ),
