@@ -9,7 +9,10 @@ import 'package:intl/intl.dart';
 import 'package:quiver/async.dart';
 import 'package:timo_test/app/modules/intro/controllers/intro_controller.dart';
 import 'package:timo_test/app/modules/login/controllers/login_controller.dart';
-
+import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:math';
 import '../../onboarding/controllers/onboarding_controller.dart';
 
 class HomescreenController extends GetxController {
@@ -26,6 +29,9 @@ class HomescreenController extends GetxController {
   final OnboardingController onboardingController =
       Get.put(OnboardingController());
 
+  //here we have a google maps controller, that we will use to calculate the
+  //distance between points.
+  GoogleMapController? mapController;
 
   //initialize parameters for timer display on screen
 
@@ -76,6 +82,8 @@ class HomescreenController extends GetxController {
   HomescreenController() {
     //initialize();
   }
+
+  //########################################
 
   // function that runs to initialize data from local storage and store it for home screen use
   initialize() async {
@@ -153,13 +161,40 @@ class HomescreenController extends GetxController {
 
     //internal usage
     timeUntilNextGetReadyInt = timeUntilNextGetReady.inSeconds;
+
+    //###################################
+    //here is where i will do google maps distance and location tracking stuff
+
+    Set<Marker> markers = Set(); //markers for google map
+    String googleAPIKey = "AIzaSyD1iNlf5OmBKaffB80GB5rgSjrvSr1gz7U";
+    LatLng startLocation = LatLng(27.6683619, 85.3101895);
+    LatLng endLocation = LatLng(27.6688312, 85.3077329);
+
+    PolylinePoints polylinePoints = PolylinePoints();
+    Map<PolylineId, Polyline> polylines = {};
+    List<LatLng> polylineCoordinates = [];
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      googleAPIKey,
+      PointLatLng(startLocation.latitude, startLocation.longitude),
+      PointLatLng(endLocation.latitude, endLocation.longitude),
+      travelMode: TravelMode.driving,
+    );
+
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    } else {
+      print(result.errorMessage);
+    }
+
+    // addPolyLine(polylineCoordinates);
   }
 
   @override
   Future<void> onInit() async {
     super.onInit();
     //getReadyTime = (onboardingController.getMinutesToGetReady() * 60).obs;
-
 
     //initializes all data in home screen
 
