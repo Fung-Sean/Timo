@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:timo_test/app/modules/onboarding/views/early_arrive_view.dart';
+import 'package:timo_test/app/modules/onboarding/views/all_set_view.dart';
 import 'package:timo_test/app/modules/onboarding/views/onboarding_transportation_view_view.dart';
 import 'package:timo_test/app/modules/onboarding/views/preptime_view.dart';
 
@@ -21,12 +21,12 @@ import 'minutes.dart';
 //import '../../../routes/app_routes.dart';
 //import '../modules/login/views/login_view.dart';
 
-class PreptimeView extends GetView<OnboardingController> {
-  const PreptimeView({Key? key}) : super(key: key);
+class EarlyArriveView extends GetView<OnboardingController> {
+  const EarlyArriveView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     OnboardingController control = OnboardingController();
-    control.setProgressSliderValue(66);
+    control.setProgressSliderValue(100);
     double _value = control.getProgressSliderValue();
 
     List<int> values = [1, 2, 3, 4, 5];
@@ -68,7 +68,7 @@ class PreptimeView extends GetView<OnboardingController> {
             const Padding(
               padding: EdgeInsets.all(10),
               child: Text(
-                'How long does it take for you get ready for your first event?',
+                'How much earlier would you like to arrive to your events?',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 25),
               ),
@@ -140,8 +140,8 @@ class PreptimeView extends GetView<OnboardingController> {
                       style: style,
                       onPressed: () {
                         OnboardingController()
-                            .onOnboardingExit(numMinutes.value);
-                        Get.to(EarlyArriveView());
+                            .onEarlyArrivalExit(numMinutes.value);
+                        Get.to(const AllSetView());
                         Get.put(OnboardingController());
                       },
                       child: const Text('Continue')),
