@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timo_test/app/modules/onboarding/views/event_selection_view.dart';
 import 'package:timo_test/app/modules/onboarding/views/preptime_view.dart';
 
 import '../controllers/onboarding_controller.dart';
@@ -76,86 +77,240 @@ class TransportationView extends GetView<OnboardingController> {
                 )),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: SizedBox(
-                    width: 175.00,
-                    height: 175.00,
-                    child: HollowCircleButton(
-                        transportationType: "Walk",
-                        icon: directions_walk,
-                        color: blue),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: SizedBox(
-                    width: 175.00,
-                    height: 175.00,
-                    child: HollowCircleButton(
-                        transportationType: "Car",
-                        icon: directions_car,
-                        color: red),
-                  ),
-                ),
-              ],
+
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                width: 350.00,
+                height: 60.00,
+                child: Obx(() => CheckboxListTile(
+                      title: Text("Walking",
+                          textAlign: TextAlign.start,
+                          style: GoogleFonts.inter(
+                              textStyle: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: control.userSelections[0].isSelected.value
+                                ? Colors.white
+                                : blue,
+                            fontSize: 20,
+                          ))),
+                      value: control.userSelections[0].isSelected.value,
+                      onChanged: (selection) {
+                        control.selectTransportation("Walk");
+                      },
+                      secondary: Icon(directions_walk,
+                          size: 40,
+                          color: control.userSelections[0].isSelected.value
+                              ? Colors.white
+                              : blue),
+                      activeColor: blue,
+                      checkColor: Colors.white,
+                      tileColor: Colors.transparent,
+                      selectedTileColor: blue,
+                      selected: control.userSelections[0].isSelected.value,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: BorderSide(color: blue, width: 4),
+                      ),
+                    )),
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: SizedBox(
-                    width: 175.00,
-                    height: 175.00,
-                    child: HollowCircleButton(
-                        transportationType: "Train",
-                        icon: train,
-                        color: purple),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: SizedBox(
-                    width: 175.00,
-                    height: 175.00,
-                    child: HollowCircleButton(
-                        transportationType: "Bus",
-                        icon: directions_bus_sharp,
-                        color: green),
-                  ),
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                width: 350.00,
+                height: 60.00,
+                child: Obx(() => CheckboxListTile(
+                      title: Text("Train",
+                          textAlign: TextAlign.start,
+                          style: GoogleFonts.inter(
+                              textStyle: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: control.userSelections[1].isSelected.value
+                                ? Colors.white
+                                : blue,
+                            fontSize: 20,
+                          ))),
+                      value: control.userSelections[1].isSelected.value,
+                      onChanged: (selection) {
+                        control.selectTransportation("Train");
+                      },
+                      secondary: Icon(train,
+                          size: 40,
+                          color: control.userSelections[1].isSelected.value
+                              ? Colors.white
+                              : blue),
+                      activeColor: blue,
+                      checkColor: Colors.white,
+                      tileColor: Colors.transparent,
+                      selectedTileColor: blue,
+                      selected: control.userSelections[1].isSelected.value,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: BorderSide(color: blue, width: 4),
+                      ),
+                    )),
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: SizedBox(
-                    width: 175.00,
-                    height: 175.00,
-                    child: HollowCircleButton(
-                        transportationType: "Bike",
-                        icon: directions_bike,
-                        color: yellow),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: SizedBox(
-                    width: 175.00,
-                    height: 175.00,
-                    child: HollowCircleButton(
-                        transportationType: "Uber",
-                        icon: attach_money,
-                        color: pink),
-                  ),
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                width: 350.00,
+                height: 60.00,
+                child: Obx(() => CheckboxListTile(
+                      title: Text("Bus",
+                          textAlign: TextAlign.start,
+                          style: GoogleFonts.inter(
+                              textStyle: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: control.userSelections[2].isSelected.value
+                                ? Colors.white
+                                : blue,
+                            fontSize: 20,
+                          ))),
+                      value: control.userSelections[2].isSelected.value,
+                      onChanged: (selection) {
+                        control.selectTransportation("Bus");
+                      },
+                      secondary: Icon(directions_bus_sharp,
+                          size: 40,
+                          color: control.userSelections[2].isSelected.value
+                              ? Colors.white
+                              : blue),
+                      activeColor: blue,
+                      checkColor: Colors.white,
+                      tileColor: Colors.transparent,
+                      selectedTileColor: blue,
+                      selected: control.userSelections[2].isSelected.value,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: BorderSide(color: blue, width: 4),
+                      ),
+                    )),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                width: 350.00,
+                height: 60.00,
+                child: Obx(() => CheckboxListTile(
+                      title: Text("Biking",
+                          textAlign: TextAlign.start,
+                          style: GoogleFonts.inter(
+                              textStyle: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: control.userSelections[3].isSelected.value
+                                ? Colors.white
+                                : blue,
+                            fontSize: 20,
+                          ))),
+                      value: control.userSelections[3].isSelected.value,
+                      onChanged: (selection) {
+                        control.selectTransportation("Bike");
+                      },
+                      secondary: Icon(directions_bike,
+                          size: 40,
+                          color: control.userSelections[3].isSelected.value
+                              ? Colors.white
+                              : blue),
+                      activeColor: blue,
+                      checkColor: Colors.white,
+                      tileColor: Colors.transparent,
+                      selectedTileColor: blue,
+                      selected: control.userSelections[3].isSelected.value,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: BorderSide(color: blue, width: 4),
+                      ),
+                    )),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                width: 350.00,
+                height: 60.00,
+                child: Obx(() => CheckboxListTile(
+                      title: Text("Car",
+                          textAlign: TextAlign.start,
+                          style: GoogleFonts.inter(
+                              textStyle: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: control.userSelections[4].isSelected.value
+                                ? Colors.white
+                                : blue,
+                            fontSize: 20,
+                          ))),
+                      value: control.userSelections[4].isSelected.value,
+                      onChanged: (selection) {
+                        control.selectTransportation("Car");
+                      },
+                      secondary: Icon(directions_car,
+                          size: 40,
+                          color: control.userSelections[4].isSelected.value
+                              ? Colors.white
+                              : blue),
+                      activeColor: blue,
+                      checkColor: Colors.white,
+                      tileColor: Colors.transparent,
+                      selectedTileColor: blue,
+                      selected: control.userSelections[4].isSelected.value,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: BorderSide(color: blue, width: 4),
+                      ),
+                    )),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                width: 350.00,
+                height: 60.00,
+                child: Obx(() => CheckboxListTile(
+                      title: Text("Ride share app",
+                          textAlign: TextAlign.start,
+                          style: GoogleFonts.inter(
+                              textStyle: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: control.userSelections[5].isSelected.value
+                                ? Colors.white
+                                : blue,
+                            fontSize: 20,
+                          ))),
+                      value: control.userSelections[5].isSelected.value,
+                      onChanged: (selection) {
+                        control.selectTransportation("Uber");
+                      },
+                      secondary: Icon(attach_money,
+                          size: 40,
+                          color: control.userSelections[5].isSelected.value
+                              ? Colors.white
+                              : blue),
+                      activeColor: blue,
+                      checkColor: Colors.white,
+                      tileColor: Colors.transparent,
+                      selectedTileColor: blue,
+                      selected: control.userSelections[5].isSelected.value,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: BorderSide(color: blue, width: 4),
+                      ),
+                    )),
+              ),
             ),
             const Expanded(child: SizedBox(height: 10)),
             SizedBox(
@@ -164,7 +319,7 @@ class TransportationView extends GetView<OnboardingController> {
               child: ElevatedButton(
                   style: style,
                   onPressed: () {
-                    Get.to(PreptimeView());
+                    Get.to(const EventSelectionView());
                     Get.put(OnboardingController());
                   },
                   child: Text(
@@ -186,48 +341,48 @@ class TransportationView extends GetView<OnboardingController> {
   }
 }
 
-class HollowCircleButton extends StatefulWidget {
-  @override
-  final String transportationType;
-  final IconData icon;
-  final Color color;
-  HollowCircleButton(
-      {required this.transportationType,
-      required this.icon,
-      required this.color});
-  _HollowCircleButtonState createState() => _HollowCircleButtonState();
-}
+// class HollowCircleButton extends StatefulWidget {
+//   @override
+//   final String transportationType;
+//   final IconData icon;
+//   final Color color;
+//   HollowCircleButton(
+//       {required this.transportationType,
+//       required this.icon,
+//       required this.color});
+//   _HollowCircleButtonState createState() => _HollowCircleButtonState();
+// }
 
-class _HollowCircleButtonState extends State<HollowCircleButton> {
-  bool _isPressed = false;
+// class _HollowCircleButtonState extends State<HollowCircleButton> {
+//   bool _isPressed = false;
 
-  @override
-  Widget build(BuildContext context) {
-    return InkResponse(
-      onTap: () {
-        setState(() {
-          _isPressed = !_isPressed;
-          //walkIsPressed.value = !(walkIsPressed.value);
-          control.selectTransportation(widget.transportationType);
-        });
-      },
-      child: Container(
-        width: 150,
-        height: 150,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: _isPressed ? widget.color : Colors.transparent,
-          border: Border.all(
-            color: widget.color,
-            width: 8,
-          ),
-        ),
-        child: Icon(
-          widget.icon,
-          size: 80,
-          color: _isPressed ? Colors.white : widget.color,
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return InkResponse(
+//       onTap: () {
+//         setState(() {
+//           _isPressed = !_isPressed;
+//           //walkIsPressed.value = !(walkIsPressed.value);
+//           control.selectTransportation(widget.transportationType);
+//         });
+//       },
+//       child: Container(
+//         width: 150,
+//         height: 150,
+//         decoration: BoxDecoration(
+//           shape: BoxShape.circle,
+//           color: _isPressed ? widget.color : Colors.transparent,
+//           border: Border.all(
+//             color: widget.color,
+//             width: 8,
+//           ),
+//         ),
+//         child: Icon(
+//           widget.icon,
+//           size: 80,
+//           color: _isPressed ? Colors.white : widget.color,
+//         ),
+//       ),
+//     );
+//   }
+// }

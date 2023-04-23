@@ -5,22 +5,35 @@ import 'package:shared_preferences/shared_preferences.dart';
 //not its been selected
 class Transportation {
   String name;
-  bool isSelected;
+  RxBool isSelected;
 
   Transportation({required this.name, required this.isSelected});
+}
+
+class EventType {
+  String name;
+  RxBool isSelected;
+  EventType({required this.name, required this.isSelected});
 }
 
 class OnboardingController extends GetxController {
   final count = 0.obs;
   double progressSliderValue = 0.0;
   List<Transportation> userSelections = [];
+  List<EventType> eventSelection = [];
   List<String> TransportationNames = [
     "Walk",
-    "Bike",
-    "Bus",
     "Train",
+    "Bus",
+    "Bike",
     "Car",
     "Uber",
+  ];
+  List<String> EventNames = [
+    "Classes",
+    "Meetings",
+    "Hangouts",
+    "Custom",
   ];
   //add the 6 types of transportation types to a simple list
 
@@ -31,13 +44,24 @@ class OnboardingController extends GetxController {
   OnboardingController() {
     for (var i = 0; i < TransportationNames.length; i++) {
       Transportation transport =
-          Transportation(name: TransportationNames[i], isSelected: false);
+          Transportation(name: TransportationNames[i], isSelected: false.obs);
       userSelections.add(transport);
+    }
+    for (var i = 0; i < EventNames.length; i++) {
+      EventType event = EventType(name: EventNames[i], isSelected: false.obs);
+      eventSelection.add(event);
     }
   }
 
   @override
   Future<void> onInit() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool("Walk", false);
+    await prefs.setBool("Train", false);
+    await prefs.setBool("Bus", false);
+    await prefs.setBool("Bike", false);
+    await prefs.setBool("Car", false);
+    await prefs.setBool("Uber", false);
     super.onInit();
   }
 
@@ -63,23 +87,46 @@ class OnboardingController extends GetxController {
 
   //when a transportation button is pressed, the selection of that transportation item
   //is reversed from what it currently is, either selected or deselected
-  void selectTransportation(String name) {
+  void selectTransportation(String name) async {
     bool found = false;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     for (var i = 0; i < userSelections.length; i++) {
       if (name == userSelections[i].name) {
         found = true;
 
-        if (userSelections[i].isSelected == false) {
-          userSelections[i].isSelected = true;
+        if (userSelections[i].isSelected.value == false) {
+          userSelections[i].isSelected.value = true;
           print(userSelections[i].name + " is true");
+          await prefs.setBool(userSelections[i].name, true);
         } else {
-          userSelections[i].isSelected = false;
+          userSelections[i].isSelected.value = false;
           print(userSelections[i].name + " is false");
+          await prefs.setBool(userSelections[i].name, false);
         }
       }
     }
     if (found == false) {
       print("transportation method does not exist.");
+    }
+  }
+
+  void selectEvent(String name) {
+    bool found = false;
+    for (var i = 0; i < eventSelection.length; i++) {
+      if (name == eventSelection[i].name) {
+        found = true;
+
+        if (eventSelection[i].isSelected.value == false) {
+          eventSelection[i].isSelected.value = true;
+          print(eventSelection[i].name + " is true");
+        } else {
+          eventSelection[i].isSelected.value = false;
+          print(eventSelection[i].name + " is false");
+        }
+      }
+    }
+    if (found == false) {
+      print("event type does not exist.");
     }
   }
 
@@ -93,15 +140,13 @@ class OnboardingController extends GetxController {
 
   void onOnboardingExit(int numMinutes) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    //first we must save the user's transportation selections
-    for (var i = 0; i < userSelections.length; i++) {
-      if (userSelections[i].isSelected == true) {
-        //just save their first selection
-        await prefs.setString("transportation", userSelections[i].name);
-        break;
-      }
-    }
+
     await prefs.setInt("time", numMinutes);
+  }
+
+  void onEarlyArrivalExit(int numMinutes) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt("early", numMinutes);
   }
 
   void increment() => count.value++;

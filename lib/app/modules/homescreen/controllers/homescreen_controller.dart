@@ -107,7 +107,9 @@ class HomescreenController extends GetxController {
     //initialize our shared preferences
     final prefs = await SharedPreferences.getInstance();
     await prefs.reload();
-    getReadyTime.value = await (prefs.getInt('time')! * 60) ?? 0;
+    int readyTime = await (prefs.getInt('time')! * 60) ?? 0;
+    int earlyTime = await (prefs.getInt('early')! * 60) ?? 0;
+    getReadyTime.value = await (readyTime + earlyTime);
     print("getReadyTime: " + getReadyTime.value.toString());
 
     //get current location from user
@@ -139,12 +141,46 @@ class HomescreenController extends GetxController {
     LatLng endLocation =
         LatLng(locations2[0].latitude, locations2[0].longitude);
 
+    //initialize some booleans to determine what form of transportation we intend
+    //to use
+    bool car = false;
+    bool publicTransit = false;
+    bool bike = false;
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       googleAPIKey,
       PointLatLng(currentLocation.latitude, currentLocation.longitude),
       PointLatLng(endLocation.latitude, endLocation.longitude),
       travelMode: TravelMode.walking,
     );
+    //HERE we need to add code to customize which is the fastest
+    // if (prefs.getBool("Bus") == true || prefs.getBool("Train") == true) {
+    //   publicTransit = true;
+    //   PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+    //     googleAPIKey,
+    //     PointLatLng(currentLocation.latitude, currentLocation.longitude),
+    //     PointLatLng(endLocation.latitude, endLocation.longitude),
+    //     travelMode: TravelMode.transit,
+    //   );
+    // }
+    if (prefs.getBool("Bike") == true) {
+      bike = true;
+      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+        googleAPIKey,
+        PointLatLng(currentLocation.latitude, currentLocation.longitude),
+        PointLatLng(endLocation.latitude, endLocation.longitude),
+        travelMode: TravelMode.bicycling,
+      );
+    }
+
+    // if (prefs.getBool("Car") == true || prefs.getBool("Uber") == true) {
+    //   car = true;
+    //   PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+    //     googleAPIKey,
+    //     PointLatLng(currentLocation.latitude, currentLocation.longitude),
+    //     PointLatLng(endLocation.latitude, endLocation.longitude),
+    //     travelMode: TravelMode.driving,
+    //   );
+    // }
 
     if (result.points.isNotEmpty) {
       result.points.forEach((PointLatLng point) {
@@ -168,6 +204,9 @@ class HomescreenController extends GetxController {
         (totalDistance * 60 / 4.5).ceil().toString() +
         " minutes");
     transportTime.value = await (totalDistance * 60 / 4.5).ceil() * 60;
+    if (bike) {
+      transportTime.value = await (totalDistance * 60 / 16).ceil() * 60;
+    }
 
     //also on startup, fill in the info in the circles
     aboveTimer.value = "Get Ready In";
