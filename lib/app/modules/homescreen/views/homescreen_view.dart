@@ -10,6 +10,10 @@ import 'package:timo_test/app/modules/homescreen/views/mainscreen_view.dart';
 import '../controllers/homescreen_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 RxInt currentPage = 0.obs;
 
 class HomescreenView extends GetView {
@@ -83,3 +87,7 @@ class HomescreenView extends GetView {
 onPageViewChange(int page) {
   currentPage.value = page;
 }
+
+// void showNotification() {
+
+// }

@@ -8,6 +8,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'dart:math' as math;
 
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 //define some colors to be used on the widgets
 Color darkBlue = const Color.fromARGB(255, 53, 146, 255);
 Color lightBlue = const Color.fromARGB(255, 170, 207, 251);
@@ -40,6 +44,27 @@ class MainScreenView extends GetView<HomescreenController> {
 
     const IconData calendar_today =
         IconData(0xe122, fontFamily: 'MaterialIcons');
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: Text(notification.title!),
+                content: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [Text(notification.body!)],
+                  ),
+                ),
+              );
+            });
+      }
+    });
 
     return Scaffold(
       body: Center(
@@ -84,6 +109,8 @@ class MainScreenView extends GetView<HomescreenController> {
             ),
 
             const SizedBox(height: 40),
+
+            //The Timer
             SizedBox(
               width: 350,
               height: 350,

@@ -12,6 +12,26 @@ import 'package:timo_test/app/modules/login/controllers/login_controller.dart';
 
 import '../../onboarding/controllers/onboarding_controller.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+//new addition!!
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'high_importance_channel', 'High Importance Notifications',
+    description: 'This channel is used for important notifications',
+    importance: Importance.high,
+    playSound: true);
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print('A bg message just showed up :  ${message.messageId}');
+}
+//ajksdblfakjdsnf
+
 class HomescreenController extends GetxController {
   final count = 0.obs;
 
@@ -25,7 +45,6 @@ class HomescreenController extends GetxController {
   //we import the onboarding controller to get the user's input for preptime needed
   final OnboardingController onboardingController =
       Get.put(OnboardingController());
-
 
   //initialize parameters for timer display on screen
 
@@ -160,13 +179,34 @@ class HomescreenController extends GetxController {
     super.onInit();
     //getReadyTime = (onboardingController.getMinutesToGetReady() * 60).obs;
 
-
     //initializes all data in home screen
 
     await initialize();
 
     //inputs data into home screen
     startBeforeGetReadyTimer();
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel.id,
+                channel.name,
+                channelDescription: channel.description,
+                //color: Colors.blue,
+                color: Color.fromARGB(255, 0, 160, 155),
+                playSound: true,
+                icon: '@mipmap/ic_launcher',
+              ),
+            ));
+      }
+    });
   }
 
   @override
@@ -255,6 +295,19 @@ class HomescreenController extends GetxController {
 
       //start getReady timer
       getReadyTimer();
+
+      //Notification sent when getReady timer starts
+      flutterLocalNotificationsPlugin.show(
+          0,
+          "TIMO",
+          "Timer started!",
+          NotificationDetails(
+              android: AndroidNotificationDetails(channel.id, channel.name,
+                  channelDescription: channel.description,
+                  importance: Importance.high,
+                  color: Color.fromARGB(255, 0, 160, 155),
+                  playSound: true,
+                  icon: '@mipmap/ic_launcher')));
     });
   }
 
@@ -290,8 +343,36 @@ class HomescreenController extends GetxController {
     sub.onDone(() {
       print("Done");
       sub.cancel();
+
+      //notification sent to user when timer is done, not sure tho
+      flutterLocalNotificationsPlugin.show(
+          0,
+          "TIMO",
+          "Timer done!",
+          NotificationDetails(
+              android: AndroidNotificationDetails(channel.id, channel.name,
+                  channelDescription: channel.description,
+                  importance: Importance.high,
+                  color: Color.fromARGB(255, 0, 160, 155),
+                  playSound: true,
+                  icon: '@mipmap/ic_launcher')));
     });
   }
 
   void increment() => count.value++;
+
+  void showNotification() {
+    flutterLocalNotificationsPlugin.show(
+        0,
+        "TIMO",
+        "Timer done!",
+        NotificationDetails(
+            android: AndroidNotificationDetails(channel.id, channel.name,
+                channelDescription: channel.description,
+                importance: Importance.high,
+                //color: Colors.blue,
+                color: Color.fromARGB(255, 0, 160, 155),
+                playSound: true,
+                icon: '@mipmap/ic_launcher')));
+  }
 }

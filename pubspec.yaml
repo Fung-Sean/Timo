@@ -11,10 +11,11 @@ dependencies:
   get: 4.6.5
   flutter: 
     sdk: flutter
-  syncfusion_flutter_calendar: ^18.4.46
+  #syncfusion_flutter_calendar: ^18.4.46
+  syncfusion_flutter_calendar: ^21.1.41
   google_sign_in: ^5.4.2
   googleapis: ^9.2.0
-  firebase_core: ^2.7.1
+  firebase_core: ^2.10.0
   firebase_database: ^10.0.15
   flutter_ringtone_player: ^3.2.0
   path_provider: any
@@ -25,10 +26,14 @@ dependencies:
   firebase_auth: ^4.2.2
 
   smooth_page_indicator: ^1.0.1
-
+  
   currency_icons: ^0.3.0
   geolocator: ^9.0.2
   geocoding: ^2.1.0
+  
+  firebase_messaging: ^14.4.1
+  flutter_local_notifications: ^13.0.0
+
 
 
 dev_dependencies: 
