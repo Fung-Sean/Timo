@@ -56,7 +56,7 @@ class Intro5View extends GetView {
                 fontSize: 22,
               )),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 25),
             SizedBox(
               width: 300,
               height: 50,
