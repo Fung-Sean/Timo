@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 
 import 'package:get/get.dart';
 
@@ -7,6 +8,7 @@ import 'package:timo_test/app/modules/homescreen/views/homescreen_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'dart:math' as math;
+import 'package:url_launcher/url_launcher.dart';
 
 //define some colors to be used on the widgets
 Color darkBlue = const Color.fromARGB(255, 53, 146, 255);
@@ -47,12 +49,12 @@ class MainScreenView extends GetView<HomescreenController> {
 
           const IconData calendar_today =
               IconData(0xe122, fontFamily: 'MaterialIcons');
-          child:
+
           return Column(
             //mainAxisAlignment: MainAxisAlignment.center,
             //crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
               //here we have some headers indicating the event name and location
               Row(
                 children: [
@@ -73,20 +75,39 @@ class MainScreenView extends GetView<HomescreenController> {
                               fontSize: 28,
                             ))),
                       ),
+                    ],
+                  ),
+                ],
+              ),
+              Row(children: [
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Obx(
-                        () => Text("at " + controller.location.value,
+                        () => InkWell(
+                          child: Text(
+                            controller.location.value,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
                                 textStyle: const TextStyle(
                               fontWeight: FontWeight.normal,
                               color: Colors.black,
                               fontSize: 17,
-                            ))),
+                            )),
+                            overflow: TextOverflow.visible,
+                            softWrap: true,
+                          ),
+                          onTap: () => launchURL(
+                              'https://www.google.com/maps/place/' +
+                                  controller.location.value),
+                        ),
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ]),
 
               const SizedBox(height: 40),
               SizedBox(
@@ -153,7 +174,7 @@ class MainScreenView extends GetView<HomescreenController> {
                       ),
                     ]),
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 40),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -174,103 +195,121 @@ class MainScreenView extends GetView<HomescreenController> {
               ),
               const SizedBox(height: 15),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const SizedBox(width: 5),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Container(
-                      height: 35,
-                      padding: const EdgeInsets.all(4.0),
-                      child: Image.asset('assets/toothbrush.png',
-                          color: lightBlue),
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(width: 5),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Container(
+                              height: 35,
+                              padding: const EdgeInsets.all(4.0),
+                              child: Image.asset('assets/toothbrush.png',
+                                  color: lightBlue),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                                controller.startAtString.value +
+                                    "-" +
+                                    controller.startTravelString.value,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.inter(
+                                    textStyle: const TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                ))),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(width: 5),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Icon(directions_walk,
+                                size: 35, color: lightGreen),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                                controller.startTravelString.value +
+                                    "-" +
+                                    controller.startEventString.value,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.inter(
+                                    textStyle: const TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                ))),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(width: 5),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Icon(calendar_today,
+                                size: 35, color: lightOrange),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                                controller.startEventString.value +
+                                    "-" +
+                                    controller.endEventString.value,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.inter(
+                                    textStyle: const TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                ))),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text(
-                        controller.startAtString.value +
-                            "-" +
-                            controller.startTravelString.value,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.inter(
-                            textStyle: const TextStyle(
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black,
-                          fontSize: 20,
-                        ))),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: SizedBox(
-                      width: firstSectionWidth * 325,
-                      height: 20,
-                      child: Container(color: lightBlue),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(width: 5),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Icon(directions_walk, size: 35, color: lightGreen),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text(
-                        controller.startTravelString.value +
-                            "-" +
-                            controller.startEventString.value,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.inter(
-                            textStyle: const TextStyle(
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black,
-                          fontSize: 20,
-                        ))),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: SizedBox(
-                      width: secondSectionWidth * 325,
-                      height: 20,
-                      child: Container(color: lightGreen),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(width: 5),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Icon(calendar_today, size: 35, color: lightOrange),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text(
-                        controller.startEventString.value +
-                            "-" +
-                            controller.endEventString.value,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.inter(
-                            textStyle: const TextStyle(
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black,
-                          fontSize: 20,
-                        ))),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: SizedBox(
-                      width: thirdSectionWidth * 325,
-                      height: 20,
-                      child: Container(color: lightOrange),
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: SizedBox(
+                          width: firstSectionWidth * 200,
+                          height: 20,
+                          child: Container(color: lightBlue),
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: SizedBox(
+                          width: secondSectionWidth * 200,
+                          height: 20,
+                          child: Container(color: lightGreen),
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: SizedBox(
+                          width: thirdSectionWidth * 200,
+                          height: 20,
+                          child: Container(color: lightOrange),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -308,7 +347,7 @@ class HorizontalBarWidget extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                width: firstSectionWidth * 325,
+                width: firstSectionWidth * 350,
                 height: 20,
                 child: Container(color: lightBlue),
               ),
@@ -327,7 +366,7 @@ class HorizontalBarWidget extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                width: secondSectionWidth * 325,
+                width: secondSectionWidth * 350,
                 height: 20,
                 child: Container(color: lightGreen),
               ),
@@ -346,7 +385,7 @@ class HorizontalBarWidget extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                width: thirdSectionWidth * 325,
+                width: thirdSectionWidth * 350,
                 height: 20,
                 child: Container(color: lightOrange),
               ),
@@ -367,5 +406,15 @@ class HorizontalBarWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+launchURL(String url) async {
+  //String url = 'https://flutter.io';
+  final uri = Uri.parse(url);
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri);
+  } else {
+    throw 'Could not launch $url';
   }
 }

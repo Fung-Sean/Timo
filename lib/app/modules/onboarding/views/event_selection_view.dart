@@ -18,9 +18,10 @@ class EventSelectionView extends GetView<OnboardingController> {
   const EventSelectionView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    control.setProgressSliderValue(33);
     double _value = control.getProgressSliderValue();
     const Color blue = Color.fromARGB(255, 64, 149, 249);
-    control.setProgressSliderValue(33);
+
     final ButtonStyle style = ElevatedButton.styleFrom(
         textStyle: const TextStyle(fontSize: 20),
         backgroundColor:
@@ -50,7 +51,7 @@ class EventSelectionView extends GetView<OnboardingController> {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(
-                'What are your preferred modes of transportation?',
+                'What events would you like to prepare for?',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                     textStyle: const TextStyle(
