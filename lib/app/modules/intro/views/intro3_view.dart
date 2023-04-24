@@ -23,7 +23,7 @@ class Intro3View extends GetView {
                   height: MediaQuery.of(context).size.height * 0.5,
                   padding:
                       EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
-                  child: Image.asset('assets/everything_in_one_place.png'),
+                  child: Image.asset('assets/Calendar.png'),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 Padding(
@@ -34,7 +34,7 @@ class Intro3View extends GetView {
                     bottom: MediaQuery.of(context).size.width * 0.05,
                   ),
                   child: Text(
-                    "Let's Get Started!",
+                    "A new way to look at your schedule",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.inter(
                         textStyle: const TextStyle(
@@ -52,7 +52,7 @@ class Intro3View extends GetView {
                     bottom: MediaQuery.of(context).size.width * 0.05,
                   ),
                   child: Text(
-                    'Everything you need, from weather to transportation, to prepare for your day',
+                    'Get an overview of your day, event by event, and be prepared for each step',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.inter(
                         textStyle: const TextStyle(

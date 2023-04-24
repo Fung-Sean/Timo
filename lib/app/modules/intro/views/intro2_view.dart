@@ -24,7 +24,7 @@ class Intro2View extends GetView {
                   height: MediaQuery.of(context).size.height * 0.5,
                   padding:
                       EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
-                  child: Image.asset('assets/everything_in_one_place.png'),
+                  child: Image.asset('assets/Magnify.png'),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.035),
                 Padding(
