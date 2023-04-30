@@ -20,6 +20,9 @@ import '../../onboarding/controllers/onboarding_controller.dart';
 import 'dart:math';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import '../../../../notification_service.dart';
+import '../../../../notification_service_cont.dart';
 
 class HomescreenController extends GetxController {
   final count = 0.obs;
@@ -40,6 +43,29 @@ class HomescreenController extends GetxController {
   //here we have a google maps controller, that we will use to calculate the
   //distance between points.
   GoogleMapController? mapController;
+
+  // initialize notifications controller to utilize its functions
+  final NotificationServiceCont _notificationController =
+      Get.put(NotificationServiceCont());
+
+  // void init() {
+  //   final AndroidInitializationSettings initializationSettingsAndroid =
+  //       AndroidInitializationSettings('app_icon');
+  //   final NotificationService _notificationController =
+  //       NotificationServiceCont();
+  // final IOSInitializationSettings initializationSettingsIOS =
+  //     IOSInitializationSettings(
+  //   requestSoundPermission: false,
+  //   requestBadgePermission: false,
+  //   requestAlertPermission: false,
+  //   onDidReceiveLocalNotification: onDidReceiveLocalNotification,
+  // );
+  //   final InitializationSettings initializationSettings =
+  //       InitializationSettings(
+  //           android: initializationSettingsAndroid,
+  //           //iOS: initializationSettingsIOS,
+  //           macOS: null);
+  // }
 
   //initialize parameters for timer display on screen
 
@@ -428,6 +454,9 @@ class HomescreenController extends GetxController {
 
       //start getReady timer
       getReadyTimer();
+
+      //our timer has started!
+      _notificationController.showNotification("Timer has started!");
     });
   }
 
@@ -463,6 +492,9 @@ class HomescreenController extends GetxController {
     sub.onDone(() {
       print("Done");
       sub.cancel();
+
+      //notification for when timer is done
+      _notificationController.showNotification("Time's up!");
     });
   }
 
