@@ -1,6 +1,7 @@
+import 'package:get/get.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-abstract class NotificationService {
+abstract class NotificationService extends GetxController {
   // static final NotificationService _notificationService =
   //     NotificationService._internal();
 

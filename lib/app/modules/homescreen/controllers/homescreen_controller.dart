@@ -15,14 +15,16 @@ import 'package:timo_test/app/modules/login/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:timo_test/notification_serviceController.dart';
 import 'dart:math';
 import '../../onboarding/controllers/onboarding_controller.dart';
 import 'dart:math';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import '../../../../notification_service.dart';
-import '../../../../notification_service_cont.dart';
+//import '../../../../notification_service.dart';
+//import '../../../../notification_service_cont.dart';
+import '../../../../notification_serviceController.dart';
 
 class HomescreenController extends GetxController {
   final count = 0.obs;
@@ -45,8 +47,8 @@ class HomescreenController extends GetxController {
   GoogleMapController? mapController;
 
   // initialize notifications controller to utilize its functions
-  final NotificationServiceCont _notificationController =
-      Get.put(NotificationServiceCont());
+  final NotificationServiceController _notificationController =
+      Get.put(NotificationServiceController());
 
   // void init() {
   //   final AndroidInitializationSettings initializationSettingsAndroid =

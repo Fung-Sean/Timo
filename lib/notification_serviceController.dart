@@ -1,9 +1,10 @@
 import 'notification_service.dart';
+import 'package:get/get.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 const String channel_id = "1234";
 
-class NotificationServiceCont extends NotificationService {
+class NotificationServiceController extends GetxController {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
