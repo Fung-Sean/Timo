@@ -47,11 +47,11 @@ class HomescreenController extends GetxController {
   GoogleMapController? mapController;
 
   // initialize notifications controller to utilize its functions
-  final NotificationServiceController _notificationController =
-      Get.put(NotificationServiceController());
+  // final NotificationServiceController _notificationController =
+  //     Get.put(NotificationServiceController());
 
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  //     FlutterLocalNotificationsPlugin();
 
   // void init() {
   //   final AndroidInitializationSettings initializationSettingsAndroid =
@@ -145,6 +145,7 @@ class HomescreenController extends GetxController {
 
     //get current location from user
     currentLocation = await _determinePosition();
+    print(currentLocation.latitude);
 
     //uses intro controller's function to read data from local storage
     var localData = await introController.readDataFromLocalStorage();
@@ -368,13 +369,13 @@ class HomescreenController extends GetxController {
     //getReadyTime = (onboardingController.getMinutesToGetReady() * 60).obs;
 
     //initializes all data in home screen
-    //await initialize();
+    await initialize();
 
     //initialize for notification
-    NotificationServiceController.initialize(flutterLocalNotificationsPlugin);
+    // NotificationServiceController.initialize(flutterLocalNotificationsPlugin);
 
-    NotificationServiceController.showNotification(
-        title: 'TIMO', body: 'meow', fln: flutterLocalNotificationsPlugin);
+    // NotificationServiceController.showNotification(
+    //     title: 'TIMO', body: 'meow', fln: flutterLocalNotificationsPlugin);
   }
 
   @override
@@ -464,10 +465,10 @@ class HomescreenController extends GetxController {
       startAtString.value = startTravelString.value;
 
       //notification
-      NotificationServiceController.showNotification(
-          title: 'TIMO',
-          body: 'Timer has started',
-          fln: flutterLocalNotificationsPlugin);
+      // NotificationServiceController.showNotification(
+      //     title: 'TIMO',
+      //     body: 'Timer has started',
+      //     fln: flutterLocalNotificationsPlugin);
 
       //start getReady timer
       getReadyTimer();
@@ -509,10 +510,10 @@ class HomescreenController extends GetxController {
       print("Done");
       sub.cancel();
 
-      NotificationServiceController.showNotification(
-          title: 'TIMO',
-          body: "Time's up! Travel now",
-          fln: flutterLocalNotificationsPlugin);
+      // NotificationServiceController.showNotification(
+      //     title: 'TIMO',
+      //     body: "Time's up! Travel now",
+      //     fln: flutterLocalNotificationsPlugin);
 
       //notification for when timer is done
       //_notificationController.showNotification("Time's up!");
