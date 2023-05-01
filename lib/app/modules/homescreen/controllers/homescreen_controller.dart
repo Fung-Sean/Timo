@@ -50,6 +50,9 @@ class HomescreenController extends GetxController {
   final NotificationServiceController _notificationController =
       Get.put(NotificationServiceController());
 
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
   // void init() {
   //   final AndroidInitializationSettings initializationSettingsAndroid =
   //       AndroidInitializationSettings('app_icon');
@@ -132,6 +135,9 @@ class HomescreenController extends GetxController {
 
   // function that runs to initialize data from local storage and store it for home screen use
   Future<void> initialize() async {
+    //initialize for notification
+    NotificationServiceController.initialize(flutterLocalNotificationsPlugin);
+
     //initialize our shared preferences
     final prefs = await SharedPreferences.getInstance();
     await prefs.reload();
@@ -454,11 +460,16 @@ class HomescreenController extends GetxController {
       belowTimer.value = "Leave at ";
       startAtString.value = startTravelString.value;
 
+      //notification
+      NotificationServiceController.showNotification(
+          title: 'TIMO',
+          body: 'Timer has started',
+          fln: flutterLocalNotificationsPlugin);
+
       //start getReady timer
       getReadyTimer();
 
-      //our timer has started!
-      _notificationController.showNotification("Timer has started!");
+      //_notificationController.showNotification("Timer has started!");
     });
   }
 
@@ -495,8 +506,13 @@ class HomescreenController extends GetxController {
       print("Done");
       sub.cancel();
 
+      NotificationServiceController.showNotification(
+          title: 'TIMO',
+          body: "Time's up! Travel now",
+          fln: flutterLocalNotificationsPlugin);
+
       //notification for when timer is done
-      _notificationController.showNotification("Time's up!");
+      //_notificationController.showNotification("Time's up!");
     });
   }
 
