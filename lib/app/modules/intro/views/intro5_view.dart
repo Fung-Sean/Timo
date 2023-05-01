@@ -29,7 +29,7 @@ class Intro5View extends GetView {
       body: Center(
         child: Column(
           children: <Widget>[
-            const SizedBox(height: 170),
+            const SizedBox(height: 325),
             Text(
               'Welcome to',
               textAlign: TextAlign.center,
@@ -37,24 +37,27 @@ class Intro5View extends GetView {
                   textStyle: const TextStyle(
                 fontWeight: FontWeight.w300,
                 color: Color.fromARGB(255, 64, 149, 249),
-                fontSize: 30,
+                fontSize: 25,
               )),
             ),
-            Container(
-              height: 350,
-              width: 350,
-              child: Image.asset('assets/timo.png'),
+            Image.asset(
+              'assets/timo.png',
+              width: 350, // optional width
+              height: 165, // optional height
             ),
-            const SizedBox(height: 100),
-            Text(
-              'Before we begin, we would like to customize your experience.',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
-                  textStyle: const TextStyle(
-                fontWeight: FontWeight.w300,
-                color: Colors.black,
-                fontSize: 22,
-              )),
+            const SizedBox(height: 150),
+            Padding(
+              padding: const EdgeInsets.only(left: 50.0, right: 50.0),
+              child: Text(
+                'Before we begin, we would like to customize your experience.',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                    textStyle: const TextStyle(
+                  fontWeight: FontWeight.w300,
+                  color: Colors.black,
+                  fontSize: 20,
+                )),
+              ),
             ),
             const SizedBox(height: 25),
             SizedBox(

@@ -61,7 +61,7 @@ class MainScreenView extends GetView<HomescreenController> {
                   //this sized box gives us a little bit of for the event name and
                   //location, which were originally pressed up against the left side of the
                   //screen.
-                  const SizedBox(width: 25),
+                  const SizedBox(width: 10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -92,16 +92,17 @@ class MainScreenView extends GetView<HomescreenController> {
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
                                 textStyle: const TextStyle(
-                              fontWeight: FontWeight.normal,
-                              color: Colors.black,
-                              fontSize: 17,
-                            )),
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.blue,
+                                    fontSize: 17,
+                                    decoration: TextDecoration.underline)),
                             overflow: TextOverflow.visible,
                             softWrap: true,
                           ),
                           onTap: () => launchURL(
                               'https://www.google.com/maps/place/' +
-                                  controller.location.value),
+                                  controller.location.value +
+                                  "/"),
                         ),
                       ),
                     ],
