@@ -40,7 +40,7 @@ class LoginController extends GetxController {
     List<Event> events = [];
 
     //loop through all events that were fetched from Google API
-    for (int i = 0; i < eventsData.appointments.length; i++) {
+    for (int i = 0; i < eventsData.appointments!.length; i++) {
       //define the Event class and fill in the properties for it
       String date =
           DateFormat('EEEE, MMMM d, y').format(eventsData.getStartTime(i));

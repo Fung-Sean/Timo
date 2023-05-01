@@ -59,7 +59,7 @@ class Intro5View extends GetView {
                 )),
               ),
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 50),
             SizedBox(
               width: 300,
               height: 50,
