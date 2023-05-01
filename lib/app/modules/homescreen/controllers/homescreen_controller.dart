@@ -135,9 +135,6 @@ class HomescreenController extends GetxController {
 
   // function that runs to initialize data from local storage and store it for home screen use
   Future<void> initialize() async {
-    //initialize for notification
-    NotificationServiceController.initialize(flutterLocalNotificationsPlugin);
-
     //initialize our shared preferences
     final prefs = await SharedPreferences.getInstance();
     await prefs.reload();
@@ -372,6 +369,12 @@ class HomescreenController extends GetxController {
 
     //initializes all data in home screen
     //await initialize();
+
+    //initialize for notification
+    NotificationServiceController.initialize(flutterLocalNotificationsPlugin);
+
+    NotificationServiceController.showNotification(
+        title: 'TIMO', body: 'meow', fln: flutterLocalNotificationsPlugin);
   }
 
   @override
