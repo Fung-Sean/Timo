@@ -63,7 +63,7 @@ class TransportationView extends GetView<OnboardingController> {
                 },
               ),
             ),
-            //const SizedBox(height: 40),
+            const SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(
@@ -77,7 +77,7 @@ class TransportationView extends GetView<OnboardingController> {
                 )),
               ),
             ),
-
+            SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: SizedBox(

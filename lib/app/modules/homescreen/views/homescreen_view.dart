@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 
 import 'package:timo_test/app/modules/homescreen/views/weather_view.dart';
 import 'package:timo_test/app/modules/homescreen/views/mainscreen_view.dart';
-
+import '../views/weather_view.dart';
 import '../controllers/homescreen_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -59,9 +59,9 @@ class HomescreenView extends GetView {
         body: PageView(
           onPageChanged: onPageViewChange,
           //
-          children: const [
+          children: [
             MainScreenView(),
-            //WeatherView(),
+            WeatherView(), // CHECK!!
           ],
         ),
         bottomNavigationBar: Row(

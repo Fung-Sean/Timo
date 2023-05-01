@@ -36,11 +36,12 @@ class WeatherpageController extends GetxController {
       WeatherDataModel _weatherdatamodel =
           WeatherDataModel.fromJson(jsonDecode(response.body));
 
-      futureWeather.add(WeatherDataModel(
-          temp: _weatherdatamodel.temp,
-          temp_min: _weatherdatamodel.temp_min,
-          temp_max: _weatherdatamodel.temp_max,
-          w_description: _weatherdatamodel.w_description));
+      futureWeather.add(WeatherDataModel(temp: _weatherdatamodel.temp
+
+          //temp_min: _weatherdatamodel.temp_min,
+          //temp_max: _weatherdatamodel.temp_max,
+          //w_description: _weatherdatamodel.w_description
+          ));
 
       isLoading.value = true;
       update();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../controllers/homescreen_controller.dart';
 import 'package:timo_test/app/modules/homescreen/views/homescreen_view.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -38,6 +38,68 @@ class MainScreenView extends GetView<HomescreenController> {
     const IconData directions_walk =
         IconData(0xe1e1, fontFamily: 'MaterialIcons');
 
+    return Column(
+        //mainAxisAlignment: MainAxisAlignment.center,
+        //crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const SizedBox(height: 20),
+          //here we have some headers indicating the event name and location
+          Row(
+            children: [
+              //this sized box gives us a little bit of for the event name and
+              //location, which were originally pressed up against the left side of the
+              //screen.
+              const SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Obx(
+                    () => Text(controller.title.value,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                            textStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 28,
+                        ))),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Row(children: [
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Obx(
+                    () => InkWell(
+                      child: Text(
+                        controller.location.value,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                            textStyle: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                                color: Colors.blue,
+                                fontSize: 17,
+                                decoration: TextDecoration.underline)),
+                        overflow: TextOverflow.visible,
+                        softWrap: true,
+                      ),
+
+                      //WHY IS LAUNCHURL GIVING AN ERROR?
+                      // onTap: () => launchURL(
+                      //     'https://www.google.com/maps/place/' +
+                      //         controller.location.value +
+                      //         "/"),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ])
+        ]);
     const IconData calendar_today =
         IconData(0xe122, fontFamily: 'MaterialIcons');
 
@@ -304,18 +366,6 @@ class MainScreenView extends GetView<HomescreenController> {
       ),
     );
   }
-
-//   Future onSelectNotification(String payload) async {
-//   showDialog(
-//     context: context,
-//     builder: (_) {
-//       return new AlertDialog(
-//         title: Text("Payload"),
-//         content: Text("Payload: ${payload}"),
-//       )
-//     }
-//   )
-// }
 }
 
 class HorizontalBarWidget extends StatelessWidget {

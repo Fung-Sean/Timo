@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:timo_test/app/modules/onboarding/views/early_arrive_view.dart';
 import 'package:timo_test/app/modules/onboarding/views/onboarding_transportation_view_view.dart';
 import 'package:timo_test/app/modules/onboarding/views/preptime_view.dart';
@@ -134,8 +135,9 @@ class PreptimeView extends GetView<OnboardingController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
+                SizedBox(
+                  width: 300,
+                  height: 50,
                   child: ElevatedButton(
                       style: style,
                       onPressed: () {
@@ -144,7 +146,16 @@ class PreptimeView extends GetView<OnboardingController> {
                         Get.to(EarlyArriveView());
                         Get.put(OnboardingController());
                       },
-                      child: const Text('Continue')),
+                      child: Text(
+                        'Continue',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                            textStyle: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                          fontSize: 22,
+                        )),
+                      )),
                 ),
               ],
             ),
