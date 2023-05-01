@@ -5,13 +5,28 @@ import 'package:timo_test/app/modules/onboarding/views/onboarding_transportation
 
 import '../../onboarding/controllers/onboarding_controller.dart';
 
+//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+//import '../../../../notification_serviceController.dart';
+import '../controllers/intro_controller.dart';
+
 class Intro1View extends GetView {
   const Intro1View({Key? key}) : super(key: key);
+
+  // final NotificationServiceController _notificationController =
+  //     Get.put(NotificationServiceController());
+
+  // static NotificationServiceController _notificationController =
+  //     Get.put(NotificationServiceController());
+
+  // static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  //     FlutterLocalNotificationsPlugin();
+  static IntroController _controller = Get.find<IntroController>();
 
   @override
   Widget build(BuildContext context) {
     //define colors to use here
     Color page1Blue = Color.fromARGB(255, 84, 144, 248);
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -22,6 +37,9 @@ class Intro1View extends GetView {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(height: 50),
+                // ElevatedButton(
+                //     onPressed: () => {_controller.sendNotification()},
+                //     child: Text('Click me')),
                 Container(
                   height: MediaQuery.of(context).size.height * 0.5,
                   padding:

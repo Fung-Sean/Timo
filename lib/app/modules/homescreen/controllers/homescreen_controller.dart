@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -15,16 +16,16 @@ import 'package:timo_test/app/modules/login/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:timo_test/notification_serviceController.dart';
+//import 'package:timo_test/notification_serviceController.dart';
 import 'dart:math';
 import '../../onboarding/controllers/onboarding_controller.dart';
 import 'dart:math';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 //import '../../../../notification_service.dart';
 //import '../../../../notification_service_cont.dart';
-import '../../../../notification_serviceController.dart';
+//import '../../../../notification_serviceController.dart';
 
 class HomescreenController extends GetxController {
   final count = 0.obs;
@@ -47,11 +48,11 @@ class HomescreenController extends GetxController {
   GoogleMapController? mapController;
 
   // initialize notifications controller to utilize its functions
-  final NotificationServiceController _notificationController =
-      Get.put(NotificationServiceController());
+  // final NotificationServiceController _notificationController =
+  //     Get.put(NotificationServiceController());
 
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  //     FlutterLocalNotificationsPlugin();
 
   // void init() {
   //   final AndroidInitializationSettings initializationSettingsAndroid =
@@ -135,6 +136,9 @@ class HomescreenController extends GetxController {
 
   // function that runs to initialize data from local storage and store it for home screen use
   Future<void> initialize() async {
+    //test notification
+    sendStartNotification();
+
     //initialize our shared preferences
     final prefs = await SharedPreferences.getInstance();
     await prefs.reload();
@@ -371,10 +375,10 @@ class HomescreenController extends GetxController {
     //await initialize();
 
     //initialize for notification
-    NotificationServiceController.initialize(flutterLocalNotificationsPlugin);
+    // NotificationServiceController.initialize(flutterLocalNotificationsPlugin);
 
-    NotificationServiceController.showNotification(
-        title: 'TIMO', body: 'meow', fln: flutterLocalNotificationsPlugin);
+    // NotificationServiceController.showNotification(
+    //     title: 'TIMO', body: 'meow', fln: flutterLocalNotificationsPlugin);
   }
 
   @override
@@ -385,6 +389,47 @@ class HomescreenController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+  }
+
+  //NOTIFICATIONS
+  void sendStartNotification() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 1,
+            channelKey: 'test_channel',
+            title: 'TIMO',
+            body: 'Timer has started!'));
+
+    //what happens if we click the notif?
+    // AwesomeNotifications().actionStream.listen((event) {
+    //   Get.to(const Intro1View());
+    // });
+  }
+
+  void sendFinishNotification() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 1,
+            channelKey: 'test_channel',
+            title: 'TIMO',
+            body: 'Timer has finished!'));
+
+    //what happens if we click the notif?
+    // AwesomeNotifications().actionStream.listen((event) {
+    //   Get.to(const Intro1View());
+    // });
   }
 
   int convertYearToInt(String date) {
@@ -464,13 +509,16 @@ class HomescreenController extends GetxController {
       startAtString.value = startTravelString.value;
 
       //notification
-      NotificationServiceController.showNotification(
-          title: 'TIMO',
-          body: 'Timer has started',
-          fln: flutterLocalNotificationsPlugin);
+      // NotificationServiceController.showNotification(
+      //     title: 'TIMO',
+      //     body: 'Timer has started',
+      //     fln: flutterLocalNotificationsPlugin);
 
       //start getReady timer
       getReadyTimer();
+
+      //send timer start notification
+      sendStartNotification();
 
       //_notificationController.showNotification("Timer has started!");
     });
@@ -509,12 +557,13 @@ class HomescreenController extends GetxController {
       print("Done");
       sub.cancel();
 
-      NotificationServiceController.showNotification(
-          title: 'TIMO',
-          body: "Time's up! Travel now",
-          fln: flutterLocalNotificationsPlugin);
+      // NotificationServiceController.showNotification(
+      //     title: 'TIMO',
+      //     body: "Time's up! Travel now",
+      //     fln: flutterLocalNotificationsPlugin);
 
       //notification for when timer is done
+      sendFinishNotification();
       //_notificationController.showNotification("Time's up!");
     });
   }

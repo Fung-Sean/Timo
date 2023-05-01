@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:get/get.dart';
 import 'package:googleapis_auth/auth.dart';
+import 'package:timo_test/app/modules/intro/views/intro1_view.dart';
 import 'package:timo_test/app/modules/login/controllers/login_controller.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart' as GoogleAPI;
@@ -12,6 +14,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:timo_test/app/modules/login/providers/google_auth_provider.dart';
 import 'dart:io' show Platform;
+
+//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+//import '../../../../notification_serviceController.dart';
 
 class IntroController extends GetxController {
   //google sign-in initialization
@@ -24,10 +29,34 @@ class IntroController extends GetxController {
   //gCal events data
   late List<GoogleAPI.Event> gcalDataFetch;
 
+  // final NotificationServiceController _notificationController =
+  //     Get.put(NotificationServiceController());
+
+  // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  //     FlutterLocalNotificationsPlugin();
+
   @override
   Future<void> onInit() async {
     super.onInit();
+
+    //notification test
+    //NotificationServiceController.initialize(flutterLocalNotificationsPlugin);
   }
+
+  // void sendNotification() {
+  //   AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+  //     if (!isAllowed) {
+  //       AwesomeNotifications().requestPermissionToSendNotifications();
+  //     }
+  //   });
+
+  //   AwesomeNotifications().createNotification(
+  //       content: NotificationContent(
+  //           id: 1, channelKey: 'test_channel', title: 'TIMO', body: 'Meowwww'));
+  //   AwesomeNotifications().actionStream.listen((event) {
+  //     Get.to(const Intro1View());
+  //   });
+  // }
 
   void appendToLocalStorage() async {
     //list that fetches Google API data

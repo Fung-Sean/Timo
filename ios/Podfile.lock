@@ -5,6 +5,8 @@ PODS:
   - AppAuth/Core (1.6.0)
   - AppAuth/ExternalUserAgent (1.6.0):
     - AppAuth/Core
+  - awesome_notifications (0.0.2):
+    - Flutter
   - Firebase/Auth (10.3.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 10.3.0)
@@ -39,8 +41,6 @@ PODS:
     - FirebaseCore (~> 10.0)
     - leveldb-library (~> 1.22)
   - Flutter (1.0.0)
-  - flutter_local_notifications (0.0.1):
-    - Flutter
   - flutter_ringtone_player (0.0.1):
     - Flutter
   - geocoding_ios (1.0.5):
@@ -93,11 +93,11 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - awesome_notifications (from `.symlinks/plugins/awesome_notifications/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_database (from `.symlinks/plugins/firebase_database/ios`)
   - Flutter (from `Flutter`)
-  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_ringtone_player (from `.symlinks/plugins/flutter_ringtone_player/ios`)
   - geocoding_ios (from `.symlinks/plugins/geocoding_ios/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
@@ -124,6 +124,8 @@ SPEC REPOS:
     - PromisesObjC
 
 EXTERNAL SOURCES:
+  awesome_notifications:
+    :path: ".symlinks/plugins/awesome_notifications/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -132,8 +134,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_database/ios"
   Flutter:
     :path: Flutter
-  flutter_local_notifications:
-    :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_ringtone_player:
     :path: ".symlinks/plugins/flutter_ringtone_player/ios"
   geocoding_ios:
@@ -153,6 +153,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AppAuth: 8fca6b5563a5baef2c04bee27538025e4ceb2add
+  awesome_notifications: 74462bc8e68b11f8235d78422266886759e9da61
   Firebase: f92fc551ead69c94168d36c2b26188263860acd9
   firebase_auth: d1a0302ad8f1d642fc1cb53c43d25a951d70e190
   firebase_core: 1ae9f9aa76e6e1edc14fb181637ad466fd6c6fa4
@@ -162,7 +163,6 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: 8845798510aae74703467480f71ac613788d0696
   FirebaseDatabase: d0732ba8aece0eccfa0cfb3ef540e7ba6fa1c6a6
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_ringtone_player: 15eba85187230b87b2512f0e1b92225618bc03e7
   geocoding_ios: a389ea40f6f548de6e63006a2e31bf66ff80769a
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
