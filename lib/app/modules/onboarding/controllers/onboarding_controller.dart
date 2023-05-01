@@ -130,6 +130,11 @@ class OnboardingController extends GetxController {
     }
   }
 
+  void seenIntroScreens() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool("beenSeen", true);
+  }
+
   int getMinutesToGetReady() {
     return minutesToGetReady;
   }

@@ -47,7 +47,7 @@ class EventSelectionView extends GetView<OnboardingController> {
                 },
               ),
             ),
-            //const SizedBox(height: 40),
+            const SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(
@@ -61,7 +61,7 @@ class EventSelectionView extends GetView<OnboardingController> {
                 )),
               ),
             ),
-
+            SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: SizedBox(
@@ -198,7 +198,6 @@ class EventSelectionView extends GetView<OnboardingController> {
                     )),
               ),
             ),
-
             const Expanded(child: SizedBox(height: 10)),
             SizedBox(
               width: 300,

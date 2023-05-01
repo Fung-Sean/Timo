@@ -32,11 +32,11 @@ class Intro4View extends GetView<IntroController> {
       body: Center(
         child: Column(
           children: <Widget>[
-            const SizedBox(height: 150),
-            Container(
-              height: 350,
-              width: 350,
-              child: Image.asset('assets/timo.png'),
+            const SizedBox(height: 300),
+            Image.asset(
+              'assets/timo.png',
+              width: 350, // optional width
+              height: 200, // optional height
             ),
             Text(
               'Your ultimate time management tool',

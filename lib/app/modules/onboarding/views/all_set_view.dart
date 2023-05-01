@@ -54,6 +54,7 @@ class AllSetView extends GetView {
               child: ElevatedButton(
                   style: style,
                   onPressed: () {
+                    OnboardingController().seenIntroScreens();
                     Get.to(const HomescreenView());
                     Get.put(HomescreenController());
                   },

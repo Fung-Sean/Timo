@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../controllers/homescreen_controller.dart';
 import 'package:timo_test/app/modules/homescreen/views/homescreen_view.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,11 +35,10 @@ class MainScreenView extends GetView<HomescreenController> {
     final secondSectionWidth = secondSectionValue.toDouble() / totalValue;
     final thirdSectionWidth = thirdSectionValue.toDouble() / totalValue;
 
-    const IconData directions_walk =
-        IconData(0xe1e1, fontFamily: 'MaterialIcons');
-
     const IconData calendar_today =
         IconData(0xe122, fontFamily: 'MaterialIcons');
+    const IconData directions_walk =
+        IconData(0xe1e1, fontFamily: 'MaterialIcons');
 
     return Scaffold(
       body: Center(
@@ -304,18 +303,6 @@ class MainScreenView extends GetView<HomescreenController> {
       ),
     );
   }
-
-//   Future onSelectNotification(String payload) async {
-//   showDialog(
-//     context: context,
-//     builder: (_) {
-//       return new AlertDialog(
-//         title: Text("Payload"),
-//         content: Text("Payload: ${payload}"),
-//       )
-//     }
-//   )
-// }
 }
 
 class HorizontalBarWidget extends StatelessWidget {

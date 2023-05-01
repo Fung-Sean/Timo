@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:googleapis_auth/auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timo_test/app/modules/login/controllers/login_controller.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart' as GoogleAPI;
@@ -27,6 +28,12 @@ class IntroController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    final prefs = await SharedPreferences.getInstance();
+    //await prefs.setBool("beenSeen", false);
+    bool seenBefore = await prefs.getBool('beenSeen')!;
+    if (seenBefore) {
+      print("We've seen it all before!");
+    }
   }
 
   void appendToLocalStorage() async {

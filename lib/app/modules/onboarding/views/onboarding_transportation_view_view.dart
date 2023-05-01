@@ -45,25 +45,35 @@ class TransportationView extends GetView<OnboardingController> {
     const Color green = Color.fromARGB(255, 48, 202, 154);
     const Color yellow = Color.fromARGB(255, 252, 196, 87);
     const Color pink = Color.fromARGB(255, 250, 121, 164);
+    const Color gray = Color.fromARGB(217, 217, 217, 217);
 
     return Scaffold(
-      body: Center(
+      body: SafeArea(
         child: Column(
-          //mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const SizedBox(height: 50),
-            Container(
-              width: double.maxFinite,
-              child: Slider(
-                min: 0.0,
-                max: 100.0,
-                value: _value,
-                onChanged: (value) {
-                  value = control.getProgressSliderValue();
-                },
-              ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+            Stack(
+              children: [
+                Positioned(
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CircularProgressIndicator(
+                          value: _value / 100,
+                          backgroundColor: gray,
+                          strokeWidth: 5,
+                        ),
+                        SizedBox(width: 30.0),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            //const SizedBox(height: 40),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(
@@ -73,11 +83,11 @@ class TransportationView extends GetView<OnboardingController> {
                     textStyle: const TextStyle(
                   fontWeight: FontWeight.w300,
                   color: Colors.black,
-                  fontSize: 22,
+                  fontSize: 17,
                 )),
               ),
             ),
-
+            SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: SizedBox(
@@ -92,7 +102,7 @@ class TransportationView extends GetView<OnboardingController> {
                             color: control.userSelections[0].isSelected.value
                                 ? Colors.white
                                 : blue,
-                            fontSize: 20,
+                            fontSize: 17,
                           ))),
                       value: control.userSelections[0].isSelected.value,
                       onChanged: (selection) {
@@ -131,7 +141,7 @@ class TransportationView extends GetView<OnboardingController> {
                             color: control.userSelections[1].isSelected.value
                                 ? Colors.white
                                 : blue,
-                            fontSize: 20,
+                            fontSize: 17,
                           ))),
                       value: control.userSelections[1].isSelected.value,
                       onChanged: (selection) {
@@ -170,7 +180,7 @@ class TransportationView extends GetView<OnboardingController> {
                             color: control.userSelections[2].isSelected.value
                                 ? Colors.white
                                 : blue,
-                            fontSize: 20,
+                            fontSize: 17,
                           ))),
                       value: control.userSelections[2].isSelected.value,
                       onChanged: (selection) {
@@ -209,7 +219,7 @@ class TransportationView extends GetView<OnboardingController> {
                             color: control.userSelections[3].isSelected.value
                                 ? Colors.white
                                 : blue,
-                            fontSize: 20,
+                            fontSize: 17,
                           ))),
                       value: control.userSelections[3].isSelected.value,
                       onChanged: (selection) {
@@ -248,7 +258,7 @@ class TransportationView extends GetView<OnboardingController> {
                             color: control.userSelections[4].isSelected.value
                                 ? Colors.white
                                 : blue,
-                            fontSize: 20,
+                            fontSize: 17,
                           ))),
                       value: control.userSelections[4].isSelected.value,
                       onChanged: (selection) {
@@ -287,7 +297,7 @@ class TransportationView extends GetView<OnboardingController> {
                             color: control.userSelections[5].isSelected.value
                                 ? Colors.white
                                 : blue,
-                            fontSize: 20,
+                            fontSize: 17,
                           ))),
                       value: control.userSelections[5].isSelected.value,
                       onChanged: (selection) {
