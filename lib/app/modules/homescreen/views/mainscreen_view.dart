@@ -44,39 +44,67 @@ class MainScreenView extends GetView<HomescreenController> {
     return Scaffold(
       body: Center(
         child: Column(
-          //mainAxisAlignment: MainAxisAlignment.center,
-          //crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const SizedBox(height: 40),
-            //here we have some headers indicating the event name and location
+            const SizedBox(height: 30),
             Row(
               children: [
-                //this sized box gives us a little bit of for the event name and
-                //location, which were originally pressed up against the left side of the
-                //screen.
                 const SizedBox(width: 25),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Obx(
-                      () => Text(controller.title.value,
+                    GestureDetector(
+                      onTapDown: (_) {
+                        // Handle text box pressed event here
+                        print("I AM HERE");
+                        Get.defaultDialog(
+                          title: "My Alert",
+                          content: Text("This is my alert message."),
+                          confirm: TextButton(
+                            onPressed: () => Get.back(),
+                            child: Text("OK"),
+                          ),
+                        );
+                      },
+                      child: Obx(
+                        () => Text(
+                          controller.title.value,
                           textAlign: TextAlign.center,
                           style: GoogleFonts.inter(
-                              textStyle: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: 28,
-                          ))),
+                            textStyle: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 28,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                    Obx(
-                      () => Text("at " + controller.location.value,
+                    GestureDetector(
+                      onTapDown: (_) {
+                        // Handle text box pressed event here
+                        print("I AM HERE");
+                        Get.defaultDialog(
+                          title: "My Alert",
+                          content: Text("This is my alert message."),
+                          confirm: TextButton(
+                            onPressed: () => Get.back(),
+                            child: Text("OK"),
+                          ),
+                        );
+                      },
+                      child: Obx(
+                        () => Text(
+                          "at " + controller.location.value,
                           textAlign: TextAlign.center,
                           style: GoogleFonts.inter(
-                              textStyle: const TextStyle(
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black,
-                            fontSize: 17,
-                          ))),
+                            textStyle: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                              fontSize: 17,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -87,8 +115,8 @@ class MainScreenView extends GetView<HomescreenController> {
 
             //The Timer
             SizedBox(
-              width: 350,
-              height: 350,
+              width: 333,
+              height: 333,
               child: Stack(
                   alignment: Alignment.center,
                   fit: StackFit.expand,
