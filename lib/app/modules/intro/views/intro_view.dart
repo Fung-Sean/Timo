@@ -29,10 +29,14 @@ class IntroView extends GetView {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             BottomAppBar(
+              color: Colors.white,
+              clipBehavior: Clip.none,
+              elevation: 0,
               child: Obx(() => AnimatedSmoothIndicator(
                     activeIndex: currentPage.value,
                     count: 4,
-                    effect: const ExpandingDotsEffect(),
+                    effect: const ExpandingDotsEffect(
+                        activeDotColor: Color.fromARGB(255, 53, 146, 255)),
                   )),
             ),
           ],

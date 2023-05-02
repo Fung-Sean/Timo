@@ -142,6 +142,7 @@ class HomescreenController extends GetxController {
     int earlyTime = await (prefs.getInt('early')! * 60) ?? 0;
     getReadyTime.value = await (readyTime + earlyTime);
     print("getReadyTime: " + getReadyTime.value.toString());
+    polylineCoordinates = [];
 
     //get current location from user
     currentLocation = await _determinePosition();
@@ -165,13 +166,17 @@ class HomescreenController extends GetxController {
     List<Location> locations2 = await locationFromAddress(location.value);
 
     Set<Marker> markers = Set(); //markers for google map
-    String googleAPIKey = "AIzaSyClNisCXgPVCbZXqReGLLc3k-5uz6Ho9Mg";
+    //String googleAPIKey = "AIzaSyClNisCXgPVCbZXqReGLLc3k-5uz6Ho9Mg";
+    String googleAPIKey = "AIzaSyDSWJxako7BZpccp1_1CfSTzPt5nwwNMY4";
     //LatLng startLocation =
     //LatLng(locations1[0].latitude, locations1[0].longitude);
     LatLng startLocation =
         LatLng(currentLocation.latitude, currentLocation.longitude);
     LatLng endLocation =
         LatLng(locations2[0].latitude, locations2[0].longitude);
+
+    print("Start location: " + startLocation.toString());
+    print("End location: " + endLocation.toString());
 
     //initialize some booleans to determine what form of transportation we intend
     //to use
@@ -184,6 +189,8 @@ class HomescreenController extends GetxController {
       PointLatLng(endLocation.latitude, endLocation.longitude),
       travelMode: TravelMode.walking,
     );
+
+    print("Polyline result: " + result.points.length.toString());
     //HERE we need to add code to customize which is the fastest
     // if (prefs.getBool("Bus") == true || prefs.getBool("Train") == true) {
     //   publicTransit = true;
@@ -196,7 +203,7 @@ class HomescreenController extends GetxController {
     // }
     if (prefs.getBool("Bike") == true) {
       bike = true;
-      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      result = await polylinePoints.getRouteBetweenCoordinates(
         googleAPIKey,
         PointLatLng(currentLocation.latitude, currentLocation.longitude),
         PointLatLng(endLocation.latitude, endLocation.longitude),
@@ -225,6 +232,7 @@ class HomescreenController extends GetxController {
     addPolyLine(polylineCoordinates);
 
     double totalDistance = 0;
+    print("PolyCoordinates Length: " + polylineCoordinates.length.toString());
     for (var i = 0; i < polylineCoordinates.length - 1; i++) {
       totalDistance += calculateDistance(
           polylineCoordinates[i].latitude,
@@ -232,6 +240,7 @@ class HomescreenController extends GetxController {
           polylineCoordinates[i + 1].latitude,
           polylineCoordinates[i + 1].longitude);
     }
+    print("Total Distance: " + totalDistance.toString());
     print("Travel time: " +
         (totalDistance * 60 / 4.5).ceil().toString() +
         " minutes");
