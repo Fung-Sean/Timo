@@ -47,7 +47,7 @@ class AllSetView extends GetView {
                 fontSize: 22,
               )),
             ),
-            const SizedBox(height: 270),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.55),
             SizedBox(
               width: 300,
               height: 50,
@@ -69,7 +69,7 @@ class AllSetView extends GetView {
                     )),
                   )),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: MediaQuery.of(context).size.width * 0),
           ],
         ),
       ),

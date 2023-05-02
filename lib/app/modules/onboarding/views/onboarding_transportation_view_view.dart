@@ -53,25 +53,29 @@ class TransportationView extends GetView<OnboardingController> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-            Stack(
-              children: [
-                Positioned(
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        CircularProgressIndicator(
-                          value: _value / 100,
-                          backgroundColor: gray,
-                          strokeWidth: 5,
-                        ),
-                        SizedBox(width: 30.0),
-                      ],
+            Align(
+              alignment: Alignment.topLeft,
+              child: Row(
+                children: [
+                  TextButton(
+                    onPressed: () => Get.back(),
+                    child: Text(
+                      'Back',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                  ),
+                  CircularProgressIndicator(
+                    value: _value / 100,
+                    backgroundColor: gray,
+                    strokeWidth: 5,
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             Padding(
@@ -334,13 +338,11 @@ class TransportationView extends GetView<OnboardingController> {
               child: SizedBox(
                 width: 350,
                 height: 60.0,
-                
                 child: ElevatedButton(
                     onPressed: () {
                       Get.to(const EventSelectionView());
                       Get.put(OnboardingController());
                     },
-                    
                     child: Text(
                       'Continue',
                       textAlign: TextAlign.center,

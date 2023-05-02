@@ -97,7 +97,7 @@ class MainScreenView extends GetView<HomescreenController> {
 
               const SizedBox(height: 40),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.801,
+                width: MediaQuery.of(context).size.height * 0.369,
                 height: MediaQuery.of(context).size.height * 0.369,
                 child: Stack(
                     alignment: Alignment.center,
@@ -124,10 +124,12 @@ class MainScreenView extends GetView<HomescreenController> {
                                   controller.aboveTimer.value,
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.inter(
-                                      textStyle: const TextStyle(
+                                      textStyle: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     color: Colors.black,
-                                    fontSize: 30,
+                                    fontSize:
+                                        MediaQuery.of(context).size.height *
+                                            0.033,
                                   )),
                                 )),
                             Obx(
@@ -136,11 +138,13 @@ class MainScreenView extends GetView<HomescreenController> {
                                   controller.timeDisplay.value,
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.inter(
-                                      textStyle: const TextStyle(
+                                      textStyle: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color:
                                         const Color.fromARGB(255, 64, 149, 249),
-                                    fontSize: 45,
+                                    fontSize:
+                                        MediaQuery.of(context).size.height *
+                                            0.045,
                                   ))),
                             ),
                             Obx(
@@ -149,10 +153,13 @@ class MainScreenView extends GetView<HomescreenController> {
                                       controller.startAtString.value,
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.inter(
-                                      textStyle: const TextStyle(
+                                      textStyle: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     color: Colors.black,
-                                    fontSize: 30,
+                                    fontSize: MediaQuery.of(context)
+                                            .size
+                                            .height *
+                                        0.033, //Add a fontsize dynamic UI (match to the height of phone)
                                   ))),
                             ),
                           ],

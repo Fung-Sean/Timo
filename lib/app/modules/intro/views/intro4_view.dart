@@ -48,7 +48,7 @@ class Intro4View extends GetView<IntroController> {
                 fontSize: 20,
               )),
             ),
-            const SizedBox(height: 250),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.3),
             SizedBox(
               width: 300,
               height: 50,
@@ -63,7 +63,7 @@ class Intro4View extends GetView<IntroController> {
                   },
                   child: const Text('Log in with Google')),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             InkWell(
                 child: Text(
                   'Sign up for a Google account',
