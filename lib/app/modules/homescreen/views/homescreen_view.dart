@@ -68,6 +68,7 @@ class HomescreenView extends GetView {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             BottomAppBar(
+              elevation: 0,
               child: Obx(() => AnimatedSmoothIndicator(
                     activeIndex: currentPage.value,
                     count: 3,

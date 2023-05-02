@@ -89,7 +89,8 @@ class TransportationView extends GetView<OnboardingController> {
             ),
             SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 28.0),
               child: SizedBox(
                 width: 350.00,
                 height: 60.00,
@@ -122,13 +123,14 @@ class TransportationView extends GetView<OnboardingController> {
                           EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
-                        side: BorderSide(color: blue, width: 4),
+                        side: BorderSide(color: blue, width: 3),
                       ),
                     )),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 28.0),
               child: SizedBox(
                 width: 350.00,
                 height: 60.00,
@@ -161,13 +163,14 @@ class TransportationView extends GetView<OnboardingController> {
                           EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
-                        side: BorderSide(color: blue, width: 4),
+                        side: BorderSide(color: blue, width: 3),
                       ),
                     )),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 28.0),
               child: SizedBox(
                 width: 350.00,
                 height: 60.00,
@@ -200,13 +203,14 @@ class TransportationView extends GetView<OnboardingController> {
                           EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
-                        side: BorderSide(color: blue, width: 4),
+                        side: BorderSide(color: blue, width: 3),
                       ),
                     )),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 28.0),
               child: SizedBox(
                 width: 350.00,
                 height: 60.00,
@@ -239,13 +243,14 @@ class TransportationView extends GetView<OnboardingController> {
                           EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
-                        side: BorderSide(color: blue, width: 4),
+                        side: BorderSide(color: blue, width: 3),
                       ),
                     )),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 28.0),
               child: SizedBox(
                 width: 350.00,
                 height: 60.00,
@@ -278,13 +283,14 @@ class TransportationView extends GetView<OnboardingController> {
                           EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
-                        side: BorderSide(color: blue, width: 4),
+                        side: BorderSide(color: blue, width: 3),
                       ),
                     )),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 28.0),
               child: SizedBox(
                 width: 350.00,
                 height: 60.00,
@@ -317,31 +323,35 @@ class TransportationView extends GetView<OnboardingController> {
                           EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
-                        side: BorderSide(color: blue, width: 4),
+                        side: BorderSide(color: blue, width: 3),
                       ),
                     )),
               ),
             ),
             const Expanded(child: SizedBox(height: 10)),
-            SizedBox(
-              width: 300,
-              height: 50,
-              child: ElevatedButton(
-                  style: style,
-                  onPressed: () {
-                    Get.to(const EventSelectionView());
-                    Get.put(OnboardingController());
-                  },
-                  child: Text(
-                    'Continue',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                        textStyle: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                      fontSize: 22,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: SizedBox(
+                width: 350,
+                height: 60.0,
+                
+                child: ElevatedButton(
+                    onPressed: () {
+                      Get.to(const EventSelectionView());
+                      Get.put(OnboardingController());
+                    },
+                    
+                    child: Text(
+                      'Continue',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                          textStyle: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                        fontSize: 22,
+                      )),
                     )),
-                  )),
+              ),
             ),
             const SizedBox(height: 20),
           ],

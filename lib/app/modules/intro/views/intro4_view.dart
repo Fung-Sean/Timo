@@ -32,23 +32,23 @@ class Intro4View extends GetView<IntroController> {
       body: Center(
         child: Column(
           children: <Widget>[
-            const SizedBox(height: 300),
+            const SizedBox(height: 200),
             Image.asset(
               'assets/timo.png',
               width: 350, // optional width
               height: 200, // optional height
             ),
             Text(
-              'Your ultimate time management tool',
+              'Personalized time management',
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                   textStyle: const TextStyle(
                 fontWeight: FontWeight.w300,
                 color: Color.fromARGB(255, 64, 149, 249),
-                fontSize: 22,
+                fontSize: 20,
               )),
             ),
-            const SizedBox(height: 200),
+            const SizedBox(height: 250),
             SizedBox(
               width: 300,
               height: 50,

@@ -29,7 +29,7 @@ class Intro5View extends GetView {
       body: Center(
         child: Column(
           children: <Widget>[
-            const SizedBox(height: 325),
+            const SizedBox(height: 200),
             Text(
               'Welcome to',
               textAlign: TextAlign.center,
@@ -41,11 +41,11 @@ class Intro5View extends GetView {
               )),
             ),
             Image.asset(
-              'assets/timo.png',
+              'assets/timo_logo_copy.png',
               width: 350, // optional width
               height: 165, // optional height
             ),
-            const SizedBox(height: 150),
+            const SizedBox(height: 250),
             Padding(
               padding: const EdgeInsets.only(left: 50.0, right: 50.0),
               child: Text(
