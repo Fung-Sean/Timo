@@ -137,7 +137,7 @@ class HomescreenController extends GetxController {
   // function that runs to initialize data from local storage and store it for home screen use
   Future<void> initialize() async {
     //test notification
-    sendStartNotification();
+    //sendStartNotification();
 
     //initialize our shared preferences
     final prefs = await SharedPreferences.getInstance();
