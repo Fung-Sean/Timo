@@ -59,7 +59,7 @@ class Intro5View extends GetView {
                 )),
               ),
             ),
-            const SizedBox(height: 50),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.0003),
             SizedBox(
               width: 300,
               height: 50,
@@ -80,7 +80,7 @@ class Intro5View extends GetView {
                     )),
                   )),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.000),
           ],
         ),
       ),
