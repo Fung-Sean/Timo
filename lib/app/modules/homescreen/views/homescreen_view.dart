@@ -12,17 +12,21 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 RxInt currentPage = 0.obs;
 
-class HomescreenView extends GetView {
+
+class HomescreenView extends GetView<HomescreenController> {
   const HomescreenView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     //a scaffold key for our drawer widget
     final scaffoldKey = GlobalKey<ScaffoldState>();
 
+    //final _homescre = Get.put(WeatherpageController());
+
     //Record the current date in the top appBar widget
     final now = DateTime.now();
     String date = DateFormat.yMMMMd('en_US').format(now).obs();
     Scaffold(key: scaffoldKey, drawer: Drawer());
+    const Color gray = Color.fromARGB(217, 217, 217, 217);
 
     return Scaffold(
 
@@ -38,6 +42,19 @@ class HomescreenView extends GetView {
           ),
 
           actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  'Last Updated: ',
+                  style: GoogleFonts.inter(
+                      textStyle: const TextStyle(
+                    color: gray,
+                  )),
+                ),
+              ],
+            ),
+            /*
             IconButton(
               color: Colors.black,
               icon: const Icon(Icons.menu),
@@ -51,6 +68,7 @@ class HomescreenView extends GetView {
                 }
               },
             )
+            */
           ],
           //actions: const [Icon(Icons.more_vert)],
           centerTitle: false,

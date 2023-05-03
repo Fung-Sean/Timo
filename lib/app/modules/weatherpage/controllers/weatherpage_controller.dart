@@ -21,7 +21,7 @@ class WeatherpageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getWeather();
+    //getWeather();
   }
 
   //latitude: 42.350876

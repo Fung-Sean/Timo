@@ -18,10 +18,36 @@ Color lightGreen = const Color.fromARGB(255, 148, 229, 210);
 Color darkOrange = const Color.fromARGB(255, 237, 123, 87);
 Color lightOrange = const Color.fromARGB(255, 243, 198, 183);
 
+//Colors for beforeGetReady
+Color beforeGetReadyBackground = const Color.fromARGB(217, 217, 217, 217);
+Color beforeGetReadyAbove = const Color.fromARGB(239, 239, 239, 239);
+
+//Colors for getReady
+Color getReadyBackground = const Color.fromARGB(255, 53, 146, 255);
+Color getReadyAbove = const Color.fromARGB(255, 170, 207, 251);
+
+//Colors for walking
+Color transportationBackground = const Color.fromARGB(255, 0, 201, 153);
+Color transportationAbove = const Color.fromARGB(255, 223, 243, 239);
+
 class MainScreenView extends GetView<HomescreenController> {
   const MainScreenView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Color timerBackground = controller.currentState == 'beforeGetReady'
+        ? beforeGetReadyBackground
+        : controller.currentState == 'getReady'
+            ? getReadyBackground
+            : transportationBackground;
+
+    Color timerAbove = controller.currentState == 'beforeGetReady'
+        ? beforeGetReadyAbove
+        : controller.currentState == 'getReady'
+            ? getReadyAbove
+            : transportationAbove;
+
+    bool isNotRunning = controller.isClosed;
+    controller.isWidgetRunning = isNotRunning;
     return Scaffold(
       body: Center(
           child: FutureBuilder(
@@ -97,7 +123,7 @@ class MainScreenView extends GetView<HomescreenController> {
 
               const SizedBox(height: 40),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.801,
+                width: MediaQuery.of(context).size.height * 0.369,
                 height: MediaQuery.of(context).size.height * 0.369,
                 child: Stack(
                     alignment: Alignment.center,
@@ -111,8 +137,18 @@ class MainScreenView extends GetView<HomescreenController> {
                           child: Obx(() => CircularProgressIndicator(
                                 value: 1.0 - controller.proportionOfTimer.value,
                                 strokeWidth: 17,
-                                color: lightBlue,
-                                backgroundColor: darkBlue,
+                                color:
+                                    controller.currentState == 'beforeGetReady'
+                                        ? beforeGetReadyAbove
+                                        : controller.currentState == 'getReady'
+                                            ? getReadyAbove
+                                            : transportationAbove,
+                                backgroundColor:
+                                    controller.currentState == 'beforeGetReady'
+                                        ? beforeGetReadyBackground
+                                        : controller.currentState == 'getReady'
+                                            ? getReadyBackground
+                                            : transportationBackground,
                               )),
                         ),
                       ),
@@ -138,8 +174,7 @@ class MainScreenView extends GetView<HomescreenController> {
                                   style: GoogleFonts.inter(
                                       textStyle: const TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color:
-                                        const Color.fromARGB(255, 64, 149, 249),
+                                    color: const Color.fromARGB(66, 66, 66, 66),
                                     fontSize: 45,
                                   ))),
                             ),
