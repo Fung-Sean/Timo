@@ -18,10 +18,36 @@ Color lightGreen = const Color.fromARGB(255, 148, 229, 210);
 Color darkOrange = const Color.fromARGB(255, 237, 123, 87);
 Color lightOrange = const Color.fromARGB(255, 243, 198, 183);
 
+//Colors for beforeGetReady
+Color beforeGetReadyBackground = const Color.fromARGB(217, 217, 217, 217);
+Color beforeGetReadyAbove = const Color.fromARGB(239, 239, 239, 239);
+
+//Colors for getReady
+Color getReadyBackground = const Color.fromARGB(255, 53, 146, 255);
+Color getReadyAbove = const Color.fromARGB(255, 170, 207, 251);
+
+//Colors for walking
+Color transportationBackground = const Color.fromARGB(255, 0, 201, 153);
+Color transportationAbove = const Color.fromARGB(255, 223, 243, 239);
+
 class MainScreenView extends GetView<HomescreenController> {
   const MainScreenView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Color timerBackground = controller.currentState == 'beforeGetReady'
+        ? beforeGetReadyBackground
+        : controller.currentState == 'getReady'
+            ? getReadyBackground
+            : transportationBackground;
+
+    Color timerAbove = controller.currentState == 'beforeGetReady'
+        ? beforeGetReadyAbove
+        : controller.currentState == 'getReady'
+            ? getReadyAbove
+            : transportationAbove;
+
+    bool isNotRunning = controller.isClosed;
+    controller.isWidgetRunning = isNotRunning;
     return Scaffold(
       body: Center(
           child: FutureBuilder(
@@ -111,8 +137,18 @@ class MainScreenView extends GetView<HomescreenController> {
                           child: Obx(() => CircularProgressIndicator(
                                 value: 1.0 - controller.proportionOfTimer.value,
                                 strokeWidth: 17,
-                                color: lightBlue,
-                                backgroundColor: darkBlue,
+                                color:
+                                    controller.currentState == 'beforeGetReady'
+                                        ? beforeGetReadyAbove
+                                        : controller.currentState == 'getReady'
+                                            ? getReadyAbove
+                                            : transportationAbove,
+                                backgroundColor:
+                                    controller.currentState == 'beforeGetReady'
+                                        ? beforeGetReadyBackground
+                                        : controller.currentState == 'getReady'
+                                            ? getReadyBackground
+                                            : transportationBackground,
                               )),
                         ),
                       ),
@@ -124,12 +160,10 @@ class MainScreenView extends GetView<HomescreenController> {
                                   controller.aboveTimer.value,
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.inter(
-                                      textStyle: TextStyle(
+                                      textStyle: const TextStyle(
                                     fontWeight: FontWeight.normal,
                                     color: Colors.black,
-                                    fontSize:
-                                        MediaQuery.of(context).size.height *
-                                            0.033,
+                                    fontSize: 30,
                                   )),
                                 )),
                             Obx(
@@ -138,13 +172,10 @@ class MainScreenView extends GetView<HomescreenController> {
                                   controller.timeDisplay.value,
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.inter(
-                                      textStyle: TextStyle(
+                                      textStyle: const TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color:
-                                        const Color.fromARGB(255, 64, 149, 249),
-                                    fontSize:
-                                        MediaQuery.of(context).size.height *
-                                            0.045,
+                                    color: const Color.fromARGB(66, 66, 66, 66),
+                                    fontSize: 45,
                                   ))),
                             ),
                             Obx(
@@ -153,13 +184,10 @@ class MainScreenView extends GetView<HomescreenController> {
                                       controller.startAtString.value,
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.inter(
-                                      textStyle: TextStyle(
+                                      textStyle: const TextStyle(
                                     fontWeight: FontWeight.normal,
                                     color: Colors.black,
-                                    fontSize: MediaQuery.of(context)
-                                            .size
-                                            .height *
-                                        0.033, //Add a fontsize dynamic UI (match to the height of phone)
+                                    fontSize: 30,
                                   ))),
                             ),
                           ],

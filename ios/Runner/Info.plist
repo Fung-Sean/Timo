@@ -47,6 +47,12 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIApplicationSceneManifest</key>
+    <dict>
+        <key>UISceneConfigurations</key>
+        <dict/>
+    </dict>
+	
 <!-- Put me in the [my_project]/ios/Runner/Info.plist file -->
 <!-- Google Sign-in Section -->
 <key>CFBundleURLTypes</key>
