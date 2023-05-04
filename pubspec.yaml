@@ -33,7 +33,8 @@ dependencies:
   flutter_polyline_points: ^1.0.0
   dio: ^5.1.1
   shared_preferences: ^2.1.0
-  flutter_local_notifications: ^13.0.0
+  #flutter_local_notifications: ^13.0.0
+  awesome_notifications: ^0.0.6+11
   flutter_background: ^1.0.7
 
 #dependency_overrides: 
