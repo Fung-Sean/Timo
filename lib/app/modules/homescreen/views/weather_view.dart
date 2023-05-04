@@ -131,7 +131,8 @@ class WeatherView extends GetView<HomescreenController> {
                       children: [
                         Text(currentTime,
                             style: GoogleFonts.inter(textStyle: style_time)),
-                        Text("63°F",
+                        Text(
+                            '${roundMainTemp(_weatherpagecontroller.futureWeather[0].temp)}°F',
                             style: GoogleFonts.inter(textStyle: style_temp)),
                         SizedBox(height: 30),
                         Container(

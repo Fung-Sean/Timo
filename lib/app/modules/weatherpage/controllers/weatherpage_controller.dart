@@ -7,7 +7,6 @@ import 'package:get/route_manager.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import '../../homescreen/controllers/homescreen_controller.dart';
 
-//import '../models/weather_model.dart';
 import '../models/weatherpage_model.dart';
 
 class WeatherpageController extends GetxController {
@@ -27,24 +26,26 @@ class WeatherpageController extends GetxController {
   //latitude: 42.350876
   //longitude: -71.106918
 
-  Future<void> getWeather() async {
+  void getWeather() async {
     final response = await http.get(Uri.parse(
-        "https://api.openweathermap.org/data/2.5/weather?lat=${_homescreencontroller.currentLocation.latitude}&lon=${_homescreencontroller.currentLocation.longitude}&units=metric&appid=5ef0b262f16659ab86bd672617ca3c51"));
+        //"https://api.openweathermap.org/data/2.5/weather?lat=${_homescreencontroller.currentLocation.latitude}&lon=${_homescreencontroller.currentLocation.longitude}&units=imperial&appid=5ef0b262f16659ab86bd672617ca3c51"
+        "https://api.openweathermap.org/data/2.5/weather?lat=42.350876&lon=-71.106918&units=imperial&appid=5ef0b262f16659ab86bd672617ca3c51"));
 
     if (response.statusCode == 200) {
-      // ignore: no_leading_underscores_for_local_identifiers
-      WeatherDataModel _weatherdatamodel =
-          WeatherDataModel.fromJson(jsonDecode(response.body));
+      final jsonData = jsonDecode(response.body);
+      if (jsonData.length != 0) {
+        WeatherDataModel _weatherdatamodel =
+            WeatherDataModel.fromJson(jsonData);
 
-      futureWeather.add(WeatherDataModel(temp: _weatherdatamodel.temp
-
-          //temp_min: _weatherdatamodel.temp_min,
-          //temp_max: _weatherdatamodel.temp_max,
-          //w_description: _weatherdatamodel.w_description
-          ));
-
-      isLoading.value = true;
-      update();
+        futureWeather.add(WeatherDataModel(temp: _weatherdatamodel.temp
+            //w_description: _weatherdatamodel.w_description
+            ));
+        isLoading.value = true;
+        update();
+      } else {
+        print("unable to get data");
+        Get.snackbar('unable to load data', 'boo');
+      }
     } else {
       //throw Exception("Failed to load weather API");
       Get.snackbar('Error loading data ...',
