@@ -26,6 +26,7 @@ class HomescreenView extends GetView<HomescreenController> {
     String date = DateFormat.yMMMMd('en_US').format(now).obs();
     Scaffold(key: scaffoldKey, drawer: Drawer());
     const Color gray = Color.fromARGB(217, 217, 217, 217);
+    Color darkBlue = const Color.fromARGB(255, 53, 146, 255);
 
     return Scaffold(
 
@@ -44,12 +45,26 @@ class HomescreenView extends GetView<HomescreenController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  'Last Updated: ',
-                  style: GoogleFonts.inter(
+                ElevatedButton(
+                  onPressed: () {
+                    // Add your action here
+                    print('Button clicked!');
+                    controller.introController.getGoogleEventsData();
+                    controller.introController.appendToLocalStorage();
+                    //controller.update();
+                  },
+                  child: Text(
+                    'Refresh Now ',
+                    style: GoogleFonts.inter(
                       textStyle: const TextStyle(
-                    color: gray,
-                  )),
+                        color: gray,
+                      ),
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                  ),
                 ),
               ],
             ),
@@ -118,7 +133,7 @@ class HomescreenView extends GetView<HomescreenController> {
           //
           children: [
             MainScreenView(),
-            WeatherView(), // CHECK!!
+            WeatherView(),
           ],
         ),
         bottomNavigationBar: Row(
@@ -128,7 +143,7 @@ class HomescreenView extends GetView<HomescreenController> {
               elevation: 0,
               child: Obx(() => AnimatedSmoothIndicator(
                     activeIndex: currentPage.value,
-                    count: 3,
+                    count: 2,
                     effect: const ExpandingDotsEffect(),
                   )),
             ),

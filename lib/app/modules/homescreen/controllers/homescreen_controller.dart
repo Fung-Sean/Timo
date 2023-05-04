@@ -335,7 +335,7 @@ class HomescreenController extends GetxController {
 
       //calculates how much time you have until next event getReady timer
       timeUntilNextGetReady = timeToGetReady.difference(now);
-      
+
       //timeUntilNextGetReady = timeToGetReady.difference(DateTime.parse(last_timer_update));
 
       print("TIME UNTIL NEXT GET READY");
@@ -563,9 +563,9 @@ class HomescreenController extends GetxController {
         sub.cancel();
 
         //make reset method but for now
-        aboveTimer.value = "Get Ready!";
-        belowTimer.value = "Leave at ";
-        startAtString.value = startTravelString.value;
+        aboveTimer.value = "Travel";
+        belowTimer.value = "ETA ";
+        startAtString.value = startEventString.value;
 
         transportTimer();
 
@@ -581,7 +581,7 @@ class HomescreenController extends GetxController {
   }
 
   void transportTimer() async {
-    await _getReady.runOnce(() async {
+    await _transport.runOnce(() async {
       currentState = "transport";
 
       //timer initialization
