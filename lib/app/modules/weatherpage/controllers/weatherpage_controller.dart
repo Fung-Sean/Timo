@@ -7,6 +7,9 @@ import 'package:get/route_manager.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import '../../homescreen/controllers/homescreen_controller.dart';
 
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+
 import '../models/weatherpage_model.dart';
 
 class WeatherpageController extends GetxController {
@@ -17,6 +20,7 @@ class WeatherpageController extends GetxController {
   final _homescreencontroller = Get.put(HomescreenController());
 
   get proportionOfTimer => null;
+
   @override
   void onInit() {
     super.onInit();
@@ -26,10 +30,38 @@ class WeatherpageController extends GetxController {
   //latitude: 42.350876
   //longitude: -71.106918
 
+  double getLatitude() {
+    final userLatitude = _homescreencontroller.currentLocation.latitude;
+    //final userLongitude = _homescreencontroller.currentLocation.longitude;
+
+    // Get.log(userLongitude as String);
+    Get.log(userLatitude as String);
+
+    return userLatitude;
+  }
+
+  double getLongitude() {
+    final userLongitude = _homescreencontroller.currentLocation.longitude;
+    Get.log(userLongitude as String);
+
+    return userLongitude;
+  }
+
   void getWeather() async {
-    final response = await http.get(Uri.parse(
-        //"https://api.openweathermap.org/data/2.5/weather?lat=${_homescreencontroller.currentLocation.latitude}&lon=${_homescreencontroller.currentLocation.longitude}&units=imperial&appid=5ef0b262f16659ab86bd672617ca3c51"
-        "https://api.openweathermap.org/data/2.5/weather?lat=42.350876&lon=-71.106918&units=imperial&appid=5ef0b262f16659ab86bd672617ca3c51"));
+    //final userLatitude = _homescreencontroller.currentLocation.latitude;
+    //final userLongitude = _homescreencontroller.currentLocation.longitude;
+    //Get.log(userLongitude as String);
+
+    double userLatitudeWeather = getLatitude();
+    double userLongitudeWeather = getLongitude();
+
+    String apiURL =
+        "https://api.openweathermap.org/data/2.5/weather?lat=$userLatitudeWeather&lon=$userLongitudeWeather&units=imperial&appid=5ef0b262f16659ab86bd672617ca3c51";
+
+    final response = await http.get(Uri.parse(apiURL
+        //"https://api.openweathermap.org/data/2.5/weather?lat=42.350876&lon=-71.106918&units=imperial&appid=5ef0b262f16659ab86bd672617ca3c51"
+
+        ));
 
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body);
@@ -42,10 +74,7 @@ class WeatherpageController extends GetxController {
             ));
         isLoading.value = true;
         update();
-      } else {
-        print("unable to get data");
-        Get.snackbar('unable to load data', 'boo');
-      }
+      } else {}
     } else {
       //throw Exception("Failed to load weather API");
       Get.snackbar('Error loading data ...',
