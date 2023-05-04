@@ -56,7 +56,8 @@ class WeatherpageController extends GetxController {
     double userLongitudeWeather = getLongitude();
 
     String apiURL =
-        "https://api.openweathermap.org/data/2.5/weather?lat=$userLatitudeWeather&lon=$userLongitudeWeather&units=imperial&appid=5ef0b262f16659ab86bd672617ca3c51";
+        "https://api.openweathermap.org/data/2.5/weather?lat=42.350876&lon=-71.106918&units=imperial&appid=5ef0b262f16659ab86bd672617ca3c51";
+    //"https://api.openweathermap.org/data/2.5/weather?lat=$userLatitudeWeather&lon=$userLongitudeWeather&units=imperial&appid=5ef0b262f16659ab86bd672617ca3c51";
 
     final response = await http.get(Uri.parse(apiURL
         //"https://api.openweathermap.org/data/2.5/weather?lat=42.350876&lon=-71.106918&units=imperial&appid=5ef0b262f16659ab86bd672617ca3c51"
@@ -74,6 +75,10 @@ class WeatherpageController extends GetxController {
             ));
         isLoading.value = true;
         update();
+
+        print("This is a test");
+        print("geolocation lat: $userLatitudeWeather");
+        print("geolocation long: $userLongitudeWeather");
       } else {}
     } else {
       //throw Exception("Failed to load weather API");

@@ -436,9 +436,10 @@ class HomescreenController extends GetxController {
 
   //FOR NOTIFICATION/POPUPS
   final stylebegin_title = TextStyle(
-      fontSize: 24,
-      fontWeight: FontWeight.w500,
-      color: Color.fromARGB(255, 53, 147, 255));
+    fontSize: 24,
+    fontWeight: FontWeight.w500,
+    color: Color.fromARGB(255, 53, 147, 255),
+  );
 
   final stylebegin_middle = TextStyle(
       fontSize: 14,
@@ -452,9 +453,29 @@ class HomescreenController extends GetxController {
     Get.defaultDialog(
         title: 'Your timer has begun!',
         titleStyle: GoogleFonts.inter(textStyle: stylebegin_title),
-        middleText:
-            'Timo takes your Google Calendar \n events to set aside periods of time for \n you to get ready and travel to your \n destination on time.',
-        middleTextStyle: GoogleFonts.inter(textStyle: stylebegin_middle));
+        content: SizedBox(
+            width: 300,
+            height: 150,
+            child: Text(
+              'Timo takes your Google Calendar \n events to set aside periods of time for \n you to get ready and travel to your \n destination on time.',
+              style: GoogleFonts.inter(textStyle: stylebegin_middle),
+              textAlign: TextAlign.center,
+            )),
+        // textConfirm: "Let's go!",
+        // buttonColor: Color.fromARGB(255, 53, 147, 255)
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: Text("Let's go!"))
+        ],
+        barrierDismissible: true
+
+        //middleText:
+        //    'Timo takes your Google Calendar \n events to set aside periods of time for \n you to get ready and travel to your \n destination on time.',
+        //middleTextStyle: GoogleFonts.inter(textStyle: stylebegin_middle)
+        );
     //add button to escape
 
     //change display show timer is over
@@ -544,11 +565,47 @@ class HomescreenController extends GetxController {
 
       //notification for when timer is done
       //sendFinishNotification();
+      // Get.defaultDialog(
+      //   title: 'Your timers have ended!',
+      //   middleText:
+      //       'Your timers have ended. Did you make it to your event on time?',
+      // );
       Get.defaultDialog(
-        title: 'Your timers have ended!',
-        middleText:
-            'Your timers have ended. Did you make it to your event on time?',
-      );
+          title: 'Your timers have ended!',
+          titleStyle: GoogleFonts.inter(textStyle: stylebegin_title),
+          content: SizedBox(
+              width: 300,
+              height: 150,
+              child: Text(
+                'Did you make it to your event on time?',
+                style: GoogleFonts.inter(textStyle: stylebegin_middle),
+                textAlign: TextAlign.center,
+              )),
+          // textConfirm: "Let's go!",
+          // buttonColor: Color.fromARGB(255, 53, 147, 255)
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text("Nope")),
+                ElevatedButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text("Yes!"))
+              ],
+            )
+          ],
+          barrierDismissible: true
+
+          //middleText:
+          //    'Timo takes your Google Calendar \n events to set aside periods of time for \n you to get ready and travel to your \n destination on time.',
+          //middleTextStyle: GoogleFonts.inter(textStyle: stylebegin_middle)
+          );
     });
   }
 
