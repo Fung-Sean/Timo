@@ -31,7 +31,7 @@ class _NearByPlacesScreenState extends State<NearbyView> {
   String radius = "1000";
   double latitude = 42.349480;
   double longitude = -71.094580;
-  String keyword = '&keyword=coffee';
+  String keyword = 'Coffee';
   int? timeLeft;
   PolylinePoints polylinePoints = PolylinePoints();
   Map<PolylineId, Polyline> polylines = {};
@@ -42,6 +42,8 @@ class _NearByPlacesScreenState extends State<NearbyView> {
         desiredAccuracy: LocationAccuracy.high);
     double latitude = location.latitude;
     double longitude = location.longitude;
+    final prefs = await SharedPreferences.getInstance();
+    keyword = await prefs.getString("Keyword")!;
     var url = Uri.parse(
         'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' +
             latitude.toString() +
@@ -49,6 +51,7 @@ class _NearByPlacesScreenState extends State<NearbyView> {
             longitude.toString() +
             '&radius=' +
             radius +
+            '&keyword=' +
             keyword +
             '&key=' +
             apiKey);
@@ -146,7 +149,27 @@ class _NearByPlacesScreenState extends State<NearbyView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Nearby Places'),
+        title: FutureBuilder<String>(
+          future: SharedPreferences.getInstance()
+              .then((prefs) => prefs.getString('Keyword')!),
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+            if (snapshot.hasData) {
+              return Text(
+                snapshot.data!,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                    fontSize: 22,
+                  ),
+                ),
+              );
+            } else {
+              return const Text('Loading...');
+            }
+          },
+        ),
         centerTitle: true,
       ),
       body: FutureBuilder<NearbyController>(
@@ -189,11 +212,19 @@ class _NearByPlacesScreenState extends State<NearbyView> {
                 child: Column(
                   children: [
                     ElevatedButton(
-                      onPressed: () {
-                        setState(() {});
-                      },
-                      child: const Text("Refresh"),
-                    ),
+                        onPressed: () {
+                          setState(() {});
+                        },
+                        child: Text(
+                          'Reload',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.inter(
+                              textStyle: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                            fontSize: 22,
+                          )),
+                        )),
                     for (int i = 0; i < results.length; i++)
                       nearbyPlacesWidget(results[i])
                   ],
@@ -216,7 +247,16 @@ class _NearByPlacesScreenState extends State<NearbyView> {
           borderRadius: BorderRadius.circular(10)),
       child: Column(
         children: [
-          Text("Name: " + results.name!),
+          Text(
+            "Name: " + results.name!,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.inter(
+                textStyle: const TextStyle(
+              fontWeight: FontWeight.w400,
+              color: Colors.black,
+              fontSize: 17,
+            )),
+          ),
           InkWell(
             child: Text(
               "Location: " + results.vicinity.toString(),
@@ -237,12 +277,38 @@ class _NearByPlacesScreenState extends State<NearbyView> {
             future: calculateTravelTime(results),
             builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Text('Loading...');
+                return Text(
+                  "loading...",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                      textStyle: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                    fontSize: 17,
+                  )),
+                );
               } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
+                return Text(
+                  'Error: ${snapshot.error}',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                      textStyle: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                    fontSize: 17,
+                  )),
+                );
               } else {
                 return Text(
-                    'Travel time: ${(snapshot.data as int) / 60}' + ' minutes');
+                  'Travel time: ${(snapshot.data as int) / 60}' + ' minutes',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                      textStyle: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                    fontSize: 17,
+                  )),
+                );
               }
             },
           ),
