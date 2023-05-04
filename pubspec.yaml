@@ -29,12 +29,14 @@ dependencies:
 
   currency_icons: ^0.3.0
   geolocator: ^9.0.2
-  geocoding: ^2.1.0
+  geocoding: ^2.0.0
   flutter_polyline_points: ^1.0.0
   dio: ^5.1.1
   shared_preferences: ^2.1.0
   flutter_local_notifications: ^13.0.0
   flutter_background: ^1.0.7
+  location: ^4.4.0
+  flutter_map: ^3.1.0
 
 #dependency_overrides: 
 #  syncfusion_flutter_calendar: ^18.4.46

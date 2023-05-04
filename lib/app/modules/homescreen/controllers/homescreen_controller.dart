@@ -26,6 +26,10 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 //import '../../../../notification_service_cont.dart';
 import '../../../../notification_serviceController.dart';
 import 'package:async/async.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class HomescreenController extends GetxController {
   final count = 0.obs;
@@ -192,7 +196,20 @@ class HomescreenController extends GetxController {
       //List<Location> locations1 = await locationFromAddress("610 Beacon St");
       print("I am here!");
       print("Location value: " + location.value);
-      List<Location> locations2 = await locationFromAddress(location.value);
+      //List<Location> locations2 = await locationFromAddress(location.value);
+      String address = location.value;
+      String apiKey = 'a33c6b320d634c1b998de2365e285726';
+      String url =
+          'https://api.opencagedata.com/geocode/v1/json?q=$address&key=$apiKey';
+      LatLng endLocation = LatLng(39.9526, 75.1652);
+      http.Response response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        double latitude = data['results'][0]['geometry']['lat'];
+        double longitude = data['results'][0]['geometry']['lng'];
+        endLocation = LatLng(latitude, longitude);
+      }
+      print(endLocation.latitude);
       print("Location2 is good");
 
       Set<Marker> markers = Set(); //markers for google map
@@ -202,8 +219,6 @@ class HomescreenController extends GetxController {
       //LatLng(locations1[0].latitude, locations1[0].longitude);
       LatLng startLocation =
           LatLng(currentLocation.latitude, currentLocation.longitude);
-      LatLng endLocation =
-          LatLng(locations2[0].latitude, locations2[0].longitude);
 
       print("Start location: " + startLocation.toString());
       print("End location: " + endLocation.toString());
