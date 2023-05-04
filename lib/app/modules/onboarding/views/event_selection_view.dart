@@ -31,20 +31,33 @@ class EventSelectionView extends GetView<OnboardingController> {
           70,
         ));
     return Scaffold(
-      body: Center(
+      body: SafeArea(
         child: Column(
-          //mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const SizedBox(height: 50),
-            Container(
-              width: double.maxFinite,
-              child: Slider(
-                min: 0.0,
-                max: 100.0,
-                value: _value,
-                onChanged: (value) {
-                  value = control.getProgressSliderValue();
-                },
+            Align(
+              alignment: Alignment.topLeft,
+              child: Row(
+                children: [
+                  TextButton(
+                    onPressed: () => Get.back(),
+                    child: Text(
+                      'Back',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                  ),
+                  CircularProgressIndicator(
+                    value: _value / 100,
+                    backgroundColor: Colors.grey,
+                    strokeWidth: 5,
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 40),

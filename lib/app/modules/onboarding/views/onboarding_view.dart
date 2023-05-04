@@ -61,7 +61,9 @@ class OnboardingView extends GetView<OnboardingController> {
                 style: TextStyle(fontSize: 25),
               ),
             ),
-            const Expanded(child: SizedBox(height: 10)),
+            Expanded(
+                child:
+                    SizedBox(height: MediaQuery.of(context).size.height * 10)),
             ElevatedButton(
                 style: style,
                 onPressed: () {
@@ -69,7 +71,7 @@ class OnboardingView extends GetView<OnboardingController> {
                   Get.put(OnboardingController());
                 },
                 child: const Text('Continue')),
-            const SizedBox(height: 50),
+            SizedBox(height: MediaQuery.of(context).size.height * .7),
           ],
         ),
       ),
