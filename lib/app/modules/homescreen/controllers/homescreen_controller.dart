@@ -335,7 +335,9 @@ class HomescreenController extends GetxController {
 
       //calculates how much time you have until next event getReady timer
       timeUntilNextGetReady = timeToGetReady.difference(now);
+      
       //timeUntilNextGetReady = timeToGetReady.difference(DateTime.parse(last_timer_update));
+
       print("TIME UNTIL NEXT GET READY");
       print(timeUntilNextGetReady.toString());
 
