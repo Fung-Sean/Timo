@@ -162,12 +162,12 @@ class HomescreenController extends GetxController {
       await prefs.reload();
       int readyTime = await (prefs.getInt('time')! * 60) ?? 0;
       int earlyTime = await (prefs.getInt('early')! * 60) ?? 0;
-      String last_timer_update = await (prefs.getString('last_timer_update')!);
+      //String last_timer_update = await (prefs.getString('last_timer_update')!);
       getReadyTime.value = await (readyTime + earlyTime);
       print("getReadyTime: " + getReadyTime.value.toString());
       polylineCoordinates = [];
 
-      print("last_timer_update: " + last_timer_update);
+      // print("last_timer_update: " + last_timer_update);
 
       //get current location from user
       currentLocation = await _determinePosition();
@@ -331,9 +331,9 @@ class HomescreenController extends GetxController {
       endEventString.value = DateFormat.jm().format(eventEndTime);
 
       //calculates how much time you have until next event getReady timer
-      //timeUntilNextGetReady = timeToGetReady.difference(now);
-      timeUntilNextGetReady =
-          timeToGetReady.difference(DateTime.parse(last_timer_update));
+      timeUntilNextGetReady = timeToGetReady.difference(now);
+      //timeUntilNextGetReady =
+      //    timeToGetReady.difference(DateTime.parse(last_timer_update));
       print("TIME UNTIL NEXT GET READY");
       print(timeUntilNextGetReady.toString());
 
