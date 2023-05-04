@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 
 import 'package:timo_test/app/modules/homescreen/views/weather_view.dart';
 import 'package:timo_test/app/modules/homescreen/views/mainscreen_view.dart';
+import '../../nearby/controllers/nearby_controller.dart';
+import '../../nearby/views/nearby_view.dart';
 import '../views/weather_view.dart';
 import '../controllers/homescreen_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -28,7 +30,7 @@ class HomescreenView extends GetView<HomescreenController> {
     const Color gray = Color.fromARGB(217, 217, 217, 217);
 
     return Scaffold(
-
+        key: scaffoldKey,
         //appBar widget which should show up on every homescreen view
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -87,8 +89,8 @@ class HomescreenView extends GetView<HomescreenController> {
               ),
               ElevatedButton.icon(
                   onPressed: () {
-                    // Get.to(NearbyView());
-                    // Get.put(NearbyController());
+                    Get.to(NearbyView());
+                    Get.put(NearbyController());
                   },
                   icon: Icon(Icons.download, size: 24),
                   label: Text(
