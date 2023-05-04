@@ -4,7 +4,7 @@ import 'app/routes/app_pages.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 // const AndroidNotificationChannel channel = AndroidNotificationChannel(
 //     'high_importance_channel', 'High Importance Notifications',

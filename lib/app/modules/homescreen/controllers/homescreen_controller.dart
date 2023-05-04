@@ -13,18 +13,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timo_test/app/modules/intro/controllers/intro_controller.dart';
 import 'package:timo_test/app/modules/login/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:timo_test/notification_serviceController.dart';
+//import 'package:timo_test/notification_serviceController.dart';
 import 'dart:math';
 import '../../onboarding/controllers/onboarding_controller.dart';
 import 'dart:math';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-//import '../../../../notification_service.dart';
-//import '../../../../notification_service_cont.dart';
-import '../../../../notification_serviceController.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 
 class HomescreenController extends GetxController {
   final count = 0.obs;
@@ -45,32 +43,6 @@ class HomescreenController extends GetxController {
   //here we have a google maps controller, that we will use to calculate the
   //distance between points.
   GoogleMapController? mapController;
-
-  // initialize notifications controller to utilize its functions
-  // final NotificationServiceController _notificationController =
-  //     Get.put(NotificationServiceController());
-
-  // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  //     FlutterLocalNotificationsPlugin();
-
-  // void init() {
-  //   final AndroidInitializationSettings initializationSettingsAndroid =
-  //       AndroidInitializationSettings('app_icon');
-  //   final NotificationService _notificationController =
-  //       NotificationServiceCont();
-  // final IOSInitializationSettings initializationSettingsIOS =
-  //     IOSInitializationSettings(
-  //   requestSoundPermission: false,
-  //   requestBadgePermission: false,
-  //   requestAlertPermission: false,
-  //   onDidReceiveLocalNotification: onDidReceiveLocalNotification,
-  // );
-  //   final InitializationSettings initializationSettings =
-  //       InitializationSettings(
-  //           android: initializationSettingsAndroid,
-  //           //iOS: initializationSettingsIOS,
-  //           macOS: null);
-  // }
 
   //initialize parameters for timer display on screen
 
@@ -379,12 +351,6 @@ class HomescreenController extends GetxController {
 
     //initializes all data in home screen
     await initialize();
-
-    //initialize for notification
-    // NotificationServiceController.initialize(flutterLocalNotificationsPlugin);
-
-    // NotificationServiceController.showNotification(
-    //     title: 'TIMO', body: 'meow', fln: flutterLocalNotificationsPlugin);
   }
 
   @override
@@ -395,6 +361,47 @@ class HomescreenController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+  }
+
+  //NOTIFICATIONS
+  void sendStartNotification() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 1,
+            channelKey: 'test_channel',
+            title: 'TIMO',
+            body: 'Timer has started!'));
+
+    //what happens if we click the notif?
+    // AwesomeNotifications().actionStream.listen((event) {
+    //   Get.to(const Intro1View());
+    // });
+  }
+
+  void sendFinishNotification() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 1,
+            channelKey: 'test_channel',
+            title: 'TIMO',
+            body: 'Timer has finished!'));
+
+    //what happens if we click the notif?
+    // AwesomeNotifications().actionStream.listen((event) {
+    //   Get.to(const Intro1View());
+    // });
   }
 
   int convertYearToInt(String date) {
@@ -427,9 +434,28 @@ class HomescreenController extends GetxController {
     return minute;
   }
 
+  //FOR NOTIFICATION/POPUPS
+  final stylebegin_title = TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.w500,
+      color: Color.fromARGB(255, 53, 147, 255));
+
+  final stylebegin_middle = TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w300,
+      color: Color.fromARGB(255, 0, 0, 0));
+
   //function to handle timer logic for before an event's getReady timer starts
   void startBeforeGetReadyTimer() async {
     print("I AM IN TIMER FUNCTION");
+
+    Get.defaultDialog(
+        title: 'Your timer has begun!',
+        titleStyle: GoogleFonts.inter(textStyle: stylebegin_title),
+        middleText:
+            'Timo takes your Google Calendar \n events to set aside periods of time for \n you to get ready and travel to your \n destination on time.',
+        middleTextStyle: GoogleFonts.inter(textStyle: stylebegin_middle));
+    //add button to escape
 
     //change display show timer is over
     if (timeUntilNextGetReadyInt < 0) {
@@ -473,16 +499,13 @@ class HomescreenController extends GetxController {
       belowTimer.value = "Leave at ";
       startAtString.value = startTravelString.value;
 
-      //notification
-      // NotificationServiceController.showNotification(
-      //     title: 'TIMO',
-      //     body: 'Timer has started',
-      //     fln: flutterLocalNotificationsPlugin);
-
       //start getReady timer
       getReadyTimer();
 
-      //_notificationController.showNotification("Timer has started!");
+      //send timer start notification/popup
+      //openStartDialog(context);
+
+      //sendStartNotification();
     });
   }
 
@@ -519,13 +542,13 @@ class HomescreenController extends GetxController {
       print("Done");
       sub.cancel();
 
-      // NotificationServiceController.showNotification(
-      //     title: 'TIMO',
-      //     body: "Time's up! Travel now",
-      //     fln: flutterLocalNotificationsPlugin);
-
       //notification for when timer is done
-      //_notificationController.showNotification("Time's up!");
+      //sendFinishNotification();
+      Get.defaultDialog(
+        title: 'Your timers have ended!',
+        middleText:
+            'Your timers have ended. Did you make it to your event on time?',
+      );
     });
   }
 
