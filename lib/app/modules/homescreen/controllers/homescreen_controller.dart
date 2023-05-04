@@ -91,6 +91,8 @@ class HomescreenController extends GetxController {
   RxString location = "".obs;
   RxString date = "".obs;
 
+  RxString shortenedLocation = "".obs;
+
   //Initialize the parameters of titles inside the Circle
   RxString aboveTimer = "".obs;
   RxString belowTimer = "".obs;
@@ -190,6 +192,12 @@ class HomescreenController extends GetxController {
       endTime.value = localData[0].end;
       location.value = localData[0].location;
       date.value = localData[0].date;
+
+      shortenedLocation.value = location.value;
+      if (shortenedLocation.value.length > 35) {
+        shortenedLocation.value = shortenedLocation.substring(0, 25);
+        shortenedLocation.value += "...";
+      }
 
       //###################################
       //here is where i will do google maps distance and location tracking stuff
