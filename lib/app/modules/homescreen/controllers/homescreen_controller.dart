@@ -131,6 +131,7 @@ class HomescreenController extends GetxController {
   AsyncMemoizer _initialize = AsyncMemoizer();
   AsyncMemoizer _beforeGetReady = AsyncMemoizer();
   AsyncMemoizer _getReady = AsyncMemoizer();
+  AsyncMemoizer _transport = AsyncMemoizer();
 
   //Color Values
   Color page1Blue = Color.fromARGB(255, 84, 144, 248);
@@ -540,6 +541,59 @@ class HomescreenController extends GetxController {
         //maintain a variable called proportion that dictates
         //the portion of the timer progress indicator to be filled
         proportionOfTimer.value = timeLeft / getReadyTime.value;
+
+        //values for timer display
+        int hours = timeLeft ~/ 3600;
+        int minutes = (timeLeft % 3600) ~/ 60;
+        int seconds = timeLeft % 60;
+        timeDisplay.value = hours.toString().padLeft(2, "0") +
+            ":" +
+            minutes.toString().padLeft(2, "0") +
+            ":" +
+            seconds.toString().padLeft(2, "0");
+      });
+
+      //when timer is done, switch to travel timer (Implementation in progress)
+      sub.onDone(() {
+        print("Done");
+        sub.cancel();
+
+        //make reset method but for now
+        aboveTimer.value = "Get Ready!";
+        belowTimer.value = "Leave at ";
+        startAtString.value = startTravelString.value;
+
+        transportTimer();
+
+        // NotificationServiceController.showNotification(
+        //     title: 'TIMO',
+        //     body: "Time's up! Travel now",
+        //     fln: flutterLocalNotificationsPlugin);
+
+        //notification for when timer is done
+        //_notificationController.showNotification("Time's up!");
+      });
+    });
+  }
+
+  void transportTimer() async {
+    await _getReady.runOnce(() async {
+      currentState = "transport";
+
+      //timer initialization
+      CountdownTimer countDownTimer = CountdownTimer(
+        Duration(seconds: transportTime.value),
+        const Duration(seconds: 1),
+      );
+
+      var sub = countDownTimer.listen(null);
+      sub.onData((duration) {
+        //calculates duration based on time elapsed
+        timeLeft = transportTime.value - duration.elapsed.inSeconds;
+
+        //maintain a variable called proportion that dictates
+        //the portion of the timer progress indicator to be filled
+        proportionOfTimer.value = timeLeft / transportTime.value;
 
         //values for timer display
         int hours = timeLeft ~/ 3600;

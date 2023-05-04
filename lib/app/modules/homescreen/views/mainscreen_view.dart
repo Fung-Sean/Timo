@@ -172,9 +172,15 @@ class MainScreenView extends GetView<HomescreenController> {
                                   controller.timeDisplay.value,
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.inter(
-                                      textStyle: const TextStyle(
+                                      textStyle: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: const Color.fromARGB(66, 66, 66, 66),
+                                    color: controller.currentState ==
+                                            'beforeGetReady'
+                                        ? beforeGetReadyBackground
+                                        : controller.currentState == 'getReady'
+                                            ? getReadyBackground
+                                            : transportationBackground,
+                                    //color: const Color.fromARGB(66, 66, 66, 66),
                                     fontSize: 45,
                                   ))),
                             ),
