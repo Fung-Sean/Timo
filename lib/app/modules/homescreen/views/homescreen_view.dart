@@ -81,11 +81,21 @@ class HomescreenView extends GetView<HomescreenController> {
             // Important: Remove any padding from the ListView.
             padding: EdgeInsets.zero,
             children: [
-              const DrawerHeader(
+              DrawerHeader(
                 decoration: BoxDecoration(
                   color: Colors.blue,
                 ),
-                child: Text('Drawer Header'),
+                child: Text(
+                  'Have some extra time? We will route you to the nearest place!',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.normal,
+                      color: Colors.white,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
               ),
               ElevatedButton.icon(
                   onPressed: () {
@@ -131,7 +141,8 @@ class HomescreenView extends GetView<HomescreenController> {
               child: Obx(() => AnimatedSmoothIndicator(
                     activeIndex: currentPage.value,
                     count: 3,
-                    effect: const ExpandingDotsEffect(),
+                    effect: const ExpandingDotsEffect(
+                        activeDotColor: Color.fromARGB(255, 53, 146, 255)),
                   )),
             ),
           ],

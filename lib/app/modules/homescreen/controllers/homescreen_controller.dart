@@ -169,6 +169,8 @@ class HomescreenController extends GetxController {
 
       //print("last_timer_update: " + last_timer_update);
 
+      //prefs.setInt("TimeLeft", last_timer_update);
+
       //get current location from user
       currentLocation = await determinePosition();
       print(currentLocation.latitude);
@@ -343,6 +345,8 @@ class HomescreenController extends GetxController {
 
       //internal usage
       timeUntilNextGetReadyInt = timeUntilNextGetReady.inSeconds;
+
+      prefs.setInt("timeUntilReady", timeUntilNextGetReadyInt);
 
       //call BeforeGetReady timer
       startBeforeGetReadyTimer();

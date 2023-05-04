@@ -27,6 +27,7 @@ class NearbyController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     prefs = await SharedPreferences.getInstance();
+    prefs.setInt("Time_for_stuff", 1200);
   }
 
   Future<int> calculateTravelTime(Results result) async {
