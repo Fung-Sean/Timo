@@ -170,7 +170,7 @@ class HomescreenController extends GetxController {
       //print("last_timer_update: " + last_timer_update);
 
       //get current location from user
-      currentLocation = await _determinePosition();
+      currentLocation = await determinePosition();
       print(currentLocation.latitude);
 
       //uses intro controller's function to read data from local storage
@@ -335,7 +335,7 @@ class HomescreenController extends GetxController {
 
       //calculates how much time you have until next event getReady timer
       timeUntilNextGetReady = timeToGetReady.difference(now);
-      
+
       //timeUntilNextGetReady = timeToGetReady.difference(DateTime.parse(last_timer_update));
 
       print("TIME UNTIL NEXT GET READY");
@@ -367,7 +367,7 @@ class HomescreenController extends GetxController {
     return 12742 * asin(sqrt(a));
   }
 
-  Future<Position> _determinePosition() async {
+  Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -476,6 +476,9 @@ class HomescreenController extends GetxController {
         Duration(seconds: timeUntilNextGetReadyInt),
         const Duration(seconds: 1),
       );
+      //we save the amount of time until get ready is activated, so that we can use it to see
+      //if there is time for miscellaneous task
+      await prefs.setInt("Time_for_stuff", timeUntilNextGetReadyInt);
 
       var sub = countDownTimer.listen(null);
       sub.onData((duration) async {
@@ -483,7 +486,7 @@ class HomescreenController extends GetxController {
         await prefs.setString("last_timer_update", DateTime.now().toString());
         //calculates time left using duration elapsed
         timeLeft = timeUntilNextGetReadyInt - duration.elapsed.inSeconds;
-        print("timeLeft: " + timeLeft.toString());
+        //print("timeLeft: " + timeLeft.toString());
 
         //maintain a variable called proportion that dictates
         //the portion of the timer progress indicator to be filled
