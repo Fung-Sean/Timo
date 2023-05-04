@@ -162,12 +162,12 @@ class HomescreenController extends GetxController {
       await prefs.reload();
       int readyTime = await (prefs.getInt('time')! * 60) ?? 0;
       int earlyTime = await (prefs.getInt('early')! * 60) ?? 0;
-      String last_timer_update = await (prefs.getString('last_timer_update')!);
+      //String last_timer_update = await (prefs.getString('last_timer_update')!);
       getReadyTime.value = await (readyTime + earlyTime);
       print("getReadyTime: " + getReadyTime.value.toString());
       polylineCoordinates = [];
 
-      print("last_timer_update: " + last_timer_update);
+      //print("last_timer_update: " + last_timer_update);
 
       //get current location from user
       currentLocation = await _determinePosition();
@@ -188,11 +188,14 @@ class HomescreenController extends GetxController {
       //###################################
       //here is where i will do google maps distance and location tracking stuff
       //List<Location> locations1 = await locationFromAddress("610 Beacon St");
+      print("I am here!");
+      print("Location value: " + location.value);
       List<Location> locations2 = await locationFromAddress(location.value);
+      print("Location2 is good");
 
       Set<Marker> markers = Set(); //markers for google map
-      //String googleAPIKey = "AIzaSyClNisCXgPVCbZXqReGLLc3k-5uz6Ho9Mg";
-      String googleAPIKey = "AIzaSyDSWJxako7BZpccp1_1CfSTzPt5nwwNMY4";
+      String googleAPIKey = "AIzaSyClNisCXgPVCbZXqReGLLc3k-5uz6Ho9Mg";
+      //String googleAPIKey = "AIzaSyDSWJxako7BZpccp1_1CfSTzPt5nwwNMY4";
       //LatLng startLocation =
       //LatLng(locations1[0].latitude, locations1[0].longitude);
       LatLng startLocation =
@@ -331,9 +334,8 @@ class HomescreenController extends GetxController {
       endEventString.value = DateFormat.jm().format(eventEndTime);
 
       //calculates how much time you have until next event getReady timer
-      //timeUntilNextGetReady = timeToGetReady.difference(now);
-      timeUntilNextGetReady =
-          timeToGetReady.difference(DateTime.parse(last_timer_update));
+      timeUntilNextGetReady = timeToGetReady.difference(now);
+      //timeUntilNextGetReady = timeToGetReady.difference(DateTime.parse(last_timer_update));
       print("TIME UNTIL NEXT GET READY");
       print(timeUntilNextGetReady.toString());
 
