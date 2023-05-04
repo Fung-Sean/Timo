@@ -162,6 +162,8 @@ class IntroController extends GetxController {
     });
     _googleSignIn.signInSilently();
     _currentUser = (await _googleSignIn.signIn())!;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('accountLoggedIn', "loggedIn");
     final GoogleAuthProvider httpClient =
         GoogleAuthProvider(await _currentUser.authHeaders);
     final GoogleAPI.CalendarApi calendarApi = GoogleAPI.CalendarApi(httpClient);

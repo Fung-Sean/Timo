@@ -705,9 +705,9 @@ class HomescreenController extends GetxController {
             );
 
         //make reset method but for now
-        aboveTimer.value = "Get Ready!";
-        belowTimer.value = "Leave at ";
-        startAtString.value = startTravelString.value;
+        aboveTimer.value = "Travel";
+        belowTimer.value = "ETA ";
+        startAtString.value = startEventString.value;
 
         transportTimer();
 
@@ -723,7 +723,7 @@ class HomescreenController extends GetxController {
   }
 
   void transportTimer() async {
-    await _getReady.runOnce(() async {
+    await _transport.runOnce(() async {
       currentState = "transport";
 
       //timer initialization
