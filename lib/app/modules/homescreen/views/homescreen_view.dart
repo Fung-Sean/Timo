@@ -12,7 +12,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 RxInt currentPage = 0.obs;
 
-
 class HomescreenView extends GetView<HomescreenController> {
   const HomescreenView({Key? key}) : super(key: key);
   @override
@@ -54,25 +53,65 @@ class HomescreenView extends GetView<HomescreenController> {
                 ),
               ],
             ),
-            /*
             IconButton(
               color: Colors.black,
               icon: const Icon(Icons.menu),
               onPressed: () {
                 if (scaffoldKey.currentState!.isDrawerOpen) {
-                  scaffoldKey.currentState!.closeDrawer();
+                  scaffoldKey.currentState!.closeEndDrawer();
                   //close drawer, if drawer is open
                 } else {
-                  scaffoldKey.currentState!.openDrawer();
+                  scaffoldKey.currentState!.openEndDrawer();
                   //open drawer, if drawer is closed
                 }
               },
-            )
-            */
+            ),
           ],
           //actions: const [Icon(Icons.more_vert)],
           centerTitle: false,
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        ),
+        endDrawer: Drawer(
+          // Add a ListView to the drawer. This ensures the user can scroll
+          // through the options in the drawer if there isn't enough vertical
+          // space to fit everything.
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Text('Drawer Header'),
+              ),
+              ElevatedButton.icon(
+                  onPressed: () {
+                    // Get.to(NearbyView());
+                    // Get.put(NearbyController());
+                  },
+                  icon: Icon(Icons.download, size: 24),
+                  label: Text(
+                    'Coffee',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.inter(
+                        textStyle: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                      fontSize: 22,
+                    )),
+                  )),
+              ListTile(
+                title: const Text('Item 2'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
         ),
         body: PageView(
           onPageChanged: onPageViewChange,
