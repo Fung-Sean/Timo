@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:timo_test/app/modules/homescreen/views/weather_view.dart';
 import 'package:timo_test/app/modules/homescreen/views/mainscreen_view.dart';
+import '../../nearby/controllers/nearby_controller.dart';
+import '../../nearby/views/nearby_view.dart';
 import '../views/weather_view.dart';
 import '../controllers/homescreen_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -29,7 +32,7 @@ class HomescreenView extends GetView<HomescreenController> {
     Color darkBlue = const Color.fromARGB(255, 53, 146, 255);
 
     return Scaffold(
-
+        key: scaffoldKey,
         //appBar widget which should show up on every homescreen view
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -94,18 +97,29 @@ class HomescreenView extends GetView<HomescreenController> {
             // Important: Remove any padding from the ListView.
             padding: EdgeInsets.zero,
             children: [
-              const DrawerHeader(
+              DrawerHeader(
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Color.fromARGB(255, 53, 146, 255),
                 ),
-                child: Text('Drawer Header'),
+                child: Text(
+                  'Have some extra time? Here are places you can visit given how much time you have before your next event.',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.normal,
+                      color: Colors.white,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
               ),
               ElevatedButton.icon(
                   onPressed: () {
-                    // Get.to(NearbyView());
-                    // Get.put(NearbyController());
+                    changeSharedPrefs("Coffee");
+                    Get.to(NearbyView());
+                    Get.put(NearbyController());
                   },
-                  icon: Icon(Icons.download, size: 24),
+                  icon: Icon(Icons.coffee, size: 24),
                   label: Text(
                     'Coffee',
                     textAlign: TextAlign.center,
@@ -116,15 +130,57 @@ class HomescreenView extends GetView<HomescreenController> {
                       fontSize: 22,
                     )),
                   )),
-              ListTile(
-                title: const Text('Item 2'),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
-                },
-              ),
+              ElevatedButton.icon(
+                  onPressed: () {
+                    changeSharedPrefs("Gas");
+                    Get.to(NearbyView());
+                    Get.put(NearbyController());
+                  },
+                  icon: Icon(Icons.local_gas_station, size: 24),
+                  label: Text(
+                    'Gas',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.inter(
+                        textStyle: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                      fontSize: 22,
+                    )),
+                  )),
+              ElevatedButton.icon(
+                  onPressed: () {
+                    changeSharedPrefs("Shop");
+                    Get.to(NearbyView());
+                    Get.put(NearbyController());
+                  },
+                  icon: Icon(Icons.shopping_cart, size: 24),
+                  label: Text(
+                    'Shop',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.inter(
+                        textStyle: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                      fontSize: 22,
+                    )),
+                  )),
+              ElevatedButton.icon(
+                  onPressed: () {
+                    changeSharedPrefs("Food");
+                    Get.to(NearbyView());
+                    Get.put(NearbyController());
+                  },
+                  icon: Icon(Icons.restaurant_menu, size: 24),
+                  label: Text(
+                    'Food',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.inter(
+                        textStyle: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                      fontSize: 22,
+                    )),
+                  )),
             ],
           ),
         ),
@@ -155,4 +211,9 @@ class HomescreenView extends GetView<HomescreenController> {
 //when the page is changed, I want that to reflect in my widgets
 onPageViewChange(int page) {
   currentPage.value = page;
+}
+
+changeSharedPrefs(String key) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString("Keyword", key);
 }

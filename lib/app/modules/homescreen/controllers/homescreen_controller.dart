@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart';
@@ -15,17 +16,22 @@ import 'package:timo_test/app/modules/login/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:timo_test/notification_serviceController.dart';
+//import 'package:timo_test/notification_serviceController.dart';
 import 'dart:math';
 import '../../onboarding/controllers/onboarding_controller.dart';
 import 'dart:math';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 //import '../../../../notification_service.dart';
 //import '../../../../notification_service_cont.dart';
-import '../../../../notification_serviceController.dart';
+//import '../../../../notification_serviceController.dart';
 import 'package:async/async.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class HomescreenController extends GetxController {
   final count = 0.obs;
@@ -169,8 +175,10 @@ class HomescreenController extends GetxController {
 
       //print("last_timer_update: " + last_timer_update);
 
+      //prefs.setInt("TimeLeft", last_timer_update);
+
       //get current location from user
-      currentLocation = await _determinePosition();
+      currentLocation = await determinePosition();
       print(currentLocation.latitude);
 
       //uses intro controller's function to read data from local storage
@@ -190,7 +198,20 @@ class HomescreenController extends GetxController {
       //List<Location> locations1 = await locationFromAddress("610 Beacon St");
       print("I am here!");
       print("Location value: " + location.value);
-      List<Location> locations2 = await locationFromAddress(location.value);
+      //List<Location> locations2 = await locationFromAddress(location.value);
+      String address = location.value;
+      String apiKey = 'a33c6b320d634c1b998de2365e285726';
+      String url =
+          'https://api.opencagedata.com/geocode/v1/json?q=$address&key=$apiKey';
+      LatLng endLocation = LatLng(39.9526, 75.1652);
+      http.Response response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        double latitude = data['results'][0]['geometry']['lat'];
+        double longitude = data['results'][0]['geometry']['lng'];
+        endLocation = LatLng(latitude, longitude);
+      }
+      print(endLocation.latitude);
       print("Location2 is good");
 
       Set<Marker> markers = Set(); //markers for google map
@@ -200,8 +221,6 @@ class HomescreenController extends GetxController {
       //LatLng(locations1[0].latitude, locations1[0].longitude);
       LatLng startLocation =
           LatLng(currentLocation.latitude, currentLocation.longitude);
-      LatLng endLocation =
-          LatLng(locations2[0].latitude, locations2[0].longitude);
 
       print("Start location: " + startLocation.toString());
       print("End location: " + endLocation.toString());
@@ -344,6 +363,8 @@ class HomescreenController extends GetxController {
       //internal usage
       timeUntilNextGetReadyInt = timeUntilNextGetReady.inSeconds;
 
+      prefs.setInt("timeUntilReady", timeUntilNextGetReadyInt);
+
       //call BeforeGetReady timer
       startBeforeGetReadyTimer();
     });
@@ -367,7 +388,7 @@ class HomescreenController extends GetxController {
     return 12742 * asin(sqrt(a));
   }
 
-  Future<Position> _determinePosition() async {
+  Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -429,6 +450,47 @@ class HomescreenController extends GetxController {
     super.onClose();
   }
 
+  //Notifications
+  void sendStartNotification() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 1,
+            channelKey: 'test_channel',
+            title: 'TIMO',
+            body: 'Timer has started!'));
+
+    //what happens if we click the notif?
+    // AwesomeNotifications().actionStream.listen((event) {
+    //   Get.to(const Intro1View());
+    // });
+  }
+
+  void sendFinishNotification() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 1,
+            channelKey: 'test_channel',
+            title: 'TIMO',
+            body: 'Timer has finished!'));
+
+    //what happens if we click the notif?
+    // AwesomeNotifications().actionStream.listen((event) {
+    //   Get.to(const Intro1View());
+    // });
+  }
+
   int convertYearToInt(String date) {
     DateTime dateTime = DateFormat('EEEE, MMMM d, y').parse(date);
     int year = dateTime.year;
@@ -459,11 +521,51 @@ class HomescreenController extends GetxController {
     return minute;
   }
 
+  //FOR NOTIFICATION/POPUPS
+  final stylebegin_title = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.w500,
+    color: Color.fromARGB(255, 53, 147, 255),
+  );
+
+  final stylebegin_middle = TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w300,
+      color: Color.fromARGB(255, 0, 0, 0));
+
   //function to handle timer logic for before an event's getReady timer starts
   void startBeforeGetReadyTimer() async {
     await _beforeGetReady.runOnce(() async {
       // code for your async operation here
       print("I AM IN TIMER FUNCTION");
+
+      Get.defaultDialog(
+          title: 'Your timer has begun!',
+          titleStyle: GoogleFonts.inter(textStyle: stylebegin_title),
+          content: SizedBox(
+              width: 300,
+              height: 150,
+              child: Text(
+                'Timo takes your Google Calendar \n events to set aside periods of time for \n you to get ready and travel to your \n destination on time.',
+                style: GoogleFonts.inter(textStyle: stylebegin_middle),
+                textAlign: TextAlign.center,
+              )),
+          // textConfirm: "Let's go!",
+          // buttonColor: Color.fromARGB(255, 53, 147, 255)
+          actions: [
+            ElevatedButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: Text("Let's go!"))
+          ],
+          barrierDismissible: true
+
+          //middleText:
+          //    'Timo takes your Google Calendar \n events to set aside periods of time for \n you to get ready and travel to your \n destination on time.',
+          //middleTextStyle: GoogleFonts.inter(textStyle: stylebegin_middle)
+          );
+
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       //change display show timer is over
@@ -476,6 +578,9 @@ class HomescreenController extends GetxController {
         Duration(seconds: timeUntilNextGetReadyInt),
         const Duration(seconds: 1),
       );
+      //we save the amount of time until get ready is activated, so that we can use it to see
+      //if there is time for miscellaneous task
+      await prefs.setInt("Time_for_stuff", timeUntilNextGetReadyInt);
 
       var sub = countDownTimer.listen(null);
       sub.onData((duration) async {
@@ -483,7 +588,7 @@ class HomescreenController extends GetxController {
         await prefs.setString("last_timer_update", DateTime.now().toString());
         //calculates time left using duration elapsed
         timeLeft = timeUntilNextGetReadyInt - duration.elapsed.inSeconds;
-        print("timeLeft: " + timeLeft.toString());
+        //print("timeLeft: " + timeLeft.toString());
 
         //maintain a variable called proportion that dictates
         //the portion of the timer progress indicator to be filled
@@ -561,6 +666,43 @@ class HomescreenController extends GetxController {
       sub.onDone(() {
         print("Done");
         sub.cancel();
+
+        Get.defaultDialog(
+            title: 'Your timers have ended!',
+            titleStyle: GoogleFonts.inter(textStyle: stylebegin_title),
+            content: SizedBox(
+                width: 300,
+                height: 90,
+                child: Text(
+                  'Did you make it to your event on time?',
+                  style: GoogleFonts.inter(textStyle: stylebegin_middle),
+                  textAlign: TextAlign.center,
+                )),
+            // textConfirm: "Let's go!",
+            // buttonColor: Color.fromARGB(255, 53, 147, 255)
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: Text("Nope")),
+                  ElevatedButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: Text("Yes!"))
+                ],
+              )
+            ],
+            barrierDismissible: true
+
+            //middleText:
+            //    'Timo takes your Google Calendar \n events to set aside periods of time for \n you to get ready and travel to your \n destination on time.',
+            //middleTextStyle: GoogleFonts.inter(textStyle: stylebegin_middle)
+            );
 
         //make reset method but for now
         aboveTimer.value = "Travel";
