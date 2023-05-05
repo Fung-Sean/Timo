@@ -267,12 +267,9 @@ class WeatherView extends GetView<HomescreenController> {
                       // child: Image.asset('assets/toothbrush.png', color: darkBlue),
                       ),
                   Obx(() => HorizontalBarWidget(
-                        firstSectionValue:
-                            (controller.getReadyTime.value / 60).toInt(),
-                        secondSectionValue:
-                            (controller.transportTime.value / 60).toInt(),
-                        thirdSectionValue:
-                            (controller.eventDuration.value).toInt(),
+                        firstSectionValue: controller.firstSectionValue.value,
+                        secondSectionValue: controller.secondSectionValue.value,
+                        thirdSectionValue: controller.thirdSectionValue.value,
                       )),
                 ],
               ),

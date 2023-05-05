@@ -57,10 +57,9 @@ class MainScreenView extends GetView<HomescreenController> {
             return CircularProgressIndicator();
           }
           //lets define some variables to give us the proportion of each segment
-          int firstSectionValue = (controller.getReadyTime.value / 60).toInt();
-          int secondSectionValue =
-              (controller.transportTime.value / 60).toInt();
-          int thirdSectionValue = (controller.eventDuration.value).toInt();
+          int firstSectionValue = controller.firstSectionValue.value;
+          int secondSectionValue = controller.secondSectionValue.value;
+          int thirdSectionValue = controller.thirdSectionValue.value;
 
           final totalValue =
               firstSectionValue + secondSectionValue + thirdSectionValue;
@@ -227,12 +226,9 @@ class MainScreenView extends GetView<HomescreenController> {
                       // child: Image.asset('assets/toothbrush.png', color: darkBlue),
                       ),
                   Obx(() => HorizontalBarWidget(
-                        firstSectionValue:
-                            (controller.getReadyTime.value / 60).toInt(),
-                        secondSectionValue:
-                            (controller.transportTime.value / 60).toInt(),
-                        thirdSectionValue:
-                            (controller.eventDuration.value).toInt(),
+                        firstSectionValue: controller.firstSectionValue.value,
+                        secondSectionValue: controller.secondSectionValue.value,
+                        thirdSectionValue: controller.thirdSectionValue.value,
                       )),
                 ],
               ),
@@ -257,17 +253,19 @@ class MainScreenView extends GetView<HomescreenController> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: Text(
-                                controller.startAtString.value +
-                                    "-" +
-                                    controller.startTravelString.value,
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.inter(
-                                    textStyle: const TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black,
-                                  fontSize: 17,
-                                ))),
+                            child: Obx(
+                              () => Text(
+                                  controller.startAtString.value +
+                                      "-" +
+                                      controller.startTravelString.value,
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.inter(
+                                      textStyle: const TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.black,
+                                    fontSize: 17,
+                                  ))),
+                            ),
                           ),
                         ],
                       ),
@@ -283,17 +281,19 @@ class MainScreenView extends GetView<HomescreenController> {
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 4.0, horizontal: 2.0),
-                            child: Text(
-                                controller.startTravelString.value +
-                                    "-" +
-                                    controller.startEventString.value,
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.inter(
-                                    textStyle: const TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black,
-                                  fontSize: 17,
-                                ))),
+                            child: Obx(
+                              () => Text(
+                                  controller.startTravelString.value +
+                                      "-" +
+                                      controller.startEventString.value,
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.inter(
+                                      textStyle: const TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.black,
+                                    fontSize: 17,
+                                  ))),
+                            ),
                           ),
                         ],
                       ),
@@ -308,17 +308,19 @@ class MainScreenView extends GetView<HomescreenController> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: Text(
-                                controller.startEventString.value +
-                                    "-" +
-                                    controller.endEventString.value,
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.inter(
-                                    textStyle: const TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black,
-                                  fontSize: 17,
-                                ))),
+                            child: Obx(
+                              () => Text(
+                                  controller.startEventString.value +
+                                      "-" +
+                                      controller.endEventString.value,
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.inter(
+                                      textStyle: const TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.black,
+                                    fontSize: 17,
+                                  ))),
+                            ),
                           ),
                         ],
                       ),
@@ -330,11 +332,9 @@ class MainScreenView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
-
                           width: (firstSectionWidth / largestSectionValue) *
                               MediaQuery.of(context).size.width *
                               0.4,
-
                           height: 20,
                           child: Container(color: lightBlue),
                         ),
@@ -344,11 +344,9 @@ class MainScreenView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
-
                           width: (secondSectionWidth / largestSectionValue) *
                               MediaQuery.of(context).size.width *
                               0.4,
-
                           height: 20,
                           child: Container(color: lightGreen),
                         ),
@@ -357,11 +355,9 @@ class MainScreenView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
-
                           width: (thirdSectionWidth / largestSectionValue) *
                               MediaQuery.of(context).size.width *
                               0.4,
-
                           height: 20,
                           child: Container(color: lightOrange),
                         ),
@@ -411,6 +407,7 @@ class HorizontalBarWidget extends StatelessWidget {
       largestSection = 3;
       largestSectionValue = thirdSectionWidth as double;
     }
+    print("Im already setting value of firstSection");
     return SizedBox(
       height: 50,
       child: Row(

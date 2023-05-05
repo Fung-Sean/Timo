@@ -32,11 +32,12 @@ class IntroController extends GetxController {
     //await prefs.setBool("beenSeen", false);
     bool seenBefore = await prefs.getBool('beenSeen')!;
     if (seenBefore) {
-      print("We've seen it all before!");
+      //print("We've seen it all before!");
     }
   }
 
   void appendToLocalStorage() async {
+    print("In Append function");
     //list that fetches Google API data
     List<GoogleAPI.Event> eventsFetched = gcalDataFetch;
 

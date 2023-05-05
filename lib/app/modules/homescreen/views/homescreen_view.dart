@@ -12,6 +12,7 @@ import '../../nearby/views/nearby_view.dart';
 import '../views/weather_view.dart';
 import '../controllers/homescreen_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:async/async.dart';
 
 RxInt currentPage = 0.obs;
 
@@ -47,12 +48,31 @@ class HomescreenView extends GetView<HomescreenController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  'Last Updated: ',
-                  style: GoogleFonts.inter(
+                ElevatedButton(
+                  onPressed: () async {
+                    // Add your action here
+                    print('Button clicked!');
+                    await controller.introController.getGoogleEventsData();
+                    controller.introController.appendToLocalStorage();
+                    controller.resetMemoizers();
+                    controller.cancelBeforeGetReadyTimer();
+                    controller.initialize();
+                    //Get.to(MainScreenView());
+                    //Get.put(HomescreenController());
+                    //controller.update();
+                  },
+                  child: Text(
+                    'Refresh Now ',
+                    style: GoogleFonts.inter(
                       textStyle: const TextStyle(
-                    color: gray,
-                  )),
+                        color: gray,
+                      ),
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                  ),
                 ),
               ],
             ),
