@@ -199,8 +199,7 @@ class _NearByPlacesScreenState extends State<NearbyView> {
               final travelTimes = snapshot.data!;
               for (int i = 0; i < results.length; i++) {
                 results[i].travelTime = travelTimes[i];
-                if ((results[i].travelTime! + 1200) > ((timeLeft! / 2))) {
-                  print("we removed something");
+                if ((results[i].travelTime! + 1200) > ((timeLeft!))) {
                   results[i].travelTime = -1;
                 }
               }
@@ -243,7 +242,10 @@ class _NearByPlacesScreenState extends State<NearbyView> {
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
+          border: Border.all(
+            color: Color.fromARGB(255, 53, 146, 255),
+            width: 3.0,
+          ),
           borderRadius: BorderRadius.circular(10)),
       child: Column(
         children: [
@@ -253,7 +255,7 @@ class _NearByPlacesScreenState extends State<NearbyView> {
             style: GoogleFonts.inter(
                 textStyle: const TextStyle(
               fontWeight: FontWeight.w400,
-              color: Colors.black,
+              color: Color.fromARGB(255, 53, 146, 255),
               fontSize: 17,
             )),
           ),
@@ -264,7 +266,7 @@ class _NearByPlacesScreenState extends State<NearbyView> {
               style: GoogleFonts.inter(
                   textStyle: const TextStyle(
                 fontWeight: FontWeight.normal,
-                color: Colors.black,
+                color: Color.fromARGB(255, 53, 146, 255),
                 fontSize: 17,
               )),
               overflow: TextOverflow.visible,
@@ -283,7 +285,7 @@ class _NearByPlacesScreenState extends State<NearbyView> {
                   style: GoogleFonts.inter(
                       textStyle: const TextStyle(
                     fontWeight: FontWeight.w400,
-                    color: Colors.black,
+                    color: Color.fromARGB(255, 53, 146, 255),
                     fontSize: 17,
                   )),
                 );
@@ -294,7 +296,7 @@ class _NearByPlacesScreenState extends State<NearbyView> {
                   style: GoogleFonts.inter(
                       textStyle: const TextStyle(
                     fontWeight: FontWeight.w400,
-                    color: Colors.black,
+                    color: Color.fromARGB(255, 53, 146, 255),
                     fontSize: 17,
                   )),
                 );
@@ -305,7 +307,7 @@ class _NearByPlacesScreenState extends State<NearbyView> {
                   style: GoogleFonts.inter(
                       textStyle: const TextStyle(
                     fontWeight: FontWeight.w400,
-                    color: Colors.black,
+                    color: Color.fromARGB(255, 53, 146, 255),
                     fontSize: 17,
                   )),
                 );

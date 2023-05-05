@@ -64,9 +64,25 @@ class MainScreenView extends GetView<HomescreenController> {
 
           final totalValue =
               firstSectionValue + secondSectionValue + thirdSectionValue;
-          final firstSectionWidth = firstSectionValue.toDouble() / totalValue;
-          final secondSectionWidth = secondSectionValue.toDouble() / totalValue;
-          final thirdSectionWidth = thirdSectionValue.toDouble() / totalValue;
+          double firstSectionWidth = firstSectionValue.toDouble() / totalValue;
+          double secondSectionWidth =
+              secondSectionValue.toDouble() / totalValue;
+          double thirdSectionWidth = thirdSectionValue.toDouble() / totalValue;
+
+          double largestSection = 0;
+          double largestSectionValue = 0;
+          if (firstSectionWidth >= secondSectionWidth &&
+              firstSectionWidth >= thirdSectionWidth) {
+            largestSection = 1;
+            largestSectionValue = firstSectionWidth as double;
+          } else if (secondSectionWidth >= secondSectionWidth &&
+              secondSectionWidth >= thirdSectionWidth) {
+            largestSection = 2;
+            largestSectionValue = secondSectionWidth as double;
+          } else {
+            largestSection = 3;
+            largestSectionValue = thirdSectionWidth as double;
+          }
 
           const IconData directions_walk =
               IconData(0xe1e1, fontFamily: 'MaterialIcons');
@@ -100,7 +116,7 @@ class MainScreenView extends GetView<HomescreenController> {
                       Obx(
                         () => InkWell(
                           child: Text(
-                            "at " + controller.location.value,
+                            "at " + controller.shortenedLocation.value,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
                                 textStyle: const TextStyle(
@@ -314,9 +330,11 @@ class MainScreenView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
-                          width: firstSectionWidth *
+
+                          width: (firstSectionWidth / largestSectionValue) *
                               MediaQuery.of(context).size.width *
-                              0.25,
+                              0.4,
+
                           height: 20,
                           child: Container(color: lightBlue),
                         ),
@@ -326,9 +344,11 @@ class MainScreenView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
-                          width: secondSectionWidth *
+
+                          width: (secondSectionWidth / largestSectionValue) *
                               MediaQuery.of(context).size.width *
-                              0.25,
+                              0.4,
+
                           height: 20,
                           child: Container(color: lightGreen),
                         ),
@@ -337,9 +357,11 @@ class MainScreenView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
-                          width: thirdSectionWidth *
+
+                          width: (thirdSectionWidth / largestSectionValue) *
                               MediaQuery.of(context).size.width *
-                              0.25,
+                              0.4,
+
                           height: 20,
                           child: Container(color: lightOrange),
                         ),
@@ -375,6 +397,20 @@ class HorizontalBarWidget extends StatelessWidget {
     final secondSectionWidth = secondSectionValue.toDouble() / totalValue;
     final thirdSectionWidth = thirdSectionValue.toDouble() / totalValue;
 
+    double largestSection = 0;
+    double largestSectionValue = 0;
+    if (firstSectionWidth >= secondSectionWidth &&
+        firstSectionWidth >= thirdSectionWidth) {
+      largestSection = 1;
+      largestSectionValue = firstSectionWidth as double;
+    } else if (secondSectionWidth >= secondSectionWidth &&
+        secondSectionWidth >= thirdSectionWidth) {
+      largestSection = 2;
+      largestSectionValue = secondSectionWidth as double;
+    } else {
+      largestSection = 3;
+      largestSectionValue = thirdSectionWidth as double;
+    }
     return SizedBox(
       height: 50,
       child: Row(
