@@ -236,7 +236,6 @@ class WeatherView extends GetView<HomescreenController> {
                             color: Colors.lightBlue,
                           ),
                           decoration: TextDecoration.none,
-
                         ),
                       ),
                     ),
@@ -370,7 +369,7 @@ class WeatherView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
-                          width: firstSectionWidth * 200,
+                          width: firstSectionWidth * 160,
                           height: 20,
                           child: Container(color: lightBlue),
                         ),
@@ -380,7 +379,7 @@ class WeatherView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
-                          width: secondSectionWidth * 200,
+                          width: secondSectionWidth * 160,
                           height: 20,
                           child: Container(color: lightGreen),
                         ),
@@ -389,7 +388,7 @@ class WeatherView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
-                          width: thirdSectionWidth * 200,
+                          width: thirdSectionWidth * 160,
                           height: 20,
                           child: Container(color: lightOrange),
                         ),
