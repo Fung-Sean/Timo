@@ -330,11 +330,9 @@ class MainScreenView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
-
                           width: (firstSectionWidth / largestSectionValue) *
                               MediaQuery.of(context).size.width *
                               0.4,
-
                           height: 20,
                           child: Container(color: lightBlue),
                         ),
@@ -344,11 +342,9 @@ class MainScreenView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
-
                           width: (secondSectionWidth / largestSectionValue) *
                               MediaQuery.of(context).size.width *
                               0.4,
-
                           height: 20,
                           child: Container(color: lightGreen),
                         ),
@@ -357,11 +353,9 @@ class MainScreenView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
-
                           width: (thirdSectionWidth / largestSectionValue) *
                               MediaQuery.of(context).size.width *
                               0.4,
-
                           height: 20,
                           child: Container(color: lightOrange),
                         ),

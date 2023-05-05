@@ -228,7 +228,7 @@ class HomescreenView extends GetView<HomescreenController> {
               elevation: 0,
               child: Obx(() => AnimatedSmoothIndicator(
                     activeIndex: currentPage.value,
-                    count: 3,
+                    count: 2,
                     effect: const ExpandingDotsEffect(
                         activeDotColor: Color.fromARGB(255, 53, 146, 255)),
                   )),
