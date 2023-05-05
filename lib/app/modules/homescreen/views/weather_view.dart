@@ -65,7 +65,7 @@ class WeatherView extends GetView<HomescreenController> {
 
     //define some colors to be used on the widgets
     Color darkBlue = const Color.fromARGB(255, 64, 149, 249);
-    Color lightBlue = const Color.fromARGB(255, 170, 207, 251);
+    Color lightBlue = const Color.fromARGB(255, 227, 237, 246);
 
     final HomescreenController controller = Get.put(HomescreenController());
     final WeatherpageController weatherpageController =
@@ -102,20 +102,6 @@ class WeatherView extends GetView<HomescreenController> {
           final secondSectionWidth = secondSectionValue.toDouble() / totalValue;
           final thirdSectionWidth = thirdSectionValue.toDouble() / totalValue;
 
-          double largestSection = 0;
-          double largestSectionValue = 0;
-          if (firstSectionWidth >= secondSectionWidth &&
-              firstSectionWidth >= thirdSectionWidth) {
-            largestSection = 1;
-            largestSectionValue = firstSectionWidth as double;
-          } else if (secondSectionWidth >= secondSectionWidth &&
-              secondSectionWidth >= thirdSectionWidth) {
-            largestSection = 2;
-            largestSectionValue = secondSectionWidth as double;
-          } else {
-            largestSection = 3;
-            largestSectionValue = thirdSectionWidth as double;
-          }
           const IconData directions_walk =
               IconData(0xe1e1, fontFamily: 'MaterialIcons');
 
@@ -148,7 +134,7 @@ class WeatherView extends GetView<HomescreenController> {
                       Obx(
                         () => InkWell(
                           child: Text(
-                            "at " + controller.shortenedLocation.value,
+                            "at " + controller.location.value,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
                                 textStyle: const TextStyle(
@@ -168,7 +154,6 @@ class WeatherView extends GetView<HomescreenController> {
                   ),
                 ),
               ]),
-
               // const SizedBox(height: 40),
               //   SizedBox(
               //     width: MediaQuery.of(context).size.height * 0.369,
@@ -251,6 +236,7 @@ class WeatherView extends GetView<HomescreenController> {
                             color: Colors.lightBlue,
                           ),
                           decoration: TextDecoration.none,
+
                         ),
                       ),
                     ),
@@ -291,7 +277,7 @@ class WeatherView extends GetView<HomescreenController> {
                       )),
                 ],
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.004),
+              const SizedBox(height: 15),
               Row(
                 children: [
                   Column(
@@ -321,7 +307,7 @@ class WeatherView extends GetView<HomescreenController> {
                                     textStyle: const TextStyle(
                                   fontWeight: FontWeight.normal,
                                   color: Colors.black,
-                                  fontSize: 17,
+                                  fontSize: 20,
                                 ))),
                           ),
                         ],
@@ -336,8 +322,7 @@ class WeatherView extends GetView<HomescreenController> {
                                 size: 35, color: lightGreen),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 4.0, horizontal: 2.0),
+                            padding: const EdgeInsets.all(4.0),
                             child: Text(
                                 controller.startTravelString.value +
                                     "-" +
@@ -347,7 +332,7 @@ class WeatherView extends GetView<HomescreenController> {
                                     textStyle: const TextStyle(
                                   fontWeight: FontWeight.normal,
                                   color: Colors.black,
-                                  fontSize: 17,
+                                  fontSize: 20,
                                 ))),
                           ),
                         ],
@@ -372,7 +357,7 @@ class WeatherView extends GetView<HomescreenController> {
                                     textStyle: const TextStyle(
                                   fontWeight: FontWeight.normal,
                                   color: Colors.black,
-                                  fontSize: 17,
+                                  fontSize: 20,
                                 ))),
                           ),
                         ],
@@ -385,9 +370,7 @@ class WeatherView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
-                          width: (firstSectionWidth / largestSectionValue) *
-                              MediaQuery.of(context).size.width *
-                              0.4,
+                          width: firstSectionWidth * 200,
                           height: 20,
                           child: Container(color: lightBlue),
                         ),
@@ -397,9 +380,7 @@ class WeatherView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
-                          width: (secondSectionWidth / largestSectionValue) *
-                              MediaQuery.of(context).size.width *
-                              0.4,
+                          width: secondSectionWidth * 200,
                           height: 20,
                           child: Container(color: lightGreen),
                         ),
@@ -408,9 +389,7 @@ class WeatherView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
-                          width: (thirdSectionWidth / largestSectionValue) *
-                              MediaQuery.of(context).size.width *
-                              0.4,
+                          width: thirdSectionWidth * 200,
                           height: 20,
                           child: Container(color: lightOrange),
                         ),
