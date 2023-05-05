@@ -197,7 +197,7 @@ class HomescreenController extends GetxController {
 
       shortenedLocation.value = location.value;
       if (shortenedLocation.value.length > 35) {
-        shortenedLocation.value = shortenedLocation.substring(0, 25);
+        shortenedLocation.value = shortenedLocation.substring(0, 35);
         shortenedLocation.value += "...";
       }
 

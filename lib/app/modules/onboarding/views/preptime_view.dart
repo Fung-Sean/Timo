@@ -196,6 +196,8 @@ class PreptimeView extends GetView<OnboardingController> {
                 height: 60.0,
                 child: ElevatedButton(
                     onPressed: () {
+                      controller.onOnboardingExit(
+                          numMinutes.value + 60 * numHours.value);
                       Get.to(const EarlyArriveView());
                       Get.put(OnboardingController());
                     },

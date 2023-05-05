@@ -207,6 +207,8 @@ class EarlyArriveView extends GetView<OnboardingController> {
                 height: 60.0,
                 child: ElevatedButton(
                     onPressed: () {
+                      controller.onEarlyArrivalExit(
+                          numMinutes.value + 60 * numHours.value);
                       Get.to(const AllSetView());
                       Get.put(OnboardingController());
                     },
