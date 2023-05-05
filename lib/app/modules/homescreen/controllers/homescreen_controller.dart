@@ -149,6 +149,11 @@ class HomescreenController extends GetxController {
   // Define a string variable to represent the current state
   String currentState = 'beforeGetReady';
 
+  //section values for horizontal bar
+  RxInt firstSectionValue = 0.obs;
+  RxInt secondSectionValue = 0.obs;
+  RxInt thirdSectionValue = 0.obs;
+
   HomescreenController() {
     //initialize();
   }
@@ -160,6 +165,31 @@ class HomescreenController extends GetxController {
   List<LatLng> polylineCoordinates = [];
 
   //########################################
+
+  //reset initialize async memoizer
+  void resetMemoizers() {
+    _initialize = AsyncMemoizer();
+    _beforeGetReady = AsyncMemoizer();
+    _getReady = AsyncMemoizer();
+    _transport = AsyncMemoizer();
+  }
+
+  //StreamSubscription for Timer
+  late StreamSubscription _subBeforeGetReady;
+  late StreamSubscription _subGetReady;
+  late StreamSubscription _subTransport;
+
+  void cancelBeforeGetReadyTimer() {
+    _subBeforeGetReady.cancel();
+
+    if (currentState == "getReady") {
+      _subGetReady.cancel();
+    }
+
+    if (currentState == "transport") {
+      _subTransport.cancel();
+    }
+  }
 
   // function that runs to initialize data from local storage and store it for home screen use
   Future<void> initialize() async {
@@ -299,10 +329,14 @@ class HomescreenController extends GetxController {
       print("Travel time: " +
           (totalDistance * 60 / 4.5).ceil().toString() +
           " minutes");
-      transportTime.value = await (totalDistance * 60 / 4.5).ceil() * 60;
+      transportTime.value = (totalDistance * 60 / 4.5).ceil() * 60;
+      print("Transpot time after print: " + transportTime.value.toString());
+
+      /*
       if (bike) {
-        transportTime.value = await (totalDistance * 60 / 16).ceil() * 60;
+        transportTime.value = (totalDistance * 60 / 16).ceil() * 60;
       }
+      */
 
       //also on startup, fill in the info in the circles
       aboveTimer.value = "Get Ready In";
@@ -362,6 +396,13 @@ class HomescreenController extends GetxController {
 
       //calculates how much time you have until next event getReady timer
       timeUntilNextGetReady = timeToGetReady.difference(now);
+
+      //set section values for horizontalbar widget
+      firstSectionValue.value = (getReadyTime.value / 60).toInt();
+      print("Transport Time before setting secondSection: " +
+          transportTime.value.toString());
+      secondSectionValue.value = (transportTime.value / 60).toInt();
+      thirdSectionValue.value = (eventDuration.value).toInt();
 
       //timeUntilNextGetReady = timeToGetReady.difference(DateTime.parse(last_timer_update));
 
@@ -547,6 +588,8 @@ class HomescreenController extends GetxController {
       // code for your async operation here
       print("I AM IN TIMER FUNCTION");
 
+      currentState = "beforeGetReady";
+
       Get.defaultDialog(
         title: 'Your timer has begun!',
         titleStyle: GoogleFonts.inter(textStyle: stylebegin_title),
@@ -605,12 +648,13 @@ class HomescreenController extends GetxController {
       //if there is time for miscellaneous task
       await prefs.setInt("Time_for_stuff", timeUntilNextGetReadyInt);
 
-      var sub = countDownTimer.listen(null);
-      sub.onData((duration) async {
+      // var sub = countDownTimer.listen(null);
+      _subBeforeGetReady = countDownTimer.listen(null);
+      _subBeforeGetReady.onData((duration) async {
         //set current time to shared preferences to preserve state
         await prefs.setString("last_timer_update", DateTime.now().toString());
         //calculates time left using duration elapsed
-        timeLeft = timeUntilNextGetReadyInt - duration.elapsed.inSeconds;
+        timeLeft = timeUntilNextGetReadyInt - duration.elapsed.inSeconds as int;
         //print("timeLeft: " + timeLeft.toString());
 
         //send notification if timeLeft == 5mins or 300 seconds
@@ -636,9 +680,9 @@ class HomescreenController extends GetxController {
       });
 
       //after timer expires, switch to getReady timer
-      sub.onDone(() {
+      _subBeforeGetReady.onDone(() {
         print("Done");
-        sub.cancel();
+        _subBeforeGetReady.cancel();
         startGetReadyTimer = true;
 
         //make reset method but for now
@@ -672,10 +716,11 @@ class HomescreenController extends GetxController {
         const Duration(seconds: 1),
       );
 
-      var sub = countDownTimer.listen(null);
-      sub.onData((duration) {
+      //var sub = countDownTimer.listen(null);
+      _subGetReady = countDownTimer.listen(null);
+      _subGetReady.onData((duration) {
         //calculates duration based on time elapsed
-        timeLeft = getReadyTime.value - duration.elapsed.inSeconds;
+        timeLeft = getReadyTime.value - duration.elapsed.inSeconds as int;
 
         if (timeLeft == 300) {
           sendNotification();
@@ -699,9 +744,9 @@ class HomescreenController extends GetxController {
       });
 
       //when timer is done, switch to travel timer (Implementation in progress)
-      sub.onDone(() {
+      _subGetReady.onDone(() {
         print("Done");
-        sub.cancel();
+        _subGetReady.cancel();
 
         Get.defaultDialog(
             title: 'Your timers have ended!',
@@ -775,10 +820,11 @@ class HomescreenController extends GetxController {
         const Duration(seconds: 1),
       );
 
-      var sub = countDownTimer.listen(null);
-      sub.onData((duration) {
+      //var sub = countDownTimer.listen(null);
+      _subTransport = countDownTimer.listen(null);
+      _subTransport.onData((duration) {
         //calculates duration based on time elapsed
-        timeLeft = transportTime.value - duration.elapsed.inSeconds;
+        timeLeft = transportTime.value - duration.elapsed.inSeconds as int;
 
         //maintain a variable called proportion that dictates
         //the portion of the timer progress indicator to be filled
@@ -796,9 +842,9 @@ class HomescreenController extends GetxController {
       });
 
       //when timer is done, switch to travel timer (Implementation in progress)
-      sub.onDone(() {
+      _subTransport.onDone(() {
         print("Done");
-        sub.cancel();
+        _subTransport.cancel();
 
         // NotificationServiceController.showNotification(
         //     title: 'TIMO',
