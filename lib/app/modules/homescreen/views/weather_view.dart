@@ -134,7 +134,7 @@ class WeatherView extends GetView<HomescreenController> {
                       Obx(
                         () => InkWell(
                           child: Text(
-                            "at " + controller.location.value,
+                            "at " + controller.shortenedLocation.value,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
                                 textStyle: const TextStyle(
@@ -155,96 +155,110 @@ class WeatherView extends GetView<HomescreenController> {
                 ),
               ]),
 
-              const SizedBox(height: 40),
-              SizedBox(
-                width: MediaQuery.of(context).size.height * 0.369,
-                height: MediaQuery.of(context).size.height * 0.369,
-                child: Stack(
-                    alignment: Alignment.center,
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      Transform.rotate(
-                        angle: 0,
-                        child: SizedBox(
-                          height: 50,
-                          width: 50,
-                          child: Obx(() => CircularProgressIndicator(
-                                value: 1.0 - controller.proportionOfTimer.value,
-                                strokeWidth: 17,
-                                color:
-                                    controller.currentState == 'beforeGetReady'
-                                        ? beforeGetReadyAbove
-                                        : controller.currentState == 'getReady'
-                                            ? getReadyAbove
-                                            : transportationAbove,
-                                backgroundColor:
-                                    controller.currentState == 'beforeGetReady'
-                                        ? beforeGetReadyBackground
-                                        : controller.currentState == 'getReady'
-                                            ? getReadyBackground
-                                            : transportationBackground,
-                              )),
+              // const SizedBox(height: 40),
+              //   SizedBox(
+              //     width: MediaQuery.of(context).size.height * 0.369,
+              //     height: MediaQuery.of(context).size.height * 0.369,
+              //     child: Stack(
+              //         alignment: Alignment.center,
+              //         fit: StackFit.expand,
+              //         children: <Widget>[
+              //           Transform.rotate(
+              //             angle: 0,
+              //             child: SizedBox(
+              //               height: 50,
+              //               width: 50,
+              //               child: Obx(() => CircularProgressIndicator(
+              //                     value: 1.0 - controller.proportionOfTimer.value,
+              //                     strokeWidth: 17,
+              //                     color:
+              //                         controller.currentState == 'beforeGetReady'
+              //                             ? beforeGetReadyAbove
+              //                             : controller.currentState == 'getReady'
+              //                                 ? getReadyAbove
+              //                                 : transportationAbove,
+              //                     backgroundColor:
+              //                         controller.currentState == 'beforeGetReady'
+              //                             ? beforeGetReadyBackground
+              //                             : controller.currentState == 'getReady'
+              //                                 ? getReadyBackground
+              //                                 : transportationBackground,
+              //                   )),
+              //             ),
+              //           ),
+
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: MediaQuery.of(context).size.height * 0.04),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      currentTime,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(textStyle: style_date),
+                    ),
+                    SizedBox(height: 20),
+                    Image.asset(
+                      'assets/Cloud.png',
+                      width: 100,
+                      height: 100,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '${(_weatherpagecontroller.futureWeather[0].temp * 1.8 + 32).round()}°F',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                        textStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: controller.currentState == 'beforeGetReady'
+                              ? Colors.black
+                              : controller.currentState == 'getReady'
+                                  ? getReadyBackground
+                                  : transportationBackground,
+                          fontSize: 45,
                         ),
                       ),
-                      Positioned.fill(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // Obx(() => Text(
-                            //       //controller.aboveTimer.value,
-                            //       //currentTime,
-                            //       textAlign: TextAlign.center,
-                            //       style: GoogleFonts.inter(
-                            //           textStyle: const TextStyle(
-                            //         fontWeight: FontWeight.normal,
-                            //         color: Colors.black,
-                            //         fontSize: 30,
-                            //       )),
-                            //     )),
-                            Obx(() => Column(
-                                  children: <Widget>[
-                                    Text(
-                                      currentTime,
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.inter(
-                                          textStyle: style_date),
-                                    ),
-                                    Text(
-                                        '${_weatherpagecontroller.futureWeather[0].temp}°C',
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.inter(
-                                            textStyle: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: controller.currentState ==
-                                                  'beforeGetReady'
-                                              ? beforeGetReadyBackground
-                                              : controller.currentState ==
-                                                      'getReady'
-                                                  ? getReadyBackground
-                                                  : transportationBackground,
-                                          //color: const Color.fromARGB(66, 66, 66, 66),
-                                          fontSize: 45,
-                                        ))),
-                                  ],
-                                )),
-                            // Obx(
-                            //   () => Text(
-                            //       controller.belowTimer.value +
-                            //           controller.startAtString.value,
-                            //       textAlign: TextAlign.center,
-                            //       style: GoogleFonts.inter(
-                            //           textStyle: const TextStyle(
-                            //         fontWeight: FontWeight.normal,
-                            //         color: Colors.black,
-                            //         fontSize: 30,
-                            //       ))),
-                            // ),
-                          ],
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.lightBlue),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        "It's slightly chilly today",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                          textStyle: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 20,
+                            color: Colors.lightBlue,
+                          ),
+                          decoration: TextDecoration.none,
                         ),
                       ),
-                    ]),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 40),
+
+              // Obx(
+              //   () => Text(
+              //       controller.belowTimer.value +
+              //           controller.startAtString.value,
+              //       textAlign: TextAlign.center,
+              //       style: GoogleFonts.inter(
+              //           textStyle: const TextStyle(
+              //         fontWeight: FontWeight.normal,
+              //         color: Colors.black,
+              //         fontSize: 30,
+              //       ))),
+              // ),
+              //       ]),
+              // ),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -375,7 +389,7 @@ class WeatherView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
-                          width: thirdSectionWidth * 200,
+                          width: thirdSectionWidth * 180,
                           height: 20,
                           child: Container(color: lightOrange),
                         ),
@@ -425,7 +439,7 @@ class HorizontalBarWidget extends StatelessWidget {
                 child: Container(color: lightBlue),
               ),
               Text(
-                firstSectionValue.toString() + " min",
+                firstSectionValue.toString() + "min ",
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                     textStyle: const TextStyle(
@@ -444,7 +458,7 @@ class HorizontalBarWidget extends StatelessWidget {
                 child: Container(color: lightGreen),
               ),
               Text(
-                secondSectionValue.toString() + " min",
+                secondSectionValue.toString() + "min ",
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                     textStyle: const TextStyle(
@@ -463,7 +477,7 @@ class HorizontalBarWidget extends StatelessWidget {
                 child: Container(color: lightOrange),
               ),
               Text(
-                thirdSectionValue.toString() + " min",
+                thirdSectionValue.toString() + "min ",
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                     textStyle: const TextStyle(

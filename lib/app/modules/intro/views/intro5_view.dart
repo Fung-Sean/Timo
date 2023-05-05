@@ -61,7 +61,7 @@ class Intro5View extends GetView {
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 40),
               child: SizedBox(
                 width: 350,
                 height: 60.0,
