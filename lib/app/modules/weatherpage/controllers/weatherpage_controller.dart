@@ -7,8 +7,12 @@ import 'package:get/route_manager.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import '../../homescreen/controllers/homescreen_controller.dart';
 
-//import '../models/weather_model.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import '../models/weatherpage_model.dart';
+
+//import '../models/weather_model.dart';
+//import '../models/weatherpage_model.dart';
 
 class WeatherpageController extends GetxController {
   var futureWeather = <WeatherDataModel>[].obs;
@@ -21,30 +25,57 @@ class WeatherpageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    //getWeather();
+    getWeather();
   }
 
   //latitude: 42.350876
   //longitude: -71.106918
 
+  double getLatitude() {
+    final userLatitude = _homescreencontroller.currentLocation.latitude;
+    //final userLongitude = _homescreencontroller.currentLocation.longitude;
+
+    // Get.log(userLongitude as String);
+    Get.log(userLatitude as String);
+
+    return userLatitude;
+  }
+
+  double getLongitude() {
+    final userLongitude = _homescreencontroller.currentLocation.longitude;
+    Get.log(userLongitude as String);
+
+    return userLongitude;
+  }
+
   Future<void> getWeather() async {
-    final response = await http.get(Uri.parse(
-        "https://api.openweathermap.org/data/2.5/weather?lat=${_homescreencontroller.currentLocation.latitude}&lon=${_homescreencontroller.currentLocation.longitude}&units=metric&appid=5ef0b262f16659ab86bd672617ca3c51"));
+    //double userLatitudeWeather = getLatitude();
+    //double userLongitudeWeather = getLongitude();
+
+    //d8b78f973be74015855202437230405
+
+    print("I am here!");
+    String apiURL =
+        "https://api.openweathermap.org/data/2.5/weather?lat=42.350876&lon=-71.106918&units=metric&appid=5ef0b262f16659ab86bd672617ca3c51";
+    //"http://api.weatherapi.com/v1/current.json?q=42.350876,-71.106918&key=d8b78f973be74015855202437230405";
+
+    final response = await http.get(Uri.parse(apiURL));
+
+    print("Response: " + response.toString());
 
     if (response.statusCode == 200) {
-      // ignore: no_leading_underscores_for_local_identifiers
-      WeatherDataModel _weatherdatamodel =
-          WeatherDataModel.fromJson(jsonDecode(response.body));
+      final jsonData = jsonDecode(response.body);
 
-      futureWeather.add(WeatherDataModel(temp: _weatherdatamodel.temp
+      if (jsonData.length != 0) {
+        WeatherDataModel _weatherdatamodel =
+            WeatherDataModel.fromJson(jsonData);
 
-          //temp_min: _weatherdatamodel.temp_min,
-          //temp_max: _weatherdatamodel.temp_max,
-          //w_description: _weatherdatamodel.w_description
-          ));
-
-      isLoading.value = true;
-      update();
+        futureWeather.add(WeatherDataModel(temp: _weatherdatamodel.temp
+            //w_description: _weatherdatamodel.w_description
+            ));
+        isLoading.value = true;
+        update();
+      }
     } else {
       //throw Exception("Failed to load weather API");
       Get.snackbar('Error loading data ...',

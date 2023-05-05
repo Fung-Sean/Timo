@@ -45,7 +45,7 @@ class Intro5View extends GetView {
               width: 350, // optional width
               height: 165, // optional height
             ),
-            const SizedBox(height: 250),
+            const SizedBox(height: 200),
             Padding(
               padding: const EdgeInsets.only(left: 50.0, right: 50.0),
               child: Text(
@@ -59,28 +59,30 @@ class Intro5View extends GetView {
                 )),
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.0003),
-            SizedBox(
-              width: 300,
-              height: 50,
-              child: ElevatedButton(
-                  style: style,
-                  onPressed: () {
-                    Get.to(TransportationView());
-                    Get.put(OnboardingController());
-                  },
-                  child: Text(
-                    'Continue',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                        textStyle: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                      fontSize: 22,
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: SizedBox(
+                width: 350,
+                height: 60.0,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Get.to(const TransportationView());
+                      Get.put(OnboardingController());
+                    },
+                    child: Text(
+                      'Continue',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                          textStyle: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                        fontSize: 22,
+                      )),
                     )),
-                  )),
+              ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.000),
+            SizedBox(height: MediaQuery.of(context).size.height * .02),
           ],
         ),
       ),

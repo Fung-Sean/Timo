@@ -38,26 +38,29 @@ class EventSelectionView extends GetView<OnboardingController> {
           children: <Widget>[
             Align(
               alignment: Alignment.topLeft,
-              child: Row(
-                children: [
-                  TextButton(
-                    onPressed: () => Get.back(),
-                    child: Text(
-                      'Back',
-                      style: TextStyle(
-                        color: Colors.black,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Row(
+                  children: [
+                    TextButton(
+                      onPressed: () => Get.back(),
+                      child: Text(
+                        'Back',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                  ),
-                  CircularProgressIndicator(
-                    value: _value / 100,
-                    backgroundColor: Colors.grey,
-                    strokeWidth: 5,
-                  ),
-                ],
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                    ),
+                    CircularProgressIndicator(
+                      value: _value / 100,
+                      backgroundColor: Colors.grey,
+                      strokeWidth: 5,
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 40),
@@ -212,25 +215,27 @@ class EventSelectionView extends GetView<OnboardingController> {
               ),
             ),
             const Expanded(child: SizedBox(height: 10)),
-            SizedBox(
-              width: 300,
-              height: 50,
-              child: ElevatedButton(
-                  style: style,
-                  onPressed: () {
-                    Get.to(PreptimeView());
-                    Get.put(OnboardingController());
-                  },
-                  child: Text(
-                    'Continue',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                        textStyle: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                      fontSize: 22,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: SizedBox(
+                width: 350,
+                height: 60.0,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Get.to(const PreptimeView());
+                      Get.put(OnboardingController());
+                    },
+                    child: Text(
+                      'Continue',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                          textStyle: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                        fontSize: 22,
+                      )),
                     )),
-                  )),
+              ),
             ),
             const SizedBox(height: 20),
           ],

@@ -55,26 +55,29 @@ class TransportationView extends GetView<OnboardingController> {
           children: <Widget>[
             Align(
               alignment: Alignment.topLeft,
-              child: Row(
-                children: [
-                  TextButton(
-                    onPressed: () => Get.back(),
-                    child: Text(
-                      'Back',
-                      style: TextStyle(
-                        color: Colors.black,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Row(
+                  children: [
+                    TextButton(
+                      onPressed: () => Get.back(),
+                      child: Text(
+                        'Back',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                  ),
-                  CircularProgressIndicator(
-                    value: _value / 100,
-                    backgroundColor: gray,
-                    strokeWidth: 5,
-                  ),
-                ],
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                    ),
+                    CircularProgressIndicator(
+                      value: _value / 100,
+                      backgroundColor: Colors.grey,
+                      strokeWidth: 5,
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),

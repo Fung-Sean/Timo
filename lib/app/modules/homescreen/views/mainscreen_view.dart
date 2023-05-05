@@ -236,7 +236,7 @@ class MainScreenView extends GetView<HomescreenController> {
                       )),
                 ],
               ),
-              const SizedBox(height: 15),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.004),
               Row(
                 children: [
                   Column(
@@ -266,7 +266,7 @@ class MainScreenView extends GetView<HomescreenController> {
                                     textStyle: const TextStyle(
                                   fontWeight: FontWeight.normal,
                                   color: Colors.black,
-                                  fontSize: 20,
+                                  fontSize: 17,
                                 ))),
                           ),
                         ],
@@ -281,7 +281,8 @@ class MainScreenView extends GetView<HomescreenController> {
                                 size: 35, color: lightGreen),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(4.0),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 4.0, horizontal: 2.0),
                             child: Text(
                                 controller.startTravelString.value +
                                     "-" +
@@ -291,7 +292,7 @@ class MainScreenView extends GetView<HomescreenController> {
                                     textStyle: const TextStyle(
                                   fontWeight: FontWeight.normal,
                                   color: Colors.black,
-                                  fontSize: 20,
+                                  fontSize: 17,
                                 ))),
                           ),
                         ],
@@ -316,7 +317,7 @@ class MainScreenView extends GetView<HomescreenController> {
                                     textStyle: const TextStyle(
                                   fontWeight: FontWeight.normal,
                                   color: Colors.black,
-                                  fontSize: 20,
+                                  fontSize: 17,
                                 ))),
                           ),
                         ],
@@ -329,9 +330,11 @@ class MainScreenView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
+
                           width: (firstSectionWidth / largestSectionValue) *
                               MediaQuery.of(context).size.width *
                               0.4,
+
                           height: 20,
                           child: Container(color: lightBlue),
                         ),
@@ -341,9 +344,11 @@ class MainScreenView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
+
                           width: (secondSectionWidth / largestSectionValue) *
                               MediaQuery.of(context).size.width *
                               0.4,
+
                           height: 20,
                           child: Container(color: lightGreen),
                         ),
@@ -352,9 +357,11 @@ class MainScreenView extends GetView<HomescreenController> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: SizedBox(
+
                           width: (thirdSectionWidth / largestSectionValue) *
                               MediaQuery.of(context).size.width *
                               0.4,
+
                           height: 20,
                           child: Container(color: lightOrange),
                         ),

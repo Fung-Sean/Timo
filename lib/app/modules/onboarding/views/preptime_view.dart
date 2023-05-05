@@ -33,6 +33,7 @@ class PreptimeView extends GetView<OnboardingController> {
     List<int> values = [1, 2, 3, 4, 5];
 
     RxInt numMinutes = 0.obs;
+    RxInt numHours = 0.obs;
 
     final ButtonStyle style = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20),
@@ -57,30 +58,33 @@ class PreptimeView extends GetView<OnboardingController> {
           children: <Widget>[
             Align(
               alignment: Alignment.topLeft,
-              child: Row(
-                children: [
-                  TextButton(
-                    onPressed: () => Get.back(),
-                    child: Text(
-                      'Back',
-                      style: TextStyle(
-                        color: Colors.black,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Row(
+                  children: [
+                    TextButton(
+                      onPressed: () => Get.back(),
+                      child: Text(
+                        'Back',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                  ),
-                  CircularProgressIndicator(
-                    value: _value / 100,
-                    backgroundColor: Colors.grey,
-                    strokeWidth: 5,
-                  ),
-                ],
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                    ),
+                    CircularProgressIndicator(
+                      value: _value / 100,
+                      backgroundColor: Colors.grey,
+                      strokeWidth: 5,
+                    ),
+                  ],
+                ),
               ),
             ),
             const Padding(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(50),
               child: Text(
                 'How long does it take for you get ready for your first event?',
                 textAlign: TextAlign.center,
@@ -88,40 +92,80 @@ class PreptimeView extends GetView<OnboardingController> {
               ),
             ),
             const SizedBox(height: 50),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'Minutes',
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-            ),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Expanded(
-                    // minutes wheel
-                    child: Container(
-                      width: 70,
-                      child: ListWheelScrollView.useDelegate(
-                        onSelectedItemChanged: (value) =>
-                            numMinutes.value = value,
-                        itemExtent: 50,
-                        perspective: 0.005,
-                        diameterRatio: 1.2,
-                        physics: const FixedExtentScrollPhysics(),
-                        childDelegate: ListWheelChildBuilderDelegate(
-                          childCount: 100,
-                          builder: (context, index) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 5.0),
-                              child: Center(
-                                  child: Obx(
+                  // hours wheel
+                  Container(
+                    width: 80, // narrower container
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 5), // reduced horizontal padding
+                    child: ListWheelScrollView.useDelegate(
+                      onSelectedItemChanged: (value) => numHours.value = value,
+                      itemExtent: 50,
+                      perspective: 0.005,
+                      diameterRatio: 1.2,
+                      physics: const FixedExtentScrollPhysics(),
+                      childDelegate: ListWheelChildBuilderDelegate(
+                        childCount: 24,
+                        builder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 0),
+                            child: Center(
+                              child: Obx(
+                                () => Text(
+                                  index < 10
+                                      ? '0' + index.toString()
+                                      : index.toString(),
+                                  style: TextStyle(
+                                    fontSize: 40,
+                                    color: index == numHours.value
+                                        ? Color.fromARGB(255, 53, 146, 255)
+                                        : Color.fromARGB(255, 137, 137, 137),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 30), // reduced horizontal padding
+                    child: Text(
+                      ':',
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 112, 180, 252),
+                      ),
+                    ),
+                  ),
+
+                  // minutes wheel
+                  Container(
+                    width: 80, // narrower container
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 5), // reduced horizontal padding
+                    child: ListWheelScrollView.useDelegate(
+                      onSelectedItemChanged: (value) =>
+                          numMinutes.value = value,
+                      itemExtent: 50,
+                      perspective: 0.005,
+                      diameterRatio: 1.2,
+                      physics: const FixedExtentScrollPhysics(),
+                      childDelegate: ListWheelChildBuilderDelegate(
+                        childCount: 60,
+                        builder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 0.0),
+                            child: Center(
+                              child: Obx(
                                 () => Text(
                                   index < 10
                                       ? '0' + index.toString()
@@ -129,15 +173,15 @@ class PreptimeView extends GetView<OnboardingController> {
                                   style: TextStyle(
                                     fontSize: 40,
                                     color: index == numMinutes.value
-                                        ? Color.fromARGB(255, 0, 0, 0)
+                                        ? Color.fromARGB(255, 53, 146, 255)
                                         : Color.fromARGB(255, 137, 137, 137),
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              )),
-                            );
-                          },
-                        ),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -145,34 +189,29 @@ class PreptimeView extends GetView<OnboardingController> {
               ),
             ),
             const Expanded(child: SizedBox(height: 10)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 300,
-                  height: 50,
-                  child: ElevatedButton(
-                      style: style,
-                      onPressed: () {
-                        OnboardingController()
-                            .onOnboardingExit(numMinutes.value);
-                        Get.to(EarlyArriveView());
-                        Get.put(OnboardingController());
-                      },
-                      child: Text(
-                        'Continue',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.inter(
-                            textStyle: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
-                          fontSize: 22,
-                        )),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: SizedBox(
+                width: 350,
+                height: 60.0,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Get.to(const EarlyArriveView());
+                      Get.put(OnboardingController());
+                    },
+                    child: Text(
+                      'Continue',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                          textStyle: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                        fontSize: 22,
                       )),
-                ),
-              ],
+                    )),
+              ),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 20),
           ],
         ),
       ),
