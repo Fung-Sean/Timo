@@ -459,7 +459,7 @@ class HomescreenController extends GetxController {
   }
 
   //Notifications
-  void sendStartNotification() {
+  void sendNotification() {
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
         AwesomeNotifications().requestPermissionToSendNotifications();
@@ -471,7 +471,7 @@ class HomescreenController extends GetxController {
             id: 1,
             channelKey: 'test_channel',
             title: 'TIMO',
-            body: 'Timer has started!'));
+            body: 'You have 5 minutes left!'));
 
     //what happens if we click the notif?
     // AwesomeNotifications().actionStream.listen((event) {
@@ -479,7 +479,7 @@ class HomescreenController extends GetxController {
     // });
   }
 
-  void sendFinishNotification() {
+  void sendOtherNotification() {
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
         AwesomeNotifications().requestPermissionToSendNotifications();
@@ -491,7 +491,7 @@ class HomescreenController extends GetxController {
             id: 1,
             channelKey: 'test_channel',
             title: 'TIMO',
-            body: 'Timer has finished!'));
+            body: 'You have 1 minute left!'));
 
     //what happens if we click the notif?
     // AwesomeNotifications().actionStream.listen((event) {
@@ -548,31 +548,46 @@ class HomescreenController extends GetxController {
       print("I AM IN TIMER FUNCTION");
 
       Get.defaultDialog(
-          title: 'Your timer has begun!',
-          titleStyle: GoogleFonts.inter(textStyle: stylebegin_title),
-          content: SizedBox(
-              width: 300,
-              height: 150,
+        title: 'Your timer has begun!',
+        titleStyle: GoogleFonts.inter(textStyle: stylebegin_title),
+        titlePadding: EdgeInsets.only(top: 40.0),
+        content: Padding(
+          padding: EdgeInsets.only(top: 20.0),
+          child: SizedBox(
+            width: 300,
+            height: 100,
+            child: Text(
+              'Timo takes your Google Calendar \n events to set aside periods of time for \n you to get ready and travel to your \n destination on time.',
+              style: GoogleFonts.inter(textStyle: stylebegin_middle),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
+            child: ElevatedButton(
+              onPressed: () {
+                Get.back();
+              },
               child: Text(
-                'Timo takes your Google Calendar \n events to set aside periods of time for \n you to get ready and travel to your \n destination on time.',
-                style: GoogleFonts.inter(textStyle: stylebegin_middle),
-                textAlign: TextAlign.center,
-              )),
-          // textConfirm: "Let's go!",
-          // buttonColor: Color.fromARGB(255, 53, 147, 255)
-          actions: [
-            ElevatedButton(
-                onPressed: () {
-                  Get.back();
-                },
-                child: Text("Let's go!"))
-          ],
-          barrierDismissible: true
-
-          //middleText:
-          //    'Timo takes your Google Calendar \n events to set aside periods of time for \n you to get ready and travel to your \n destination on time.',
-          //middleTextStyle: GoogleFonts.inter(textStyle: stylebegin_middle)
-          );
+                "Let's go!",
+                style: TextStyle(fontSize: 18.0),
+              ),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(240, 45),
+                padding: EdgeInsets.symmetric(vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                primary: Color.fromARGB(255, 53, 147, 255),
+              ),
+            ),
+          ),
+        ],
+        barrierDismissible: true,
+        radius: 5.0,
+      );
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -597,6 +612,13 @@ class HomescreenController extends GetxController {
         //calculates time left using duration elapsed
         timeLeft = timeUntilNextGetReadyInt - duration.elapsed.inSeconds;
         //print("timeLeft: " + timeLeft.toString());
+
+        //send notification if timeLeft == 5mins or 300 seconds
+        if (timeLeft == 300) {
+          sendNotification();
+        } else if (timeLeft == 60) {
+          sendOtherNotification();
+        }
 
         //maintain a variable called proportion that dictates
         //the portion of the timer progress indicator to be filled
@@ -655,6 +677,12 @@ class HomescreenController extends GetxController {
         //calculates duration based on time elapsed
         timeLeft = getReadyTime.value - duration.elapsed.inSeconds;
 
+        if (timeLeft == 300) {
+          sendNotification();
+        } else if (timeLeft == 60) {
+          sendOtherNotification();
+        }
+
         //maintain a variable called proportion that dictates
         //the portion of the timer progress indicator to be filled
         proportionOfTimer.value = timeLeft / getReadyTime.value;
@@ -678,14 +706,20 @@ class HomescreenController extends GetxController {
         Get.defaultDialog(
             title: 'Your timers have ended!',
             titleStyle: GoogleFonts.inter(textStyle: stylebegin_title),
-            content: SizedBox(
+            titlePadding: EdgeInsets.only(top: 40.0),
+            content: Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: SizedBox(
                 width: 300,
-                height: 90,
+                height: 80,
                 child: Text(
                   'Did you make it to your event on time?',
                   style: GoogleFonts.inter(textStyle: stylebegin_middle),
                   textAlign: TextAlign.center,
-                )),
+                ),
+              ),
+            ),
+
             // textConfirm: "Let's go!",
             // buttonColor: Color.fromARGB(255, 53, 147, 255)
             actions: [
@@ -705,7 +739,8 @@ class HomescreenController extends GetxController {
                 ],
               )
             ],
-            barrierDismissible: true
+            barrierDismissible: true,
+            radius: 5
 
             //middleText:
             //    'Timo takes your Google Calendar \n events to set aside periods of time for \n you to get ready and travel to your \n destination on time.',
