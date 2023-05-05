@@ -29,7 +29,6 @@ class HomescreenView extends GetView<HomescreenController> {
     String date = DateFormat.yMMMMd('en_US').format(now).obs();
     Scaffold(key: scaffoldKey, drawer: Drawer());
     const Color gray = Color.fromARGB(217, 217, 217, 217);
-    Color darkBlue = const Color.fromARGB(255, 53, 146, 255);
 
     return Scaffold(
         key: scaffoldKey,
@@ -48,26 +47,12 @@ class HomescreenView extends GetView<HomescreenController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    // Add your action here
-                    print('Button clicked!');
-                    controller.introController.getGoogleEventsData();
-                    controller.introController.appendToLocalStorage();
-                    //controller.update();
-                  },
-                  child: Text(
-                    'Refresh Now ',
-                    style: GoogleFonts.inter(
+                Text(
+                  'Last Updated: ',
+                  style: GoogleFonts.inter(
                       textStyle: const TextStyle(
-                        color: gray,
-                      ),
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                  ),
+                    color: gray,
+                  )),
                 ),
               ],
             ),
@@ -114,84 +99,116 @@ class HomescreenView extends GetView<HomescreenController> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton.icon(
-                    onPressed: () {
-                      changeSharedPrefs("Coffee");
-                      Get.to(NearbyView());
-                      Get.put(NearbyController());
-                    },
-                    icon: Icon(Icons.coffee, size: 24),
-                    label: Text(
-                      'Coffee',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                        fontSize: 22,
-                      )),
-                    )),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    changeSharedPrefs("Coffee");
+                    Get.to(NearbyView());
+                    Get.put(NearbyController());
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.coffee, size: 24),
+                      SizedBox(
+                          width:
+                              10), // Add some spacing between the icon and button text
+                      Text(
+                        'Coffee',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                            textStyle: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                          fontSize: 22,
+                        )),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton.icon(
-                    onPressed: () {
-                      changeSharedPrefs("Gas");
-                      Get.to(NearbyView());
-                      Get.put(NearbyController());
-                    },
-                    icon: Icon(Icons.local_gas_station, size: 24),
-                    label: Text(
-                      'Gas',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                        fontSize: 22,
-                      )),
-                    )),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    changeSharedPrefs("Gas");
+                    Get.to(NearbyView());
+                    Get.put(NearbyController());
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.local_gas_station, size: 24),
+                      SizedBox(
+                          width:
+                              10), // Add some spacing between the icon and button text
+                      Text(
+                        'Gas',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                            textStyle: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                          fontSize: 22,
+                        )),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton.icon(
-                    onPressed: () {
-                      changeSharedPrefs("Shop");
-                      Get.to(NearbyView());
-                      Get.put(NearbyController());
-                    },
-                    icon: Icon(Icons.shopping_cart, size: 24),
-                    label: Text(
-                      'Shop',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                        fontSize: 22,
-                      )),
-                    )),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    changeSharedPrefs("Shop");
+                    Get.to(NearbyView());
+                    Get.put(NearbyController());
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.shopping_cart, size: 24),
+                      SizedBox(
+                          width:
+                              10), // Add some spacing between the icon and button text
+                      Text(
+                        'Shop',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                            textStyle: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                          fontSize: 22,
+                        )),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton.icon(
-                    onPressed: () {
-                      changeSharedPrefs("Food");
-                      Get.to(NearbyView());
-                      Get.put(NearbyController());
-                    },
-                    icon: Icon(Icons.restaurant_menu, size: 24),
-                    label: Text(
-                      'Food',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                        fontSize: 22,
-                      )),
-                    )),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    changeSharedPrefs("Food");
+                    Get.to(NearbyView());
+                    Get.put(NearbyController());
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.restaurant_menu, size: 24),
+                      SizedBox(
+                          width:
+                              10), // Add some spacing between the icon and button text
+                      Text(
+                        'Food',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                            textStyle: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                          fontSize: 22,
+                        )),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
@@ -201,7 +218,7 @@ class HomescreenView extends GetView<HomescreenController> {
           //
           children: [
             MainScreenView(),
-            WeatherView(),
+            WeatherView(), // CHECK!!
           ],
         ),
         bottomNavigationBar: Row(
@@ -211,8 +228,9 @@ class HomescreenView extends GetView<HomescreenController> {
               elevation: 0,
               child: Obx(() => AnimatedSmoothIndicator(
                     activeIndex: currentPage.value,
-                    count: 2,
-                    effect: const ExpandingDotsEffect(),
+                    count: 3,
+                    effect: const ExpandingDotsEffect(
+                        activeDotColor: Color.fromARGB(255, 53, 146, 255)),
                   )),
             ),
           ],
